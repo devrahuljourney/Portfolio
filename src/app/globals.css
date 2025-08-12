@@ -1,26 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Sora:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: #0a0a0a; /* Theme Background */
+    color: #ffffff; /* Default text color */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Colors */
+  .bg-theme {
+    background-color: #0a0a0a;
+  }
+  .text-primary {
+    color: #b9fd50;
+  }
+  .bg-primary-fade {
+    background-color: rgba(185, 253, 80, 0.15);
+  }
+  .text-secondary {
+    color: #a1a1a1;
+  }
+  .grid-primary {
+    background-image: linear-gradient(to right, rgba(185, 253, 80, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(185, 253, 80, 0.1) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Fonts */
+  .font-heading {
+    font-family: 'Michroma', sans-serif;
+  }
+  .font-body {
+    font-family: 'Sora', sans-serif;
+  }
+
+  /* Animations */
+  @keyframes waveGradient {
+    0% {
+      background-position: 50% 0%;
+    }
+    50% {
+      background-position: 55% 5%;
+    }
+    100% {
+      background-position: 50% 0%;
+    }
+  }
+
+  .animate-wave {
+    animation: waveGradient 8s ease-in-out infinite;
+    background-size: 120% 120%;
+  }
 }
