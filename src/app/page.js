@@ -1,6 +1,7 @@
 // Home.tsx
 import Experience from "@/components/Experience";
 import Hero from "@/components/Hero";
+import Skill from "@/components/Skill";
 
 export default function Home() {
   return (
@@ -37,6 +38,9 @@ export default function Home() {
 
         <section className="h-screen snap-start flex items-center justify-center">
           <Experience />
+        </section>
+        <section className="h-screen snap-start flex items-center justify-center">
+          <Skill />
         </section>
       </div>
     </div>

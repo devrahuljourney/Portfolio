@@ -73,3 +73,14 @@
   animation: scroll 30s linear infinite;
   
 }
+
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 1s linear infinite;
+}
