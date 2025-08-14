@@ -98,7 +98,7 @@ export default function NavBar() {
   return (
     <nav
       className="
-        fixed inset-x-0 bottom-4 z-50 mx-auto w-[60%] max-w-2xl
+        fixed inset-x-0 bottom-4 right-[15%] z-50 mx-auto w-[75%] max-w-2xl
         rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-lg
         p-2
         md:static md:mt-4 md:w-full md:max-w-none md:rounded-2xl

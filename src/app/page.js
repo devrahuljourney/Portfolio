@@ -1,6 +1,7 @@
 // Home.tsx
 import ContactForm from "@/components/ContactForm";
 import Experience from "@/components/Experience";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import ProjectSection from "@/components/ProjectSection";
 import Skill from "@/components/Skill";
@@ -34,25 +35,30 @@ export default function Home() {
 
       {/* Scrollable Sections */}
       <div className="relative z-20 w-full h-full overflow-y-auto snap-y snap-mandatory">
-      <section id="home" className="min-h-screen snap-start flex items-center justify-center">
-  <Hero />
-</section>
+        <section id="home" className="min-h-screen snap-start flex items-center justify-center">
+          <Hero />
+        </section>
 
-<section className="min-h-screen snap-start flex items-center justify-center">
-  <Experience />
-</section>
+        <section className="min-h-screen snap-start flex items-center justify-center">
+          <Experience />
+        </section>
 
-<section className="min-h-screen snap-start flex items-center justify-center">
-  <Skill />
-</section>
+        <section className="min-h-screen snap-start flex items-center justify-center">
+          <Skill />
+        </section>
 
-<section className="min-h-screen snap-start flex items-center justify-center">
-  <ProjectSection />
-</section>
-<section className="min-h-screen snap-start flex items-center justify-center">
-  <ContactForm />
-</section>
+        <section className="min-h-screen snap-start flex items-center justify-center">
+          <ProjectSection />
+        </section>
 
+        <section className="min-h-screen snap-start flex items-center justify-center">
+          <ContactForm />
+        </section>
+
+        {/* Footer - Full Width */}
+        <footer className="w-full snap-start">
+          <Footer />
+        </footer>
       </div>
     </div>
   );

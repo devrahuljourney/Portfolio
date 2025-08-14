@@ -60,7 +60,7 @@ export default function SocialMenu() {
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-50 flex flex-col items-end"
+      className="fixed bottom-5 md:right-6 right-2 z-50 flex flex-col items-end"
       ref={menuRef}
     >
       {/* Social Links */}
