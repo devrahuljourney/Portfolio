@@ -24,6 +24,8 @@ import gallybajar from "../../public/assests/gallybajar.png"
 import anil from "../../public/assests/ana.png"
 import rn from "../../public/assests/rn.png"
 import coskill from "../../public/assests/coskill.jpeg"
+import ph from "../../public/assests/ph.png"
+
 
 
 export const SkillImageAndName = [
@@ -167,4 +169,14 @@ export const experience = [
       githubLink: "https://github.com/devrahuljourney/rn-style-injector"
     }
   ];
+  
+
+  export const social = {
+    linkedin: "https://www.linkedin.com/in/devrahuljourney/",
+    instagram: "https://www.instagram.com/rhullvrma/",
+    github: "https://github.com/devrahuljourney",
+    x: "https://x.com/devrahuljourney",
+    whatsapp: "https://wa.me/9162988797",
+    leetcode: "https://leetcode.com/yourusername"
+  };
   

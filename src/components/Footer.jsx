@@ -1,3 +1,6 @@
+import { social } from "@/constant/data";
+
+
 export default function Footer() {
     return (
       <footer className="backdrop-blur-lg md:pb-[5%] pb-[13%] bg-white/5 border-t border-white/10 text-white">
@@ -11,16 +14,28 @@ export default function Footer() {
             {/* Middle Links */}
             <div className="flex gap-6 text-sm text-gray-300">
               <a
+                href="#home"
+                className="hover:text-[#B9FD50] transition-colors"
+              >
+                Home
+              </a>
+              <a
+                href="#experience"
+                className="hover:text-[#B9FD50] transition-colors"
+              >
+                Experience
+              </a>
+              <a
+                href="#skills"
+                className="hover:text-[#B9FD50] transition-colors"
+              >
+                Skill
+              </a>
+              <a
                 href="#projects"
                 className="hover:text-[#B9FD50] transition-colors"
               >
                 Projects
-              </a>
-              <a
-                href="#about"
-                className="hover:text-[#B9FD50] transition-colors"
-              >
-                About
               </a>
               <a
                 href="#contact"
@@ -33,7 +48,7 @@ export default function Footer() {
             {/* Right Section - Social Icons */}
             <div className="flex gap-4">
               <a
-                href="https://github.com/yourusername"
+                href={social.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#B9FD50] transition-colors"
@@ -48,7 +63,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com/in/yourusername"
+                href={social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#B9FD50] transition-colors"

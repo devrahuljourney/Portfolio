@@ -1,4 +1,5 @@
 "use client";
+import { social } from "@/constant/data";
 import { useState, useRef, useEffect } from "react";
 
 export default function SocialMenu() {
@@ -17,7 +18,7 @@ export default function SocialMenu() {
 
   const socialLinks = [
     {
-      href: "https://twitter.com",
+      href: social.x,
       label: "Twitter",
       svg: (
         <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
@@ -26,7 +27,7 @@ export default function SocialMenu() {
       ),
     },
     {
-      href: "https://github.com",
+      href: social.github,
       label: "GitHub",
       svg: (
         <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
@@ -39,7 +40,7 @@ export default function SocialMenu() {
       ),
     },
     {
-      href: "https://linkedin.com",
+      href: social.linkedin,
       label: "LinkedIn",
       svg: (
         <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
@@ -48,7 +49,17 @@ export default function SocialMenu() {
       ),
     },
     {
-      href: "https://instagram.com",
+      href: social.whatsapp,
+      label: "WhatsApp",
+      svg: (
+        <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.52 3.48A11.88 11.88 0 0 0 12 0C5.37 0 .02 5.37.02 12c0 2.12.55 4.1 1.52 5.85L0 24l6.37-1.51A11.93 11.93 0 0 0 12 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.22-3.48-8.52zm-8.52 17.24a9.81 9.81 0 0 1-5.21-1.53l-.37-.22-3.78.89.91-3.69-.24-.38a9.83 9.83 0 1 1 8.69 4.93zm5.27-7.17c-.29-.14-1.71-.84-1.98-.93s-.46-.14-.66.14-.76.93-.93 1.12-.34.21-.63.07a7.05 7.05 0 0 1-2.06-1.26 7.9 7.9 0 0 1-1.46-1.81c-.16-.28 0-.43.12-.57.12-.12.28-.33.42-.5.14-.16.19-.28.29-.47.1-.19.05-.35-.02-.5-.07-.14-.66-1.58-.91-2.17s-.48-.5-.66-.51h-.56a1.05 1.05 0 0 0-.77.36 3.25 3.25 0 0 0-1 2.44c0 1.44.8 2.84 1.13 3.05.33.21 1.94 3 4.7 4.2a5.18 5.18 0 0 0 2.27.45c.92 0 1.76-.37 2.44-.96a4.38 4.38 0 0 0 1.36-2.12c.11-.37.07-.7-.05-.78z"/>
+        </svg>
+      ),
+    }
+,    
+    {
+      href: social.instagram,
       label: "Instagram",
       svg: (
         <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">

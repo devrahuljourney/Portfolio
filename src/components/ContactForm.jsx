@@ -35,17 +35,17 @@ export default function ContactForm() {
   return (
     <section id="contact" className="py-16 px-4 sm:px-6 lg:px-12">
       <div className="max-w-2xl mx-auto text-center mb-10">
-        <h2 className="text-3xl font-bold text-white">
+        <h2 className="text-3xl font-heading font-bold text-white">
           Contact <span className="text-[#B9FD50]">Me</span>
         </h2>
-        <p className="text-gray-400 mt-3 text-sm sm:text-base">
+        <p className="text-gray-400 font-body mt-3 text-sm sm:text-base">
           Feel free to reach out for collaborations, freelance projects, or just a friendly chat.
         </p>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="max-w-xl mx-auto p-6 rounded-2xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg space-y-4"
+        className="max-w-xl mx-auto p-6 font-body rounded-2xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg space-y-4"
       >
         <input
           type="text"
