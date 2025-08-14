@@ -29,7 +29,7 @@ export default function Experience() {
   ];
 
   return (
-    <section className="py-20 relative">
+    <section id="experience" className="py-20 relative">
       <h2 className="text-primary font-heading text-2xl sm:text-3xl md:text-5xl mb-[5%] tracking-wide text-center text-[#B9FD50]">
         Work Experience
       </h2>

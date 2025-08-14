@@ -6,9 +6,9 @@ import SideScrollBar from "./Hero/SideScrollBar";
 
 export default function Hero() {
   return (
-<BackgroundBeamsWithCollision className="bg-transparent w-full flex h-[99vh] items-center">
+<BackgroundBeamsWithCollision  className="bg-transparent w-full flex h-[99vh] items-center">
   {/* Left sidebar */}
-  <div className="hidden sm:flex w-[10%] justify-center">
+  <div  className="hidden sm:flex w-[10%] justify-center">
     <SideScrollBar />
   </div>
 
