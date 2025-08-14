@@ -63,7 +63,7 @@ export default function Skill() {
       </div>
 
       {/* Skills list */}
-      <div className="flex flex-row flex-wrap justify-center items-centerflex-wrap gap-6 md:w-[80%] w-full ">
+      <div className="flex flex-row font-body flex-wrap justify-center items-centerflex-wrap gap-6 md:w-[80%] w-full ">
         {SkillImageAndName.map((data, index) => (
           <Tilt key={index}>
           <div className="p-4 md:px-10 rounded-2xl flex md:flex-row flex-col justify-center items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 shadow-lg hover:scale-105 transition-transform duration-300">

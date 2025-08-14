@@ -1,4 +1,5 @@
 // Home.tsx
+import ContactForm from "@/components/ContactForm";
 import Experience from "@/components/Experience";
 import Hero from "@/components/Hero";
 import ProjectSection from "@/components/ProjectSection";
@@ -47,6 +48,9 @@ export default function Home() {
 
 <section className="min-h-screen snap-start flex items-center justify-center">
   <ProjectSection />
+</section>
+<section className="min-h-screen snap-start flex items-center justify-center">
+  <ContactForm />
 </section>
 
       </div>

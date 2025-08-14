@@ -34,7 +34,7 @@ export default function Experience() {
         Work Experience
       </h2>
 
-      <div className="relative max-w-6xl mx-auto px-4">
+      <div className="relative max-w-6xl mx-auto px-4 font-body">
         {/* Vertical Line */}
         <div className="absolute md:left-1/2  top-0 w-1 bg-[#B9FD50] h-full -translate-x-1/2"></div>
 
