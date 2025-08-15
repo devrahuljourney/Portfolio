@@ -35,19 +35,19 @@ export default function ContactForm() {
   return (
     <section id="contact" className="py-16 px-4 sm:px-6 lg:px-12">
       <div className="max-w-2xl mx-auto text-center mb-10">
-        <h2 className="text-3xl font-heading font-bold text-white">
+        <h2 data-aos="fade-up" className="text-3xl font-heading font-bold text-white">
           Contact <span className="text-[#B9FD50]">Me</span>
         </h2>
-        <p className="text-gray-400 font-body mt-3 text-sm sm:text-base">
+        <p data-aos="fade-down" className="text-gray-400 font-body mt-3 text-sm sm:text-base">
           Feel free to reach out for collaborations, freelance projects, or just a friendly chat.
         </p>
       </div>
 
-      <form
+      <form data-aos="fade-up"
         onSubmit={handleSubmit}
         className="max-w-xl mx-auto p-6 font-body rounded-2xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg space-y-4"
       >
-        <input
+        <input data-aos="fade-down"
           type="text"
           name="name"
           value={form.name}
@@ -56,7 +56,7 @@ export default function ContactForm() {
           required
           className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-[#B9FD50]"
         />
-        <input
+        <input data-aos="fade-down"
           type="email"
           name="email"
           value={form.email}
@@ -65,7 +65,7 @@ export default function ContactForm() {
           required
           className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-[#B9FD50]"
         />
-        <textarea
+        <textarea data-aos="fade-down"
           name="message"
           value={form.message}
           onChange={handleChange}
@@ -74,7 +74,7 @@ export default function ContactForm() {
           required
           className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-[#B9FD50]"
         />
-        <button
+        <button data-aos="fade-down"
           type="submit"
           disabled={status === "loading"}
           className="w-full py-3 rounded-lg bg-[#B9FD50] text-black font-semibold hover:opacity-90 transition"

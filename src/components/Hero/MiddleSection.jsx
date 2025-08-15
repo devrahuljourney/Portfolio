@@ -23,17 +23,17 @@ export default function MiddleSection() {
         <div className="flex-grow h-1 bg-primary-fade rounded-full"></div>
       </div>
 
-      <p className="text-white max-w-lg font-bold text-base sm:text-lg md:text-xl leading-snug select-text px-2">
+      <p data-aos="fade-down" className="text-white max-w-lg font-bold text-base sm:text-lg md:text-xl leading-snug select-text px-2">
         From <span className="text-primary">idea</span> to{" "}
         <span className="text-primary">launch</span>, I build software that’s
         fast, scalable, and tailored to your needs. Let’s work together to turn
         your goals into reality.
       </p>
 
-      <div className="w-20 sm:w-24 h-[3px] bg-primary-fade rounded-full mx-auto"></div>
+      <div  className="w-20 sm:w-24 h-[3px] bg-primary-fade rounded-full mx-auto"></div>
 
       <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 w-full sm:w-auto justify-center">
-  <a
+  <a data-aos="fade-down" 
     href="/assests/Rahul_Kumar_FullStack_RESUME.pdf"
     download
     className="group relative overflow-hidden border-2 border-[#b9fd50] text-[#b9fd50] font-semibold px-6 py-3 sm:px-8 rounded-lg transition-all duration-300 ease-out
@@ -43,7 +43,7 @@ export default function MiddleSection() {
     <span className="absolute inset-0 bg-[#b9fd50] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></span>
   </a>
 
-  <a href="#contact"
+  <a data-aos="fade-up" href="#contact"
     className="group relative overflow-hidden bg-[#b9fd50] hover:bg-[rgba(185,253,80,0.15)] text-black font-semibold px-6 py-3 sm:px-8 rounded-lg transition-all duration-300 ease-out
       hover:text-[#b9fd50]"
   >

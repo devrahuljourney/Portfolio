@@ -14,6 +14,7 @@ export default function Experience() {
 - Implemented bulk product upload via CSV, reducing manual entry by 80% and improving admin efficiency.
 - Contributed to the esports admin panel with user management and integrated Cloudinary for secure, fast image uploads and storage.
       `,
+      company:"WE  PLAY  INDIA"
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ export default function Experience() {
 - Delivered a responsive legal services website with a Quill.js blog and admin panel for content management.
 - Created a marketing website for a client, implementing interactive sections and smooth animations.
       `,
+      company:"FREELANCER"
     },
   ];
 
@@ -38,18 +40,18 @@ export default function Experience() {
         {/* Vertical Line */}
         <div className="absolute md:left-1/2  top-0 w-1 bg-[#B9FD50] h-full -translate-x-1/2"></div>
 
-        <ul className="space-y-20">
+        <ul  className="space-y-20">
           {experienceData.map((exp, idx) => {
             const isLeft = idx % 2 === 0;
             return (
-              <li key={exp.id} className="relative flex flex-col md:flex-row w-full">
+              <li  key={exp.id} className="relative flex flex-col md:flex-row w-full">
                 {/* Icon */}
                 <div className="absolute md:left-1/2 -translate-x-1/2 bg-[#B9FD50] w-6 h-6 rounded-full flex items-center justify-center z-10">
                   <FaCheckCircle className="text-black w-4 h-4" />
                 </div>
 
                 {/* Content */}
-                <div
+                <div data-aos="fade-up"
                   className={`w-full md:w-1/2 px-4 mt-8 md:mt-0 ${
                     isLeft
                       ? "md:text-right md:pr-12 md:ml-auto"
@@ -57,6 +59,7 @@ export default function Experience() {
                   }`}
                 >
                   <time className="font-mono italic text-[#B9FD50]">{exp.start} – {exp.end}</time>
+                  <p className="font-heading text-gray-400 md:text-[15px]  text-[12px]" > {exp.company} </p>
                   <div className="text-xl sm:text-2xl md:text-2xl font-bold text-white mt-2">{exp.role}</div>
                   <p className="text-gray-400 whitespace-pre-line mt-2">{exp.description}</p>
                 </div>

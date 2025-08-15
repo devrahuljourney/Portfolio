@@ -13,7 +13,7 @@ export default function Skill() {
       {/* Heading with rotating gears */}
       <div className="flex md:w-full w-[80%]  items-center text-center justify-center md:gap-3  mb-8">
         {/* Left gear */}
-        <svg
+        <svg data-aos="fade-down"
           className="w-14 h-14  text-[#B9FD50] animate-spin-slow"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -35,12 +35,12 @@ export default function Skill() {
         </svg>
 
         {/* Text */}
-        <h1 className="text-primary font-heading text-xl sm:text-2xl md:text-4xl tracking-wide text-[#B9FD50]">
+        <h1  data-aos="fade-up" className="text-primary font-heading text-xl sm:text-2xl md:text-4xl tracking-wide text-[#B9FD50]">
           Tools and Technologies
         </h1>
 
         {/* Right gear */}
-        <svg
+        <svg data-aos="fade-down"
           className="w-14 h-14 text-[#B9FD50] animate-spin-slow"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -66,7 +66,7 @@ export default function Skill() {
       <div className="flex flex-row font-body flex-wrap justify-center items-centerflex-wrap md:gap-6 gap-2 md:w-[80%] w-full ">
         {SkillImageAndName.map((data, index) => (
           <Tilt key={index}>
-          <div className="p-4 md:px-8 rounded-2xl flex md:flex-row flex-col justify-center items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 shadow-lg hover:scale-105 transition-transform duration-300">
+          <div data-aos="fade-down"  className="p-4 md:px-8 rounded-2xl flex md:flex-row flex-col justify-center items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 shadow-lg hover:scale-105 transition-transform duration-300">
   <Image
     src={data.img}
     alt={data.name}

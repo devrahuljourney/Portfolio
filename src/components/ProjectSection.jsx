@@ -27,10 +27,10 @@ export default function ProjectSection() {
     >
       {/* Heading */}
       <div className="text-center mb-10">
-        <h2 className=" font-heading text-2xl sm:text-3xl md:text-5xl mb-[5%] tracking-wide text-center text-white">
+        <h2 data-aos="fade-down" className=" font-heading text-2xl sm:text-3xl md:text-5xl mb-[5%] tracking-wide text-center text-white">
           My <span className="text-[#B9FD50]">Projects</span>
         </h2>
-        <p className="text-gray-400 font-body mt-3 max-w-2xl mx-auto text-sm sm:text-base">
+        <p data-aos="fade-up" className="text-gray-400 font-body mt-3 max-w-2xl mx-auto text-sm sm:text-base">
           A curated selection of work — from freelance collaborations to
           personal builds — covering web, app, and extension development.
         </p>
@@ -39,7 +39,7 @@ export default function ProjectSection() {
       {/* Tabs */}
       <div className="flex  justify-center flex-wrap gap-3 mb-8">
         {categories.map((cat) => (
-          <button
+          <button 
             key={cat}
             onClick={() => setActiveTab(cat)}
             className={`px-4 py-2 rounded-full text-sm sm:text-base font-semibold transition-all duration-300 backdrop-blur-md border 
@@ -73,7 +73,7 @@ export default function ProjectSection() {
               transitionSpeed={700}
               className="w-full"
             >
-              <div className="flex flex-col h-full p-4 sm:p-5 rounded-xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg hover:shadow-[#B9FD50]/40 transition-all duration-300">
+              <div data-aos="fade-down" className="flex flex-col h-full p-4 sm:p-5 rounded-xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg hover:shadow-[#B9FD50]/40 transition-all duration-300">
                 {/* Image */}
                 <div className="w-full aspect-video relative rounded-lg overflow-hidden mb-4">
                   <Image

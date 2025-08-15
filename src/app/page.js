@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import ContactForm from "@/components/ContactForm";
 import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
@@ -6,15 +6,25 @@ import Hero from "@/components/Hero";
 import ProjectSection from "@/components/ProjectSection";
 import Skill from "@/components/Skill";
 import AOS from "aos";
+import "aos/dist/aos.css"; 
 import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
     AOS.init({
-      duration: 800, 
-      once: true, 
+      duration: 800,
+      once: true,
     });
+
+    
+    const container = document.querySelector(".scroll-container");
+    if (container) {
+      container.addEventListener("scroll", () => {
+        AOS.refresh();
+      });
+    }
   }, []);
+
   return (
     <div className="w-full h-screen overflow-hidden relative">
       {/* Fixed Background */}
@@ -42,7 +52,7 @@ export default function Home() {
       />
 
       {/* Scrollable Sections */}
-      <div className="relative z-20 w-full h-full overflow-y-auto snap-y snap-mandatory">
+      <div className="scroll-container relative z-20 w-full h-full overflow-y-auto snap-y snap-mandatory">
         <section id="home" className="min-h-screen snap-start flex items-center justify-center">
           <Hero />
         </section>
@@ -63,7 +73,6 @@ export default function Home() {
           <ContactForm />
         </section>
 
-        {/* Footer - Full Width */}
         <footer className="w-full snap-start">
           <Footer />
         </footer>
