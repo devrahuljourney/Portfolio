@@ -63,6 +63,61 @@ export default function RootLayout({ children }) {
     <html lang="en">
          <head>
         <link rel="icon" href="/favicon.ico" />
+        <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "name": "Rahul Kumar Verma",
+          "url": "https://rahulverma.site",
+          "image": "https://rahulverma.site/assets/portfolio.png",
+          "sameAs": [
+            "https://www.linkedin.com/in/devrahuljourney",
+            "https://github.com/devrahuljourney",
+            "https://x.com/devrahuljourney"
+          ],
+          "jobTitle": "Software Engineer / Full-Stack Developer",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Freelance"
+          },
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "J.C. Bose University of Science and Technology, YMCA Faridabad, Haryana"
+          },
+          "knowsAbout": [
+            "Full-Stack Development",
+            "MERN Stack",
+            "React Native",
+            "JavaScript",
+            "Node.js",
+            "Web Development"
+          ],
+          "description": "Full-stack software engineer specializing in MERN stack and React Native, building fast, scalable applications."
+        },
+        {
+          "@type": "WebSite",
+          "url": "https://rahulverma.site",
+          "name": "Rahul Kumar Verma Portfolio",
+          "description": "Portfolio website of Rahul Kumar Verma — showcasing projects, skills, and freelance development work.",
+          "publisher": {
+            "@type": "Person",
+            "name": "Rahul Kumar Verma"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://rahulverma.site/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    })
+  }}
+/>
+
       </head>
     
       <body
