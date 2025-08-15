@@ -2,35 +2,60 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavigationBar/NavBar";
 import SocialMenu from "@/components/NavigationBar/SocialMenu";
-
-
 export const metadata = {
-  title: "Rahul Verma - Full-Stack Developer Portfolio",
-  description: "Explore the projects, skills, and freelance work of Rahul Verma, a Full-Stack Developer specialized in MERN and React Native apps.",
-  keywords: ["Rahul Verma", "Full-Stack Developer", "MERN Stack", "React Native", "Portfolio", "Freelance Developer"],
-  authors: [{ name: "Rahul Verma", url: "https://yourportfolio.com" }],
+  title: "Rahul Kumar Verma | Full-Stack Software Engineer Portfolio",
+  description:
+    "Official portfolio of Rahul Kumar Verma — Full-Stack Software Engineer from India specializing in MERN stack, React Native, and scalable web applications. Explore Indian and global freelance projects, skills, and contact details.",
+  keywords: [
+    "Rahul",
+    "Rahul Verma",
+    "Rahul Kumar",
+    "Rahul Kumar Verma",
+    "Rahul Verma Portfolio",
+    "Rahul Kumar Verma Portfolio",
+    "Full-Stack Developer",
+    "Full-Stack Developer India",
+    "MERN Stack Developer",
+    "MERN Stack Developer India",
+    "React Native Developer",
+    "React Native Developer India",
+    "JavaScript Developer",
+    "JavaScript Developer India",
+    "Freelance Web Developer",
+    "Freelance Web Developer India",
+    "Indian Software Engineer",
+    "Software Developer Portfolio"
+  ],
+  authors: [{ name: "Rahul Kumar Verma", url: "https://rahulverma.site" }],
+  applicationName: "Rahul Kumar Verma Portfolio",
   openGraph: {
-    title: "Rahul Verma - Full-Stack Developer Portfolio",
-    description: "Explore the projects, skills, and freelance work of Rahul Verma, a Full-Stack Developer specialized in MERN and React Native apps.",
-    url: "https://yourportfolio.com",
-    siteName: "Rahul Verma Portfolio",
+    title: "Rahul Kumar Verma | Full-Stack Software Engineer Portfolio",
+    description:
+      "Portfolio of Rahul Kumar Verma — showcasing web & mobile projects, MERN stack expertise, and freelance development work from India.",
+    url: "https://rahulverma.site",
+    siteName: "Rahul Kumar Verma | Full-Stack Developer India",
     images: [
       {
-        url: "/assets/projects/portfolio.png",
-        width: 800,
-        height: 600,
-      },
+        url: "/assets/portfolio.png",
+        width: 1200,
+        height: 630,
+        alt: "Portfolio screenshot of Rahul Kumar Verma"
+      }
     ],
-    locale: "en_US",
-    type: "website",
+    locale: "en_IN",
+    type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rahul Verma - Full-Stack Developer Portfolio",
-    description: "Explore the projects, skills, and freelance work of Rahul Verma.",
-    images: ["/assets/projects/portfolio.png"],
+    title: "Rahul Kumar Verma | Full-Stack Software Engineer Portfolio",
+    description:
+      "Explore the projects, skills, and freelance work of Rahul Kumar Verma — MERN & React Native Developer from India.",
+    images: ["/assets/portfolio.png"],
+    creator: "@devrahuljourney"
   },
+  metadataBase: new URL("https://rahulverma.site")
 };
+
 
 
 export default function RootLayout({ children }) {
