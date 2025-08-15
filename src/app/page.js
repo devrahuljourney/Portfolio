@@ -1,12 +1,20 @@
-// Home.tsx
+"use client"
 import ContactForm from "@/components/ContactForm";
 import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import ProjectSection from "@/components/ProjectSection";
 import Skill from "@/components/Skill";
+import AOS from "aos";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    AOS.init({
+      duration: 800, 
+      once: true, 
+    });
+  }, []);
   return (
     <div className="w-full h-screen overflow-hidden relative">
       {/* Fixed Background */}

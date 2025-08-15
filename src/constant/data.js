@@ -123,7 +123,7 @@ export const experience = [
       title: "CoSkill",
       description: "CoSkill is a React Native + Node.js-based skill-sharing and interview preparation platform. Users can sign up, select skills to explore or offer, get matched based on mutual skill interest, schedule mock interviews, chat in real-time using WebSocket + Redis, provide session feedback, and discover trending skills and active users nearby.",
       image: coskill,
-      tech: ["React Native", "Node.js", "Express", "MongoDB", "WebSocket", "Redis", "Expo"],
+      tech: ["React Native", "Node.js", "Express", "MongoDB", "Redis", "Expo"],
       category: ["all", "app", "mobile"],
       liveLink: "https://www.youtube.com/shorts/RPMTcxZlLVY",
       githubLink: "https://github.com/devrahuljourney/CoSkill_Frontend"
@@ -133,7 +133,7 @@ export const experience = [
       title: "GallyBajar E-commerce Platform",
       description: "A full-stack freelance e-commerce platform built with MERN. Includes separate dashboards for sellers, customers, and admins. Features product management, order processing, payment integration, Google authentication, and real-time updates. Fully responsive with modern UI and seamless user experience.",
       image: gallybajar,
-      tech: ["MongoDB", "Express", "React", "Node.js", "Stripe", "Google Auth", "Cloudinary"],
+      tech: ["MongoDB", "Express", "React", "Node.js", "Google Auth", "Cloudinary"],
       category: ["all", "freelance", "web"],
       liveLink: "https://gallybajar.com/",
       githubLink: null
@@ -143,7 +143,7 @@ export const experience = [
       title: "Anil Dhyani & Associates Website",
       description: "A professional law firm website built as a full-stack MERN freelance project. Includes service pages, blog section with Quill.js editor, contact form with email notifications, and a modern responsive UI. Designed for easy content management and client engagement.",
       image: anil,
-      tech: ["MongoDB", "Express.js", "React", "Node.js", "Tailwind CSS", "Quill.js", "Email Notifications"],
+      tech: ["MongoDB", "Express.js", "React", "Node.js", "Tailwind CSS", "Quill.js"],
       category: ["all", "freelance", "web"],
       liveLink: "https://anildhyaniassociates.com/",
       githubLink: null
@@ -153,7 +153,7 @@ export const experience = [
       title: "Confidential Marketing Website",
       description: "A full-stack marketing website built for a client. Includes responsive landing pages, blog section, contact form with email notifications, and modern UI components. Details are confidential.",
       image: "/assets/projects/placeholder.png",
-      tech: ["React", "Node.js", "Express.js", "Tailwind CSS", "Email Notifications"],
+      tech: ["React", "Node.js", "Express.js", "Tailwind CSS"],
       category: ["all", "freelance", "web"],
       liveLink: "#",
       githubLink: null
