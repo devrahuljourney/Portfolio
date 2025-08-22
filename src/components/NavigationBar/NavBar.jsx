@@ -68,49 +68,68 @@ const items = [
 
 export default function NavBar() {
   const [active, setActive] = useState("home");
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  let timeoutId = null;
 
   useEffect(() => {
-    const sectionIds = items.map((item) => item.key);
+    const container = document.querySelector(".scroll-container");
+    if (!container) return;
 
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const currentScrollY = container.scrollTop;
 
-      for (let i = 0; i < sectionIds.length; i++) {
-        const sectionId = sectionIds[i];
-        const section = document.getElementById(sectionId);
-        if (!section) continue;
+      if (timeoutId) clearTimeout(timeoutId);
 
+      timeoutId = setTimeout(() => {
+        if (currentScrollY > lastScrollY + 5) {
+          setVisible(false); 
+        } else if (currentScrollY < lastScrollY - 5) {
+          setVisible(true); 
+        }
+        setLastScrollY(currentScrollY);
+      }, 80);
+
+      const scrollPosition = currentScrollY + container.clientHeight / 3;
+      let currentActive = null;
+
+      items.forEach((item) => {
+        const section = document.getElementById(item.key);
+        if (!section) return;
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
 
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          setActive(sectionId);
-          break;
+        if (
+          scrollPosition >= sectionTop &&
+          scrollPosition < sectionTop + sectionHeight
+        ) {
+          currentActive = item.key;
         }
+      });
+
+      if (currentActive && currentActive !== active) {
+        setActive(currentActive);
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [lastScrollY, active]);
 
   return (
     <nav
-      className="
-        fixed inset-x-0 bottom-4 right-[15%] z-50 mx-auto w-[75%] max-w-2xl
+      className={`
+        fixed inset-x-0 bottom-4 md:left-0 left-[-14%]  z-50 mx-auto w-[75%] max-w-2xl
         rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-lg
-        p-2
+        p-2 transition-transform duration-300
+        ${visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
         md:static md:mt-4 md:w-full md:max-w-none md:rounded-2xl
-      "
-      aria-label="Primary"
+      `}
     >
-      <ul
-        className="
-          flex items-center justify-between gap-1
-          md:justify-center md:gap-4
-        "
-      >
+      <ul className="flex items-center justify-between gap-1 md:justify-center md:gap-4">
         {items.map((it) => (
           <li key={it.key}>
             <a
@@ -119,10 +138,12 @@ export default function NavBar() {
               className={`
                 group flex items-center gap-2 rounded-xl md:px-3 px-1 py-1 md:py-2
                 text-sm transition
-                ${active === it.key ? "text-[#B9FD50] bg-white/10" : "text-white/80 hover:text-[#B9FD50] hover:bg-white/5"}
+                ${active === it.key
+                  ? "text-[#B9FD50] bg-white/10"
+                  : "text-white/80 hover:text-[#B9FD50] hover:bg-white/5"}
               `}
             >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg" aria-hidden>
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg">
                 {it.svg}
               </span>
               <span className="hidden sm:inline">{it.label}</span>

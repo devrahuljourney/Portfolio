@@ -51,7 +51,6 @@ export default function Home() {
         }}
       />
 
-      {/* Scrollable Sections */}
       <div className="scroll-container relative z-20 w-full h-full overflow-y-auto snap-y snap-mandatory">
         <section id="home" className="min-h-screen snap-start flex items-center justify-center">
           <Hero />

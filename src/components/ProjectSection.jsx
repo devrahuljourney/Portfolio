@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Tilt from "react-parallax-tilt";
 import Image from "next/image";
 import { projects } from "@/constant/data";
+import Link from "next/link";
 
 const categories = ["all", "freelance", "web", "app", "extension"];
 
@@ -75,24 +76,24 @@ export default function ProjectSection() {
             >
               <div data-aos="fade-down" className="flex flex-col h-full p-4 sm:p-5 rounded-xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg hover:shadow-[#B9FD50]/40 transition-all duration-300">
                 {/* Image */}
-                <div className="w-full aspect-video relative rounded-lg overflow-hidden mb-4">
+                <a   href={project.liveLink} className="w-full aspect-video relative rounded-lg overflow-hidden mb-4">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     className="object-cover"
                   />
-                </div>
+                </a>
 
                 {/* Title */}
-                <h3 className="text-lg font-heading font-semibold text-white mb-2">
+                <a   href={project.liveLink} className="text-lg font-heading font-semibold text-white mb-2">
                   {project.title}
-                </h3>
+                </a>
 
                 {/* Description with Read More */}
-                <p className="text-sm text-gray-300 flex-grow">
+                <a    href={project.liveLink} className="text-sm text-gray-300 flex-grow">
                   {isExpanded ? project.description : shortDesc}
-                </p>
+                </a>
                 {project.description.length > 120 && (
                   <button
                     onClick={() => toggleReadMore(project.id)}
@@ -116,14 +117,18 @@ export default function ProjectSection() {
 
                 {/* Links */}
                 <div className="flex justify-between items-center mt-4">
-                  <a
-                    href={project.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#B9FD50] text-sm hover:underline"
-                  >
-                    Live
-                  </a>
+                {project.liveLink ? (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#B9FD50] text-sm hover:underline"
+                    >
+                      live
+                    </a>
+                  ) : (
+                    <span className="text-gray-500 text-sm">Private</span>
+                  )}
                   {project.githubLink ? (
                     <a
                       href={project.githubLink}

@@ -155,7 +155,7 @@ export const experience = [
       image: "/assets/projects/placeholder.png",
       tech: ["React", "Node.js", "Express.js", "Tailwind CSS"],
       category: ["all", "freelance", "web"],
-      liveLink: "#",
+      liveLink: null,
       githubLink: null
     },
     {
