@@ -161,7 +161,7 @@ export const experience = [
     {
       id: 7,
       title: "React Native Style Injector",
-      description: "Used by 105+ developers. A lightweight VS Code extension for React Native that automatically scans your file and adds any missing styles to `StyleSheet.create`. Keeps existing styles intact, no setup required. Trigger with Alt + S for quick prototyping. Open source and super lightweight, saving developers time while building React Native apps.",
+      description: "Used by 140+ developers. A lightweight VS Code extension for React Native that automatically scans your file and adds any missing styles to `StyleSheet.create`. Keeps existing styles intact, no setup required. Trigger with Alt + S for quick prototyping. Open source and super lightweight, saving developers time while building React Native apps.",
       image: rn,
       tech: ["JavaScript", "React Native", "VS Code Extension API"],
       category: ["all", "extension", "tool"],

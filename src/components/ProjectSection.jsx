@@ -124,7 +124,7 @@ export default function ProjectSection() {
                       rel="noopener noreferrer"
                       className="text-[#B9FD50] text-sm hover:underline"
                     >
-                      live
+                      live 
                     </a>
                   ) : (
                     <span className="text-gray-500 text-sm">Private</span>
