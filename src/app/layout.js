@@ -24,53 +24,97 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+const SITE_URL = "https://rahulverma.site";
+const OG_IMAGE = "/assests/portfolio.png";
+const DESCRIPTION =
+  "Rahul Kumar Verma is a Full-Stack Software Engineer in India building production web and mobile products — AI features (LangChain, GPT-4o), payment systems, and multi-tenant SaaS with Next.js, React Native, and Node.js.";
+
 export const metadata = {
-  title: "Rahul Kumar Verma | Full-Stack Software Engineer",
-  description:
-    "Portfolio of Rahul Kumar Verma — Full-Stack Software Engineer from India specializing in MERN stack, React Native, and scalable web applications. Explore projects, skills, and contact details.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Rahul Kumar Verma | Full-Stack Software Engineer",
+    template: "%s | Rahul Kumar Verma",
+  },
+  description: DESCRIPTION,
+  applicationName: "Rahul Kumar Verma — Portfolio",
+  authors: [{ name: "Rahul Kumar Verma", url: SITE_URL }],
+  creator: "Rahul Kumar Verma",
+  publisher: "Rahul Kumar Verma",
+  category: "technology",
   keywords: [
-    "Rahul",
     "Rahul Verma",
-    "Rahul Kumar",
     "Rahul Kumar Verma",
-    "Rahul Verma Portfolio",
-    "Full-Stack Developer",
+    "Rahul Kumar Verma Portfolio",
+    "Full-Stack Software Engineer",
     "Full-Stack Developer India",
-    "MERN Stack Developer",
+    "Next.js Developer",
     "React Native Developer",
-    "JavaScript Developer",
-    "Freelance Web Developer",
-    "Indian Software Engineer",
+    "MERN Stack Developer",
+    "Node.js Developer",
+    "AI Engineer",
+    "LangChain Developer",
+    "TypeScript Developer",
+    "Software Engineer India",
     "Software Developer Portfolio",
   ],
-  authors: [{ name: "Rahul Kumar Verma", url: "https://rahulverma.site" }],
-  applicationName: "Rahul Kumar Verma Portfolio",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Rahul Kumar Verma — Full-Stack Software Engineer",
     title: "Rahul Kumar Verma | Full-Stack Software Engineer",
-    description:
-      "Portfolio of Rahul Kumar Verma — showcasing web & mobile projects, MERN stack expertise, and freelance development work from India.",
-    url: "https://rahulverma.site",
-    siteName: "Rahul Kumar Verma | Full-Stack Developer India",
+    description: DESCRIPTION,
+    locale: "en_IN",
     images: [
       {
-        url: "/assets/portfolio.png",
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Portfolio of Rahul Kumar Verma",
+        alt: "Rahul Kumar Verma — Full-Stack Software Engineer portfolio",
       },
     ],
-    locale: "en_IN",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Rahul Kumar Verma | Full-Stack Software Engineer",
-    description:
-      "Explore the projects, skills, and freelance work of Rahul Kumar Verma — MERN & React Native Developer from India.",
-    images: ["/assets/portfolio.png"],
+    description: DESCRIPTION,
+    images: [OG_IMAGE],
     creator: "@devrahuljourney",
+    site: "@devrahuljourney",
   },
-  metadataBase: new URL("https://rahulverma.site"),
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "dark light",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#090909" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f3ec" },
+  ],
 };
 
 export default function RootLayout({ children }) {
@@ -89,38 +133,66 @@ export default function RootLayout({ children }) {
               "@graph": [
                 {
                   "@type": "Person",
+                  "@id": "https://rahulverma.site/#person",
                   name: "Rahul Kumar Verma",
+                  alternateName: "devrahuljourney",
                   url: "https://rahulverma.site",
-                  image: "https://rahulverma.site/assets/portfolio.png",
+                  image: "https://rahulverma.site/assests/portfolio.png",
                   sameAs: [
                     "https://www.linkedin.com/in/devrahuljourney",
                     "https://github.com/devrahuljourney",
                     "https://x.com/devrahuljourney",
                   ],
-                  jobTitle: "Software Engineer / Full-Stack Developer",
+                  jobTitle: "Full-Stack Software Engineer",
                   worksFor: { "@type": "Organization", name: "Vitraga Solutions" },
+                  hasOccupation: {
+                    "@type": "Occupation",
+                    name: "Full-Stack Software Engineer",
+                    skills:
+                      "Next.js, React, React Native, Node.js, TypeScript, LangChain, PostgreSQL, Supabase, AI/LLM integration",
+                  },
+                  address: {
+                    "@type": "PostalAddress",
+                    addressCountry: "IN",
+                  },
                   alumniOf: {
                     "@type": "CollegeOrUniversity",
-                    name: "J.C. Bose University of Science and Technology, YMCA Faridabad, Haryana",
+                    name: "J.C. Bose University of Science and Technology, YMCA, Faridabad, Haryana",
                   },
                   knowsAbout: [
                     "Full-Stack Development",
-                    "MERN Stack",
+                    "Next.js",
                     "React Native",
-                    "JavaScript",
                     "Node.js",
-                    "Web Development",
+                    "TypeScript",
+                    "MERN Stack",
+                    "AI / LLM Integration",
+                    "LangChain",
+                    "PostgreSQL",
+                    "Payment Gateway Integration",
+                    "SaaS Development",
                   ],
                   description:
-                    "Full-stack software engineer specializing in MERN stack and React Native, building fast, scalable applications.",
+                    "Full-stack software engineer building production web and mobile products with Next.js, React Native, Node.js, and AI/LLM integrations.",
                 },
                 {
                   "@type": "WebSite",
+                  "@id": "https://rahulverma.site/#website",
                   url: "https://rahulverma.site",
-                  name: "Rahul Kumar Verma Portfolio",
+                  name: "Rahul Kumar Verma — Portfolio",
                   description:
-                    "Portfolio website of Rahul Kumar Verma — showcasing projects, skills, and freelance development work.",
-                  publisher: { "@type": "Person", name: "Rahul Kumar Verma" },
+                    "Portfolio of Rahul Kumar Verma — a full-stack software engineer building AI-driven web and mobile products.",
+                  inLanguage: "en",
+                  publisher: { "@id": "https://rahulverma.site/#person" },
+                },
+                {
+                  "@type": "ProfilePage",
+                  "@id": "https://rahulverma.site/#profilepage",
+                  url: "https://rahulverma.site",
+                  name: "Rahul Kumar Verma | Full-Stack Software Engineer",
+                  isPartOf: { "@id": "https://rahulverma.site/#website" },
+                  about: { "@id": "https://rahulverma.site/#person" },
+                  inLanguage: "en",
                 },
               ],
             }),
