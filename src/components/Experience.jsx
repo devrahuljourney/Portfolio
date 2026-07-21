@@ -10,28 +10,44 @@ gsap.registerPlugin(ScrollTrigger);
 const experienceData = [
   {
     id: 1,
-    role: "Frontend Developer Intern",
-    tag: "Founding member",
-    company: "We Play India",
-    start: "Sep 2024",
-    end: "Jan 2025",
+    role: "Software Engineer",
+    tag: "Client · Indian travel brand",
+    company: "Vitraga Solutions",
+    location: "Delhi, India",
+    start: "Mar 2026",
+    end: "Present",
     points: [
-      "Built and deployed a full-stack furniture e-commerce site on the MERN stack with a responsive UI and an optimized checkout flow.",
-      "Shipped CSV bulk product upload, cutting manual entry by ~80% and boosting admin efficiency.",
-      "Contributed to the esports admin panel with user management and Cloudinary-backed image uploads.",
+      "Built an AI travel-planner chatbot with LangChain, GPT-4o, and pgvector semantic search across 20+ partner agencies — cutting agent package discovery from ~20 minutes to under 2, with mid-conversation lead capture synced to TeleCRM with UTM attribution.",
+      "Designed a PaymentGateway interface and GatewayFactory unifying HDFC SmartGateway and ICICI Orange Gateway, enabling provider switches without touching orchestration code.",
+      "Integrated TripJack GDS via Supabase Edge Functions for live flight search, fare validation, confirm-book, and hotel pricing — embedding travel inventory directly in the agent portal.",
     ],
   },
   {
     id: 2,
-    role: "Freelance Full-Stack Developer",
-    tag: "Self-employed",
-    company: "Independent",
-    start: "Jan 2025",
-    end: "Present",
+    role: "Software Engineer Intern",
+    tag: "Australian NDIS client",
+    company: "Vitraga Solutions",
+    location: "Remote",
+    start: "Sep 2025",
+    end: "Feb 2026",
     points: [
-      "Delivered a full MERN commerce platform — user, seller, and admin dashboards, CSV uploads, Cashfree payments, and invoice generation.",
-      "Built a responsive legal-services site with a Quill.js blog and a content-management admin panel.",
-      "Produced a client marketing site with interactive sections and smooth motion.",
+      "Built a task-to-invoice pipeline with PDF generation, NDIS service codes, and GST compliance — reducing billing time from 2+ days to under 5 minutes.",
+      "Shipped an LLM-assisted NDIS plan parser (pdf-parse + Google Generative AI) that extracts participant details, funded supports, and service rates from PDFs, cutting plan entry from 30–60 minutes to under 5.",
+      "Architected a multi-tenant RBAC/ABAC system with 200+ permission keys gating every UI action, enforced in Express middleware and scoped SQL.",
+    ],
+  },
+  {
+    id: 3,
+    role: "Frontend Developer Intern",
+    tag: "E-commerce",
+    company: "PlayGG (formerly Weird Esports India)",
+    location: "Jaipur, India",
+    start: "Sep 2024",
+    end: "Jan 2025",
+    points: [
+      "Built and deployed a full-stack MERN e-commerce platform with responsive design across desktop, tablet, and mobile.",
+      "Engineered a multi-step checkout flow, reducing user drop-off by 30%.",
+      "Implemented bulk product upload via CSV, cutting manual product-entry time by 80%.",
     ],
   },
 ];
@@ -119,6 +135,12 @@ export default function Experience() {
                     <h3 className="text-2xl md:text-3xl">{exp.role}</h3>
                     <div className="mt-1 text-sm text-[color:var(--color-muted)]">
                       {exp.company}
+                      {exp.location ? (
+                        <span className="text-[color:var(--color-faint)]">
+                          {" "}
+                          · {exp.location}
+                        </span>
+                      ) : null}
                     </div>
                     <ul className="mt-6 space-y-3">
                       {exp.points.map((p, i) => (

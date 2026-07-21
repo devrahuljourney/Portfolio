@@ -27,6 +27,12 @@ export default function ProjectCard({ project, index }) {
   };
 
   const hasAsset = typeof project.image !== "string";
+  const isConfidential = project.image === "confidential";
+  const placeholderLabel = isConfidential
+    ? "Confidential — client work"
+    : project.liveLink
+    ? "Live project"
+    : "Personal project";
 
   return (
     <motion.article
@@ -48,8 +54,14 @@ export default function ProjectCard({ project, index }) {
             />
           </motion.div>
         ) : (
-          <div className="absolute inset-0 dot-grid flex items-center justify-center">
-            <span className="eyebrow text-[10px]">Under NDA</span>
+          <div className="absolute inset-0 dot-grid flex flex-col items-center justify-center gap-3 px-6 text-center">
+            <span
+              className="display-huge text-outline text-[clamp(1.8rem,5vw,2.6rem)] leading-none"
+              style={{ transform: "translateZ(20px)" }}
+            >
+              {project.title}
+            </span>
+            <span className="eyebrow text-[10px]">{placeholderLabel}</span>
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--color-bg-soft)] via-transparent to-transparent" />
@@ -63,6 +75,9 @@ export default function ProjectCard({ project, index }) {
       <div className="flex flex-1 flex-col p-6" style={{ transform: "translateZ(30px)" }}>
         <div className="flex items-baseline justify-between gap-3">
           <h3 className="text-2xl">{project.title}</h3>
+          {project.client && (
+            <span className="eyebrow shrink-0 text-[9px]">{project.client}</span>
+          )}
         </div>
         <p className="mt-1 text-sm text-[#c7f94a]">{project.tagline}</p>
         <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-muted)] line-clamp-3">

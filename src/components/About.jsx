@@ -75,6 +75,15 @@ export default function About() {
                 {p}
               </Reveal>
             ))}
+            {about.meta && (
+              <Reveal
+                delay={0.2}
+                className="flex items-center gap-3 pt-2 text-xs text-[color:var(--color-faint)]"
+              >
+                <span className="h-px w-6 bg-[color:var(--color-faint)]" />
+                {about.meta}
+              </Reveal>
+            )}
           </div>
 
           {/* Stats */}

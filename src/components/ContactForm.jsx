@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { social } from "@/constant/data";
+import { social, contactEmail } from "@/constant/data";
 import Reveal from "./ui/Reveal";
 
 const fields = [
@@ -55,8 +55,18 @@ export default function ContactForm() {
             delay={0.1}
             className="mt-8 max-w-sm text-base leading-relaxed text-[color:var(--color-muted)]"
           >
-            Open to freelance projects, collaborations, or a quick chat. Drop a
+            Open to interesting problems, collaborations, or a quick chat. Drop a
             note and I&apos;ll get back within a day.
+          </Reveal>
+
+          <Reveal delay={0.12} className="mt-6">
+            <a
+              href={`mailto:${contactEmail}`}
+              data-cursor-label="Mail"
+              className="link-underline font-[family-name:var(--font-jetbrains)] text-sm text-[color:var(--color-fg)]"
+            >
+              {contactEmail}
+            </a>
           </Reveal>
 
           <Reveal delay={0.15} className="mt-10 flex flex-wrap gap-x-8 gap-y-3">

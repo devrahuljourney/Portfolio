@@ -99,6 +99,47 @@ export const experience = [
 
   export const projects = [
     {
+      id: 10,
+      title: "ReThink",
+      tagline: "Digital-wellbeing app — Android",
+      year: "2025",
+      description:
+        "A screen-time app that actually intervenes. I wrote a custom Kotlin AccessibilityService and a from-scratch React Native native-module bridge to detect the foreground app in real time and hard-block distracting apps instantly — even when the app is force-closed (HeadlessJS). Adds AI coaching (Gemini + LangChain), scheduled Focus Mode, and 15-minute background sync.",
+      image: "personal",
+      tech: ["React Native", "Kotlin", "Node.js", "Supabase", "Gemini"],
+      category: ["all", "app", "mobile", "ai"],
+      liveLink: null,
+      githubLink: "https://github.com/devrahuljourney/rethink",
+    },
+    {
+      id: 8,
+      title: "AI Travel Platform",
+      tagline: "AI trip-planner — B2C + B2B",
+      client: "Client work · via Vitraga Solutions",
+      year: "2026",
+      description:
+        "The consumer site and franchise-agent portal for a 260-year-old Indian travel brand. I built an AI trip-planner (LangChain + GPT-4o + pgvector semantic search) that cut agent package discovery from ~20 min to under 2, with in-chat OTP lead capture and two-way TeleCRM sync powering 5,000+ leads — plus a unified HDFC / ICICI payment layer.",
+      image: "confidential",
+      tech: ["Next.js 15", "TypeScript", "Supabase", "LangChain", "pgvector"],
+      category: ["all", "work", "web", "ai"],
+      liveLink: null,
+      githubLink: null,
+    },
+    {
+      id: 9,
+      title: "NDIS SaaS",
+      tagline: "Disability-services platform — Australia",
+      client: "Client · via Vitraga Solutions",
+      year: "2025",
+      description:
+        "A multi-tenant SaaS for Australian NDIS providers. I built a task-to-invoice pipeline (PDF, NDIS service codes, GST) that dropped billing from 2+ days to under 5 minutes, an LLM plan-parser that reads 20–40 page government PDFs into structured data, and a 200+ permission-key RBAC/ABAC system enforced in Express and scoped SQL.",
+      image: "confidential",
+      tech: ["Next.js", "Express", "Supabase", "Google Gemini", "Docker"],
+      category: ["all", "work", "app", "ai"],
+      liveLink: null,
+      githubLink: null,
+    },
+    {
       id: 1,
       title: "StudyNotion",
       tagline: "EdTech learning platform",
@@ -179,10 +220,10 @@ export const experience = [
     {
       id: 7,
       title: "RN Style Injector",
-      tagline: "VS Code extension · 140+ devs",
+      tagline: "VS Code extension · 450+ devs",
       year: "2025",
       description:
-        "A lightweight VS Code extension for React Native that scans a file and auto-adds missing styles to StyleSheet.create — existing styles untouched, zero setup, triggered with Alt + S. Open source, used by 140+ developers.",
+        "A lightweight VS Code extension for React Native that scans a file and auto-adds missing styles to StyleSheet.create — existing styles untouched, zero setup, triggered with Alt + S. Open source, used by 450+ developers.",
       image: rn,
       tech: ["JavaScript", "React Native", "VS Code API"],
       category: ["all", "extension", "tool"],
@@ -195,9 +236,9 @@ export const experience = [
   export const hero = {
     name: "Rahul Kumar Verma",
     role: "Full-Stack Software Engineer",
-    line: "I build software that goes from idea to launch — fast, scalable, and shaped around the problem it solves.",
+    badge: "Software Engineer @ Vitraga Solutions",
+    line: "I build production software end to end — from data models and LLM features to the last pixel of the interface. Currently shipping AI-driven travel and SaaS products.",
     location: "India",
-    available: true,
   };
 
   export const about = {
@@ -205,17 +246,20 @@ export const experience = [
     heading:
       "I turn ambiguous ideas into products people actually ship and use.",
     body: [
-      "I'm a full-stack engineer working end to end across the MERN stack and React Native — from data models and APIs to the last pixel of the interface.",
-      "For the past year I've built commerce platforms, real-time apps, and client websites as a freelancer, and shipped a VS Code extension now used by 140+ developers.",
+      "I'm a full-stack engineer at Vitraga Solutions, building production systems for a 260-year-old Indian travel brand and for an Australian NDIS provider. I went from intern to engineer doing it.",
+      "My work leans into the hard parts: LLM features in real products, payment gateways, multi-tenant SaaS, and CRM pipelines that move 5,000+ leads. On the side I ship developer tooling used by 450+ people.",
     ],
+    meta: "B.Tech CSE '26 · J.C. Bose University of Science & Technology · India",
   };
 
   export const stats = [
-    { value: "15+", label: "Projects shipped" },
-    { value: "140+", label: "Devs using my tooling" },
-    { value: "1yr+", label: "Freelance delivery" },
-    { value: "∞", label: "Cups of coffee" },
+    { value: "5K+", label: "Leads synced via CRM" },
+    { value: "10+", label: "Products & apps shipped" },
+    { value: "200+", label: "Access-control rules built" },
+    { value: "450+", label: "Devs using my tooling" },
   ];
+
+  export const contactEmail = "devrahulverma9162@gmail.com";
   
 
   export const social = {

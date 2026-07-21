@@ -55,7 +55,7 @@ export default function Hero() {
             <span className="absolute inline-flex h-full w-full rounded-full bg-[#c7f94a] opacity-75 animate-ping" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-[#c7f94a]" />
           </span>
-          <span className="eyebrow">Available for work — {hero.location}</span>
+          <span className="eyebrow">{hero.badge}</span>
         </motion.div>
 
         {/* Name */}

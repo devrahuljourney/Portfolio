@@ -2,6 +2,7 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import Cursor from "@/components/providers/Cursor";
+import ScrollProgress from "@/components/providers/ScrollProgress";
 import NavBar from "@/components/NavigationBar/NavBar";
 import SocialMenu from "@/components/NavigationBar/SocialMenu";
 
@@ -77,7 +78,6 @@ export default function RootLayout({ children }) {
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrains.variable}`}
     >
       <head>
-        <link rel="icon" href="/favicon.ico" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -95,7 +95,7 @@ export default function RootLayout({ children }) {
                     "https://x.com/devrahuljourney",
                   ],
                   jobTitle: "Software Engineer / Full-Stack Developer",
-                  worksFor: { "@type": "Organization", name: "Freelance" },
+                  worksFor: { "@type": "Organization", name: "Vitraga Solutions" },
                   alumniOf: {
                     "@type": "CollegeOrUniversity",
                     name: "J.C. Bose University of Science and Technology, YMCA Faridabad, Haryana",
@@ -125,6 +125,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="grain antialiased">
+        <ScrollProgress />
         <Cursor />
         <SmoothScroll>{children}</SmoothScroll>
         <NavBar />
