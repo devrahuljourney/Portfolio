@@ -52,7 +52,7 @@ export default function NavBar() {
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2"
     >
-      <ul className="flex items-center gap-1 rounded-full border border-[color:var(--color-line)] bg-black/50 p-1.5 backdrop-blur-xl">
+      <ul className="flex items-center gap-1 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-1.5 backdrop-blur-xl">
         {items.map((it) => {
           const isActive = active === it.key;
           return (
@@ -61,7 +61,7 @@ export default function NavBar() {
                 href={`#${it.key}`}
                 className={`relative z-10 block rounded-full px-3.5 py-2 text-xs font-medium transition-colors duration-300 md:px-4 md:text-sm ${
                   isActive
-                    ? "text-black"
+                    ? "text-[color:var(--color-on-accent)]"
                     : "text-[color:var(--color-muted)] hover:text-[color:var(--color-fg)]"
                 }`}
               >
@@ -70,7 +70,7 @@ export default function NavBar() {
                   <motion.span
                     layoutId="nav-pill"
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                    className="absolute inset-0 -z-10 rounded-full bg-[#c7f94a]"
+                    className="absolute inset-0 -z-10 rounded-full bg-[color:var(--color-accent)]"
                   />
                 )}
               </a>

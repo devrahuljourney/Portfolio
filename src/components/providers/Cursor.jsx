@@ -88,8 +88,8 @@ export default function Cursor() {
         style={{
           width: 6,
           height: 6,
-          background: "#c7f94a",
-          boxShadow: "0 0 8px rgba(199,249,74,0.9)",
+          background: "var(--color-accent)",
+          boxShadow: "0 0 8px color-mix(in srgb, var(--color-accent) 90%, transparent)",
           opacity: hovering ? 0 : 1,
           transition: "opacity .2s",
         }}
@@ -100,14 +100,16 @@ export default function Cursor() {
         style={{
           width: hovering ? 64 : 34,
           height: hovering ? 64 : 34,
-          border: "1px solid rgba(199,249,74,0.65)",
-          background: hovering ? "rgba(199,249,74,0.08)" : "transparent",
+          border: "1px solid color-mix(in srgb, var(--color-accent) 65%, transparent)",
+          background: hovering
+            ? "color-mix(in srgb, var(--color-accent) 12%, transparent)"
+            : "transparent",
           transition:
             "width .3s cubic-bezier(0.16,1,0.3,1), height .3s cubic-bezier(0.16,1,0.3,1), background .3s",
         }}
       >
         {label && (
-          <span className="text-[9px] uppercase tracking-widest text-[#c7f94a] font-[family-name:var(--font-jetbrains)]">
+          <span className="text-[9px] uppercase tracking-widest text-[color:var(--color-accent)] font-[family-name:var(--font-jetbrains)]">
             {label}
           </span>
         )}

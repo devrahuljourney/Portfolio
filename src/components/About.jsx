@@ -48,7 +48,7 @@ export default function About() {
     >
       <div className="mx-auto max-w-[1440px]">
         <Reveal className="eyebrow mb-10 flex items-center gap-3">
-          <span className="h-px w-10 bg-[#c7f94a]" />
+          <span className="h-px w-10 bg-[color:var(--color-accent)]" />
           {about.kicker}
         </Reveal>
 
@@ -94,7 +94,7 @@ export default function About() {
                 delay={i * 0.06}
                 className="bg-[color:var(--color-bg)] p-7 md:p-9"
               >
-                <div className="font-[family-name:var(--font-space-grotesk)] text-4xl md:text-5xl text-[#c7f94a]">
+                <div className="font-[family-name:var(--font-space-grotesk)] text-4xl md:text-5xl text-[color:var(--color-accent)]">
                   {s.value}
                 </div>
                 <div className="eyebrow mt-3 text-[10px]">{s.label}</div>

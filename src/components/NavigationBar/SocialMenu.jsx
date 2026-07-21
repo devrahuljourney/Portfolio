@@ -88,7 +88,7 @@ export default function SocialMenu() {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white/10 hover:bg-white/20 text-white rounded-full p-3 shadow-lg backdrop-blur-md transition"
+            className="rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-3 text-[color:var(--color-fg)] shadow-lg backdrop-blur-md transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
             title={link.label}
           >
             {link.svg}
@@ -99,7 +99,7 @@ export default function SocialMenu() {
       {/* Glassmorphism Toggle */}
       <button
         onClick={() => setOpen((p) => !p)}
-        className="backdrop-blur-md bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-2xl p-4 shadow-lg transition"
+        className="rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-4 text-[color:var(--color-fg)] shadow-lg backdrop-blur-md transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
       >
         {open ? (
     // Close icon

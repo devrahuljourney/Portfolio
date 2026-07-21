@@ -18,12 +18,12 @@ export default function Footer() {
         {/* Giant wordmark */}
         <div className="flex items-end justify-between gap-6 border-b border-[color:var(--color-line)] pb-12">
           <h2 className="display-huge text-[clamp(2.6rem,11vw,9rem)] leading-[0.8]">
-            Rahul<span className="text-[#c7f94a]">.</span>
+            Rahul<span className="text-[color:var(--color-accent)]">.</span>
           </h2>
           <a
             href="#home"
             data-cursor-label="Top"
-            className="mb-3 hidden shrink-0 items-center gap-2 text-sm text-[color:var(--color-muted)] transition-colors hover:text-[#c7f94a] md:flex"
+            className="mb-3 hidden shrink-0 items-center gap-2 text-sm text-[color:var(--color-muted)] transition-colors hover:text-[color:var(--color-accent)] md:flex"
           >
             Back to top ↑
           </a>
@@ -59,7 +59,7 @@ export default function Footer() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-[family-name:var(--font-jetbrains)] text-sm text-[color:var(--color-muted)] transition-colors hover:text-[#c7f94a]"
+                className="font-[family-name:var(--font-jetbrains)] text-sm text-[color:var(--color-muted)] transition-colors hover:text-[color:var(--color-accent)]"
               >
                 {s.label}
               </a>

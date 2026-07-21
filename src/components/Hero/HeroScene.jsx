@@ -1,62 +1,76 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Icosahedron, MeshDistortMaterial } from "@react-three/drei";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
+/** Fibonacci-distributed points on a sphere of radius r. */
+function spherePoints(count, r) {
+  const arr = new Float32Array(count * 3);
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < count; i++) {
+    const y = 1 - (i / (count - 1)) * 2;
+    const rad = Math.sqrt(1 - y * y);
+    const theta = golden * i;
+    arr[i * 3] = Math.cos(theta) * rad * r;
+    arr[i * 3 + 1] = y * r;
+    arr[i * 3 + 2] = Math.sin(theta) * rad * r;
+  }
+  return arr;
+}
+
 /**
- * A cursor-reactive distorted icosahedron wrapped in a slowly counter-rotating
- * wireframe cage. Lit with a lime key light so highlights stay on-brand.
+ * A rotating point-cloud sphere (echoing the site's dot-grid) wrapped in a
+ * faint wireframe cage. Tilts toward the cursor and breathes gently.
  */
-function Blob({ pointer }) {
-  const core = useRef();
-  const cage = useRef();
+function PointGlobe({ pointer, color }) {
+  const group = useRef();
+  const inner = useRef();
+  const outer = useMemo(() => spherePoints(1100, 1.7), []);
+  const core = useMemo(() => spherePoints(360, 1.05), []);
+  const c = useMemo(() => new THREE.Color(color), [color]);
 
   useFrame((state, delta) => {
-    if (!core.current || !cage.current) return;
-    // Idle rotation.
-    core.current.rotation.y += delta * 0.12;
-    // Tilt toward the cursor.
-    core.current.rotation.x = THREE.MathUtils.lerp(
-      core.current.rotation.x,
-      pointer.current.y * 0.45,
-      0.04
+    if (!group.current) return;
+    group.current.rotation.y += delta * 0.06;
+    group.current.rotation.x = THREE.MathUtils.lerp(
+      group.current.rotation.x,
+      pointer.current.y * 0.4,
+      0.05
     );
-    core.current.rotation.z = THREE.MathUtils.lerp(
-      core.current.rotation.z,
-      -pointer.current.x * 0.35,
-      0.04
+    group.current.rotation.z = THREE.MathUtils.lerp(
+      group.current.rotation.z,
+      -pointer.current.x * 0.3,
+      0.05
     );
-    // Cage tracks the core but drifts the other way for depth.
-    cage.current.rotation.x = core.current.rotation.x;
-    cage.current.rotation.z = core.current.rotation.z;
-    cage.current.rotation.y -= delta * 0.05;
+    if (inner.current) inner.current.rotation.y -= delta * 0.12;
+    const s = 1 + Math.sin(state.clock.elapsedTime * 0.6) * 0.03;
+    group.current.scale.setScalar(s);
   });
 
   return (
-    <group>
-      <Icosahedron ref={core} args={[1.25, 20]}>
-        <MeshDistortMaterial
-          color="#141414"
-          emissive="#0c0c0c"
-          metalness={0.85}
-          roughness={0.28}
-          distort={0.32}
-          speed={1.6}
-          flatShading={false}
-        />
-      </Icosahedron>
-      <Icosahedron ref={cage} args={[1.72, 1]}>
-        <meshBasicMaterial color="#c7f94a" wireframe transparent opacity={0.12} />
-      </Icosahedron>
+    <group ref={group}>
+      <points>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[outer, 3]} />
+        </bufferGeometry>
+        <pointsMaterial color={c} size={0.02} sizeAttenuation transparent opacity={0.9} />
+      </points>
+      <points ref={inner}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[core, 3]} />
+        </bufferGeometry>
+        <pointsMaterial color={c} size={0.03} sizeAttenuation transparent opacity={0.5} />
+      </points>
+      <mesh>
+        <icosahedronGeometry args={[1.4, 1]} />
+        <meshBasicMaterial color={c} wireframe transparent opacity={0.08} />
+      </mesh>
     </group>
   );
 }
 
-export default function HeroScene() {
-  // Normalized pointer (-1..1), updated globally so it works even though the
-  // canvas sits behind the text with pointer-events disabled.
+export default function HeroScene({ color = "#c7f94a" }) {
   const pointer = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -70,18 +84,12 @@ export default function HeroScene() {
 
   return (
     <Canvas
-      dpr={[1, 1.8]}
+      dpr={[1, 2]}
       camera={{ position: [0, 0, 5], fov: 42 }}
       gl={{ antialias: true, alpha: true }}
       style={{ background: "transparent" }}
     >
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[4, 6, 5]} intensity={1.1} color="#ffffff" />
-      <pointLight position={[-5, -2, 3]} intensity={40} color="#c7f94a" distance={14} />
-      <pointLight position={[3, -4, -2]} intensity={16} color="#7bd0ff" distance={12} />
-      <Float speed={1.4} rotationIntensity={0.25} floatIntensity={0.7}>
-        <Blob pointer={pointer} />
-      </Float>
+      <PointGlobe pointer={pointer} color={color} />
     </Canvas>
   );
 }

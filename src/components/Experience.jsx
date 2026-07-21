@@ -91,7 +91,7 @@ export default function Experience() {
         <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <Reveal className="eyebrow mb-5 flex items-center gap-3">
-              <span className="h-px w-10 bg-[#c7f94a]" />
+              <span className="h-px w-10 bg-[color:var(--color-accent)]" />
               Experience
             </Reveal>
             <Reveal as="h2" delay={0.05} className="text-[clamp(2.2rem,6vw,5rem)]">
@@ -112,7 +112,7 @@ export default function Experience() {
           <div className="absolute left-0 top-2 bottom-2 w-px bg-[color:var(--color-line)]" />
           <div
             ref={lineRef}
-            className="absolute left-0 top-2 bottom-2 w-px bg-[#c7f94a] origin-top"
+            className="absolute left-0 top-2 bottom-2 w-px bg-[color:var(--color-accent)] origin-top"
           />
 
           <div className="space-y-16 md:space-y-24">
@@ -120,12 +120,12 @@ export default function Experience() {
               <Reveal key={exp.id} className="group relative">
                 {/* Node */}
                 <span className="absolute -left-[26px] md:-left-[42px] top-2 flex h-3.5 w-3.5 items-center justify-center">
-                  <span className="h-3.5 w-3.5 rounded-full border border-[#c7f94a] bg-[color:var(--color-bg)] transition-colors duration-300 group-hover:bg-[#c7f94a]" />
+                  <span className="h-3.5 w-3.5 rounded-full border border-[color:var(--color-accent)] bg-[color:var(--color-bg)] transition-colors duration-300 group-hover:bg-[color:var(--color-accent)]" />
                 </span>
 
                 <div className="grid gap-6 md:grid-cols-[200px_1fr] md:gap-12">
                   <div>
-                    <div className="font-[family-name:var(--font-jetbrains)] text-sm text-[#c7f94a]">
+                    <div className="font-[family-name:var(--font-jetbrains)] text-sm text-[color:var(--color-accent)]">
                       {exp.start} — {exp.end}
                     </div>
                     <div className="eyebrow mt-2 text-[10px]">{exp.tag}</div>
@@ -148,7 +148,7 @@ export default function Experience() {
                           key={i}
                           className="flex gap-3 text-sm md:text-base leading-relaxed text-[color:var(--color-muted)]"
                         >
-                          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#c7f94a]" />
+                          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[color:var(--color-accent)]" />
                           {p}
                         </li>
                       ))}

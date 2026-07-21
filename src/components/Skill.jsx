@@ -6,13 +6,13 @@ import Reveal from "./ui/Reveal";
 
 function Pill({ item }) {
   return (
-    <div className="group mx-2 flex shrink-0 items-center gap-3 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-bg-soft)] px-6 py-3.5 transition-colors duration-300 hover:border-[#c7f94a]/60">
+    <div className="group mx-2 flex shrink-0 items-center gap-3 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-bg-soft)] px-6 py-3.5 transition-colors duration-300 hover:border-[color:var(--color-accent)]">
       <Image
         src={item.img}
         alt={item.name}
         width={26}
         height={26}
-        className="h-6 w-6 object-contain grayscale transition-all duration-300 group-hover:grayscale-0"
+        className="skill-icon h-6 w-6 object-contain"
       />
       <span className="whitespace-nowrap text-sm text-[color:var(--color-muted)] transition-colors duration-300 group-hover:text-[color:var(--color-fg)]">
         {item.name}
@@ -47,7 +47,7 @@ export default function Skill() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-12 mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
           <Reveal className="eyebrow mb-5 flex items-center gap-3">
-            <span className="h-px w-10 bg-[#c7f94a]" />
+            <span className="h-px w-10 bg-[color:var(--color-accent)]" />
             Stack
           </Reveal>
           <Reveal as="h2" delay={0.05} className="text-[clamp(2.2rem,6vw,5rem)]">

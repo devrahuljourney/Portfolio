@@ -40,7 +40,7 @@ export default function ContactForm() {
         {/* Left — invitation */}
         <div>
           <Reveal className="eyebrow mb-6 flex items-center gap-3">
-            <span className="h-px w-10 bg-[#c7f94a]" />
+            <span className="h-px w-10 bg-[color:var(--color-accent)]" />
             Contact
           </Reveal>
           <Reveal as="h2" delay={0.05} className="text-[clamp(2.4rem,7vw,5.5rem)] leading-[0.95]">
@@ -48,7 +48,7 @@ export default function ContactForm() {
             <br />
             something
             <br />
-            <span className="text-[#c7f94a]">good.</span>
+            <span className="text-[color:var(--color-accent)]">good.</span>
           </Reveal>
           <Reveal
             as="p"
@@ -101,7 +101,7 @@ export default function ContactForm() {
                   value={form[f.name]}
                   onChange={handleChange}
                   required
-                  className="mt-2 w-full border-b border-[color:var(--color-line)] bg-transparent pb-3 text-lg text-[color:var(--color-fg)] outline-none transition-colors duration-300 placeholder:text-[color:var(--color-faint)] focus:border-[#c7f94a]"
+                  className="mt-2 w-full border-b border-[color:var(--color-line)] bg-transparent pb-3 text-lg text-[color:var(--color-fg)] outline-none transition-colors duration-300 placeholder:text-[color:var(--color-faint)] focus:border-[color:var(--color-accent)]"
                   placeholder="—"
                 />
               </label>
@@ -114,7 +114,7 @@ export default function ContactForm() {
                 onChange={handleChange}
                 rows={4}
                 required
-                className="mt-2 w-full resize-none border-b border-[color:var(--color-line)] bg-transparent pb-3 text-lg text-[color:var(--color-fg)] outline-none transition-colors duration-300 placeholder:text-[color:var(--color-faint)] focus:border-[#c7f94a]"
+                className="mt-2 w-full resize-none border-b border-[color:var(--color-line)] bg-transparent pb-3 text-lg text-[color:var(--color-fg)] outline-none transition-colors duration-300 placeholder:text-[color:var(--color-faint)] focus:border-[color:var(--color-accent)]"
                 placeholder="—"
               />
             </label>
@@ -123,7 +123,7 @@ export default function ContactForm() {
               type="submit"
               disabled={status === "loading"}
               data-cursor-label="Send"
-              className="group relative mt-2 w-fit overflow-hidden rounded-full bg-[#c7f94a] px-9 py-4 text-sm font-medium text-black disabled:opacity-60"
+              className="group relative mt-2 w-fit overflow-hidden rounded-full bg-[color:var(--color-accent)] px-9 py-4 text-sm font-medium text-[color:var(--color-on-accent)] disabled:opacity-60"
             >
               <span className="relative z-10">
                 {status === "loading" ? "Sending…" : "Send message"}
@@ -131,7 +131,7 @@ export default function ContactForm() {
             </button>
 
             {status === "success" && (
-              <p className="text-sm text-[#c7f94a]">Message sent — talk soon.</p>
+              <p className="text-sm text-[color:var(--color-accent)]">Message sent — talk soon.</p>
             )}
             {status === "error" && (
               <p className="text-sm text-red-400">Something went wrong. Try again.</p>

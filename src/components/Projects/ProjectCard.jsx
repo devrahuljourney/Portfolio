@@ -65,7 +65,7 @@ export default function ProjectCard({ project, index }) {
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--color-bg-soft)] via-transparent to-transparent" />
-        <div className="absolute left-5 top-5 font-[family-name:var(--font-jetbrains)] text-xs text-[#c7f94a]">
+        <div className="absolute left-5 top-5 font-[family-name:var(--font-jetbrains)] text-xs text-[color:var(--color-accent)]">
           {String(index + 1).padStart(2, "0")}
         </div>
         <div className="absolute right-5 top-5 eyebrow text-[10px]">{project.year}</div>
@@ -79,7 +79,7 @@ export default function ProjectCard({ project, index }) {
             <span className="eyebrow shrink-0 text-[9px]">{project.client}</span>
           )}
         </div>
-        <p className="mt-1 text-sm text-[#c7f94a]">{project.tagline}</p>
+        <p className="mt-1 text-sm text-[color:var(--color-accent)]">{project.tagline}</p>
         <p className="mt-3 text-sm leading-relaxed text-[color:var(--color-muted)] line-clamp-3">
           {project.description}
         </p>
@@ -102,7 +102,7 @@ export default function ProjectCard({ project, index }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor-label="Open"
-                className="link-underline text-[#c7f94a]"
+                className="link-underline text-[color:var(--color-accent)]"
               >
                 Live
               </a>

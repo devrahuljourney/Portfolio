@@ -3,6 +3,8 @@ import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import Cursor from "@/components/providers/Cursor";
 import ScrollProgress from "@/components/providers/ScrollProgress";
+import ThemeProvider from "@/components/providers/ThemeProvider";
+import ThemeToggle from "@/components/ThemeToggle";
 import NavBar from "@/components/NavigationBar/NavBar";
 import SocialMenu from "@/components/NavigationBar/SocialMenu";
 
@@ -75,6 +77,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrains.variable}`}
     >
       <head>
@@ -125,11 +128,14 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="grain antialiased">
-        <ScrollProgress />
-        <Cursor />
-        <SmoothScroll>{children}</SmoothScroll>
-        <NavBar />
-        <SocialMenu />
+        <ThemeProvider>
+          <ScrollProgress />
+          <Cursor />
+          <ThemeToggle />
+          <SmoothScroll>{children}</SmoothScroll>
+          <NavBar />
+          <SocialMenu />
+        </ThemeProvider>
       </body>
     </html>
   );

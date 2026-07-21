@@ -1,20 +1,50 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================================
-   DESIGN TOKENS
-   Refined lime-on-black editorial system.
-   Colors, type, and rhythm — no AI-blob gradients anywhere.
+   DESIGN TOKENS — themeable palette
+   Refined lime-on-X editorial system. Values live in :root
+   (light) and .dark, mapped into Tailwind tokens below so the
+   whole page swaps by toggling a class. No AI-blob gradients.
    ============================================================ */
+:root {
+  /* Light theme — warm bone paper, deep lime accent */
+  --bg: #f4f3ec;
+  --bg-soft: #ffffff;
+  --surface: #ffffff;
+  --fg: #16150f;
+  --muted: #57564d;
+  --faint: #b4b2a6;
+  --line: rgba(0, 0, 0, 0.12);
+  --dot: rgba(0, 0, 0, 0.10);
+  --accent: #4d7c0f;
+  --on-accent: #ffffff;
+}
+
+.dark {
+  /* Dark theme — near-black, bright lime accent */
+  --bg: #090909;
+  --bg-soft: #0e0e0e;
+  --surface: #141414;
+  --fg: #f2f2ee;
+  --muted: #8a8a82;
+  --faint: #4c4c46;
+  --line: rgba(255, 255, 255, 0.09);
+  --dot: rgba(255, 255, 255, 0.08);
+  --accent: #c7f94a;
+  --on-accent: #060606;
+}
+
 @theme {
-  --color-bg: #090909;
-  --color-bg-soft: #0e0e0e;
-  --color-surface: #121212;
-  --color-fg: #f2f2ee;
-  --color-muted: #8a8a82;
-  --color-faint: #4c4c46;
-  --color-lime: #c7f94a;
-  --color-lime-dim: #9bc537;
-  --color-line: rgba(255, 255, 255, 0.09);
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
 
   --font-display: var(--font-space-grotesk), "Arial Narrow", sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
@@ -42,8 +72,8 @@
   }
 
   ::selection {
-    background: var(--color-lime);
-    color: #050505;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
   }
 
   h1, h2, h3, h4 {
@@ -57,10 +87,12 @@
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: var(--color-bg); }
   ::-webkit-scrollbar-thumb {
-    background: #262626;
+    background: color-mix(in srgb, var(--color-fg) 22%, transparent);
     border-radius: 99px;
   }
-  ::-webkit-scrollbar-thumb:hover { background: #333; }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--color-fg) 35%, transparent);
+  }
 }
 
 /* ============================================================
@@ -72,15 +104,19 @@
   inset: 0;
   z-index: 100;
   pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px;
 }
+.dark .grain::after {
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
 
-/* Faint dotted grid — replaces neon gradient grid */
+/* Faint dotted grid — echoes the 3D point cloud */
 .dot-grid {
-  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(circle at center, var(--dot) 1px, transparent 1px);
   background-size: 26px 26px;
   -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 78%);
   mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 78%);
@@ -177,6 +213,49 @@
 .link-underline:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+/* ============================================================
+   SKILL ICONS — theme-safe monochrome wall that reveals colour
+   on hover. (Bare grayscale turned bright logos pale, so they
+   vanished on the light background.)
+   ============================================================ */
+.skill-icon {
+  filter: grayscale(1) brightness(0);
+  opacity: 0.7;
+  transition: filter 0.35s var(--ease-out-expo), opacity 0.35s;
+}
+.dark .skill-icon {
+  filter: grayscale(1) brightness(0) invert(1);
+  opacity: 0.65;
+}
+.group:hover .skill-icon {
+  filter: none;
+  opacity: 1;
+}
+
+/* ============================================================
+   THEME SWITCH — smooth animated transition
+   View Transitions handle the circular reveal (see ThemeToggle);
+   this class is the crossfade fallback for unsupported browsers.
+   ============================================================ */
+.theme-transitioning,
+.theme-transitioning * {
+  transition: background-color 0.45s ease, border-color 0.45s ease,
+    color 0.45s ease, fill 0.45s ease !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+/* New theme is revealed on top of the old snapshot via clip-path. */
+::view-transition-new(root) {
+  z-index: 1;
+}
+::view-transition-old(root) {
+  z-index: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

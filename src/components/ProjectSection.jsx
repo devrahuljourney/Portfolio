@@ -66,7 +66,7 @@ export default function ProjectSection() {
           <div className="flex h-[62vh] max-h-[560px] w-[80vw] shrink-0 flex-col justify-between sm:w-[380px]">
             <div>
               <div className="eyebrow mb-5 flex items-center gap-3">
-                <span className="h-px w-10 bg-[#c7f94a]" />
+                <span className="h-px w-10 bg-[color:var(--color-accent)]" />
                 Selected work
               </div>
               <h2 className="text-[clamp(2.4rem,7vw,5rem)] leading-[0.95]">
@@ -74,12 +74,12 @@ export default function ProjectSection() {
                 <br />
                 I&apos;ve
                 <br />
-                <span className="text-[#c7f94a]">shipped.</span>
+                <span className="text-[color:var(--color-accent)]">shipped.</span>
               </h2>
             </div>
             <p className="max-w-[280px] text-sm text-[color:var(--color-muted)]">
               {projects.length} projects across web, mobile, and developer tooling.
-              <span className="mt-3 hidden md:flex items-center gap-2 text-[#c7f94a]">
+              <span className="mt-3 hidden md:flex items-center gap-2 text-[color:var(--color-accent)]">
                 Scroll to explore →
               </span>
             </p>
@@ -99,7 +99,7 @@ export default function ProjectSection() {
             <a
               href="#contact"
               data-cursor-label="Say hi"
-              className="rounded-full bg-[#c7f94a] px-7 py-3.5 text-sm font-medium text-black transition-transform duration-300 hover:scale-[1.03]"
+              className="rounded-full bg-[color:var(--color-accent)] px-7 py-3.5 text-sm font-medium text-[color:var(--color-on-accent)] transition-transform duration-300 hover:scale-[1.03]"
             >
               Start a project
             </a>
