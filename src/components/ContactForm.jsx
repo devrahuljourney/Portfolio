@@ -1,94 +1,134 @@
 "use client";
 
 import { useState } from "react";
+import { social } from "@/constant/data";
+import Reveal from "./ui/Reveal";
+
+const fields = [
+  { name: "name", label: "Your name", type: "text" },
+  { name: "email", label: "Email address", type: "email" },
+];
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState(null);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("loading");
-
     try {
-      const res = await fetch("api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
       if (res.ok) {
         setStatus("success");
         setForm({ name: "", email: "", message: "" });
-      } else {
-        setStatus("error");
-      }
+      } else setStatus("error");
     } catch {
       setStatus("error");
     }
   };
 
   return (
-    <section id="contact" className="py-16 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-2xl mx-auto text-center mb-10">
-        <h2 data-aos="fade-up" className="text-3xl font-heading font-bold text-white">
-          Contact <span className="text-[#B9FD50]">Me</span>
-        </h2>
-        <p data-aos="fade-down" className="text-gray-400 font-body mt-3 text-sm sm:text-base">
-          Feel free to reach out for collaborations, freelance projects, or just a friendly chat.
-        </p>
+    <section id="contact" className="relative w-full py-28 md:py-40 px-6 md:px-12">
+      <div className="mx-auto grid max-w-[1440px] gap-16 md:grid-cols-[1fr_1fr] md:gap-24">
+        {/* Left — invitation */}
+        <div>
+          <Reveal className="eyebrow mb-6 flex items-center gap-3">
+            <span className="h-px w-10 bg-[#c7f94a]" />
+            Contact
+          </Reveal>
+          <Reveal as="h2" delay={0.05} className="text-[clamp(2.4rem,7vw,5.5rem)] leading-[0.95]">
+            Let&apos;s build
+            <br />
+            something
+            <br />
+            <span className="text-[#c7f94a]">good.</span>
+          </Reveal>
+          <Reveal
+            as="p"
+            delay={0.1}
+            className="mt-8 max-w-sm text-base leading-relaxed text-[color:var(--color-muted)]"
+          >
+            Open to freelance projects, collaborations, or a quick chat. Drop a
+            note and I&apos;ll get back within a day.
+          </Reveal>
+
+          <Reveal delay={0.15} className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
+            {[
+              { label: "GitHub", href: social.github },
+              { label: "LinkedIn", href: social.linkedin },
+              { label: "Twitter", href: social.x },
+              { label: "WhatsApp", href: social.whatsapp },
+            ].map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline text-sm text-[color:var(--color-fg)]"
+              >
+                {s.label}
+              </a>
+            ))}
+          </Reveal>
+        </div>
+
+        {/* Right — form */}
+        <Reveal delay={0.1}>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+            {fields.map((f) => (
+              <label key={f.name} className="group block">
+                <span className="eyebrow text-[10px]">{f.label}</span>
+                <input
+                  type={f.type}
+                  name={f.name}
+                  value={form[f.name]}
+                  onChange={handleChange}
+                  required
+                  className="mt-2 w-full border-b border-[color:var(--color-line)] bg-transparent pb-3 text-lg text-[color:var(--color-fg)] outline-none transition-colors duration-300 placeholder:text-[color:var(--color-faint)] focus:border-[#c7f94a]"
+                  placeholder="—"
+                />
+              </label>
+            ))}
+            <label className="group block">
+              <span className="eyebrow text-[10px]">Message</span>
+              <textarea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                rows={4}
+                required
+                className="mt-2 w-full resize-none border-b border-[color:var(--color-line)] bg-transparent pb-3 text-lg text-[color:var(--color-fg)] outline-none transition-colors duration-300 placeholder:text-[color:var(--color-faint)] focus:border-[#c7f94a]"
+                placeholder="—"
+              />
+            </label>
+
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              data-cursor-label="Send"
+              className="group relative mt-2 w-fit overflow-hidden rounded-full bg-[#c7f94a] px-9 py-4 text-sm font-medium text-black disabled:opacity-60"
+            >
+              <span className="relative z-10">
+                {status === "loading" ? "Sending…" : "Send message"}
+              </span>
+            </button>
+
+            {status === "success" && (
+              <p className="text-sm text-[#c7f94a]">Message sent — talk soon.</p>
+            )}
+            {status === "error" && (
+              <p className="text-sm text-red-400">Something went wrong. Try again.</p>
+            )}
+          </form>
+        </Reveal>
       </div>
-
-      <form data-aos="fade-up"
-        onSubmit={handleSubmit}
-        className="max-w-xl mx-auto p-6 font-body rounded-2xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg space-y-4"
-      >
-        <input data-aos="fade-down"
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Your Name"
-          required
-          className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-[#B9FD50]"
-        />
-        <input data-aos="fade-down"
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          placeholder="Your Email"
-          required
-          className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-[#B9FD50]"
-        />
-        <textarea data-aos="fade-down"
-          name="message"
-          value={form.message}
-          onChange={handleChange}
-          placeholder="Your Message"
-          rows="5"
-          required
-          className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-[#B9FD50]"
-        />
-        <button data-aos="fade-down"
-          type="submit"
-          disabled={status === "loading"}
-          className="w-full py-3 rounded-lg bg-[#B9FD50] text-black font-semibold hover:opacity-90 transition"
-        >
-          {status === "loading" ? "Sending..." : "Send Message"}
-        </button>
-
-        {status === "success" && (
-          <p className="text-green-400 text-center">Message sent successfully!</p>
-        )}
-        {status === "error" && (
-          <p className="text-red-400 text-center">Something went wrong. Try again.</p>
-        )}
-      </form>
     </section>
   );
 }

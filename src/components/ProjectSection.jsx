@@ -1,151 +1,110 @@
 "use client";
 
-import React, { useState } from "react";
-import Tilt from "react-parallax-tilt";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/constant/data";
-import Link from "next/link";
+import ProjectCard from "./Projects/ProjectCard";
 
-const categories = ["all", "freelance", "web", "app", "extension"];
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectSection() {
-  const [activeTab, setActiveTab] = useState("all");
-  const [expanded, setExpanded] = useState({});
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
 
-  const filteredProjects =
-    activeTab === "all"
-      ? projects
-      : projects.filter((project) => project.category.includes(activeTab));
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const toggleReadMore = (id) => {
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
+    // On desktop, pin the section and translate the track horizontally as the
+    // user scrolls vertically. On mobile it falls back to native horizontal
+    // swipe (see markup), so no pin there.
+    let ctx;
+    const build = () => {
+      if (!mq.matches || reduce || !trackRef.current) return;
+      ctx = gsap.context(() => {
+        const track = trackRef.current;
+        const amount = () => track.scrollWidth - window.innerWidth + 96;
+        const tween = gsap.to(track, { x: () => -amount(), ease: "none" });
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top top",
+          end: () => `+=${amount()}`,
+          pin: true,
+          scrub: 1,
+          animation: tween,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        });
+      }, sectionRef);
+    };
+
+    build();
+    const onChange = () => {
+      ctx?.revert();
+      ctx = undefined;
+      build();
+      ScrollTrigger.refresh();
+    };
+    mq.addEventListener("change", onChange);
+
+    return () => {
+      mq.removeEventListener("change", onChange);
+      ctx?.revert();
+    };
+  }, []);
 
   return (
-    <section
-      id="projects"
-      className="py-12 px-4 sm:px-6 lg:px-12 bg-transparent"
-    >
-      {/* Heading */}
-      <div className="text-center mb-10">
-        <h2 data-aos="fade-down" className=" font-heading text-2xl sm:text-3xl md:text-5xl mb-[5%] tracking-wide text-center text-white">
-          My <span className="text-[#B9FD50]">Projects</span>
-        </h2>
-        <p data-aos="fade-up" className="text-gray-400 font-body mt-3 max-w-2xl mx-auto text-sm sm:text-base">
-          A curated selection of work — from freelance collaborations to
-          personal builds — covering web, app, and extension development.
-        </p>
-      </div>
-
-      {/* Tabs */}
-      <div className="flex  justify-center flex-wrap gap-3 mb-8">
-        {categories.map((cat) => (
-          <button 
-            key={cat}
-            onClick={() => setActiveTab(cat)}
-            className={`px-4 py-2 rounded-full text-sm sm:text-base font-semibold transition-all duration-300 backdrop-blur-md border 
-              ${
-                activeTab === cat
-                  ? "bg-[#B9FD50] text-black border-[#B9FD50]"
-                  : "bg-white/10 text-white border-white/20 hover:bg-white/20"
-              }`}
-          >
-            {cat.charAt(0).toUpperCase() + cat.slice(1)}
-          </button>
-        ))}
-      </div>
-
-      <div className="grid gap-6 font-body sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-
-        {filteredProjects.map((project) => {
-          const isExpanded = expanded[project.id];
-          const shortDesc =
-            project.description.length > 120
-              ? project.description.slice(0, 120) + "..."
-              : project.description;
-
-          return (
-            <Tilt
-              key={project.id}
-              tiltMaxAngleX={6}
-              tiltMaxAngleY={6}
-              perspective={1000}
-              scale={1.03}
-              transitionSpeed={700}
-              className="w-full"
-            >
-              <div data-aos="fade-down" className="flex flex-col h-full p-4 sm:p-5 rounded-xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg hover:shadow-[#B9FD50]/40 transition-all duration-300">
-                {/* Image */}
-                <a   href={project.liveLink} className="w-full aspect-video relative rounded-lg overflow-hidden mb-4">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                  />
-                </a>
-
-                {/* Title */}
-                <a   href={project.liveLink} className="text-lg font-heading font-semibold text-white mb-2">
-                  {project.title}
-                </a>
-
-                {/* Description with Read More */}
-                <a    href={project.liveLink} className="text-sm text-gray-300 flex-grow">
-                  {isExpanded ? project.description : shortDesc}
-                </a>
-                {project.description.length > 120 && (
-                  <button
-                    onClick={() => toggleReadMore(project.id)}
-                    className="text-xs text-[#B9FD50] mt-1 hover:underline"
-                  >
-                    {isExpanded ? "Read Less" : "Read More"}
-                  </button>
-                )}
-
-                {/* Tech stack */}
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {project.tech.map((t, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-1 text-xs bg-[#B9FD50]/20 text-[#B9FD50] rounded-full border border-[#B9FD50]/40"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex justify-between items-center mt-4">
-                {project.liveLink ? (
-                    <a
-                      href={project.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#B9FD50] text-sm hover:underline"
-                    >
-                      live 
-                    </a>
-                  ) : (
-                    <span className="text-gray-500 text-sm">Private</span>
-                  )}
-                  {project.githubLink ? (
-                    <a
-                      href={project.githubLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#B9FD50] text-sm hover:underline"
-                    >
-                      Code
-                    </a>
-                  ) : (
-                    <span className="text-gray-500 text-sm">Private</span>
-                  )}
-                </div>
+    <section id="projects" ref={sectionRef} className="relative w-full overflow-hidden">
+      <div className="md:flex md:h-screen md:flex-col md:justify-center py-24 md:py-0">
+        {/* Track: GSAP-driven on desktop, native swipe on mobile */}
+        <div
+          ref={trackRef}
+          className="flex items-stretch gap-6 overflow-x-auto px-6 md:overflow-visible md:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {/* Intro panel */}
+          <div className="flex h-[62vh] max-h-[560px] w-[80vw] shrink-0 flex-col justify-between sm:w-[380px]">
+            <div>
+              <div className="eyebrow mb-5 flex items-center gap-3">
+                <span className="h-px w-10 bg-[#c7f94a]" />
+                Selected work
               </div>
-            </Tilt>
-          );
-        })}
+              <h2 className="text-[clamp(2.4rem,7vw,5rem)] leading-[0.95]">
+                Things
+                <br />
+                I&apos;ve
+                <br />
+                <span className="text-[#c7f94a]">shipped.</span>
+              </h2>
+            </div>
+            <p className="max-w-[280px] text-sm text-[color:var(--color-muted)]">
+              {projects.length} projects across web, mobile, and developer tooling.
+              <span className="mt-3 hidden md:flex items-center gap-2 text-[#c7f94a]">
+                Scroll to explore →
+              </span>
+            </p>
+          </div>
+
+          {projects.map((project, i) => (
+            <ProjectCard key={project.id} project={project} index={i} />
+          ))}
+
+          {/* Outro panel */}
+          <div className="flex h-[62vh] max-h-[560px] w-[80vw] shrink-0 flex-col items-start justify-center gap-6 sm:w-[360px]">
+            <h3 className="text-3xl leading-tight">
+              Got something
+              <br />
+              to build?
+            </h3>
+            <a
+              href="#contact"
+              data-cursor-label="Say hi"
+              className="rounded-full bg-[#c7f94a] px-7 py-3.5 text-sm font-medium text-black transition-transform duration-300 hover:scale-[1.03]"
+            >
+              Start a project
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

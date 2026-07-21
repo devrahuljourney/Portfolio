@@ -1,87 +1,77 @@
 "use client";
-import { SkillImageAndName } from "@/constant/data";
+
 import Image from "next/image";
-import React from "react";
-import Tilt from "react-parallax-tilt";
+import { SkillImageAndName } from "@/constant/data";
+import Reveal from "./ui/Reveal";
 
-export default function Skill() {
+function Pill({ item }) {
   return (
-    <div
-      id="skills"
-      className="flex flex-col justify-center items-center h-screen px-4"
-    >
-      {/* Heading with rotating gears */}
-      <div className="flex md:w-full w-[80%]  items-center text-center justify-center md:gap-3  mb-8">
-        {/* Left gear */}
-        <svg data-aos="fade-down"
-          className="w-14 h-14  text-[#B9FD50] animate-spin-slow"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.591 1.069c1.527-.88 3.362.954 2.482 2.482a1.724 1.724 0 001.068 2.592c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.068 2.592c.88 1.527-.955 3.362-2.482 2.482a1.724 1.724 0 00-2.591 1.068c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.592-1.068c-1.527.88-3.362-.955-2.482-2.482a1.724 1.724 0 00-1.068-2.592c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.068-2.592c-.88-1.528.955-3.362 2.482-2.482.96.553 2.165.223 2.592-1.068z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-        </svg>
+    <div className="group mx-2 flex shrink-0 items-center gap-3 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-bg-soft)] px-6 py-3.5 transition-colors duration-300 hover:border-[#c7f94a]/60">
+      <Image
+        src={item.img}
+        alt={item.name}
+        width={26}
+        height={26}
+        className="h-6 w-6 object-contain grayscale transition-all duration-300 group-hover:grayscale-0"
+      />
+      <span className="whitespace-nowrap text-sm text-[color:var(--color-muted)] transition-colors duration-300 group-hover:text-[color:var(--color-fg)]">
+        {item.name}
+      </span>
+    </div>
+  );
+}
 
-        {/* Text */}
-        <h1  data-aos="fade-up" className="text-primary font-heading text-xl sm:text-2xl md:text-4xl tracking-wide text-[#B9FD50]">
-          Tools and Technologies
-        </h1>
-
-        {/* Right gear */}
-        <svg data-aos="fade-down"
-          className="w-14 h-14 text-[#B9FD50] animate-spin-slow"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.591 1.069c1.527-.88 3.362.954 2.482 2.482a1.724 1.724 0 001.068 2.592c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.068 2.592c.88 1.527-.955 3.362-2.482 2.482a1.724 1.724 0 00-2.591 1.068c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.592-1.068c-1.527.88-3.362-.955-2.482-2.482a1.724 1.724 0 00-1.068-2.592c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.068-2.592c-.88-1.528.955-3.362 2.482-2.482.96.553 2.165.223 2.592-1.068z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-        </svg>
-      </div>
-
-      {/* Skills list */}
-      <div className="flex flex-row font-body flex-wrap justify-center items-centerflex-wrap md:gap-6 gap-2 md:w-[80%] w-full ">
-        {SkillImageAndName.map((data, index) => (
-          <Tilt key={index}>
-          <div data-aos="fade-down"  className="p-4 md:px-8 rounded-2xl flex md:flex-row flex-col justify-center items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 shadow-lg hover:scale-105 transition-transform duration-300">
-  <Image
-    src={data.img}
-    alt={data.name}
-    width={32}
-    height={32}
-    className="w-8 h-8"
-  />
-  <p className="text-center text-white text-sm hidden sm:block">
-    {data.name}
-  </p>
-</div>
-
-          </Tilt>
+function Row({ items, duration, reverse }) {
+  const loop = [...items, ...items];
+  return (
+    <div className="marquee-wrap relative w-full overflow-hidden">
+      <div
+        className={`marquee-track ${reverse ? "reverse" : ""}`}
+        style={{ "--marquee-duration": duration }}
+      >
+        {loop.map((item, i) => (
+          <Pill key={i} item={item} />
         ))}
       </div>
     </div>
+  );
+}
+
+export default function Skill() {
+  const half = Math.ceil(SkillImageAndName.length / 2);
+  const rowA = SkillImageAndName.slice(0, half);
+  const rowB = SkillImageAndName.slice(half);
+
+  return (
+    <section id="skills" className="relative w-full py-28 md:py-40 overflow-hidden">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-12 mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div>
+          <Reveal className="eyebrow mb-5 flex items-center gap-3">
+            <span className="h-px w-10 bg-[#c7f94a]" />
+            Stack
+          </Reveal>
+          <Reveal as="h2" delay={0.05} className="text-[clamp(2.2rem,6vw,5rem)]">
+            Tools I reach for
+          </Reveal>
+        </div>
+        <Reveal
+          as="p"
+          delay={0.1}
+          className="max-w-xs text-sm text-[color:var(--color-muted)]"
+        >
+          The kit I use to take products from first commit to production.
+        </Reveal>
+      </div>
+
+      {/* Edge fade over the marquee rows */}
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 md:w-48 bg-gradient-to-r from-[color:var(--color-bg)] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 md:w-48 bg-gradient-to-l from-[color:var(--color-bg)] to-transparent" />
+        <div className="flex flex-col gap-4">
+          <Row items={rowA} duration="38s" />
+          <Row items={rowB} duration="32s" reverse />
+        </div>
+      </div>
+    </section>
   );
 }

@@ -1,81 +1,21 @@
-"use client";
-import ContactForm from "@/components/ContactForm";
-import Experience from "@/components/Experience";
-import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import ProjectSection from "@/components/ProjectSection";
+import About from "@/components/About";
+import Experience from "@/components/Experience";
 import Skill from "@/components/Skill";
-import AOS from "aos";
-import "aos/dist/aos.css"; 
-import { useEffect } from "react";
+import ProjectSection from "@/components/ProjectSection";
+import ContactForm from "@/components/ContactForm";
+import Footer from "@/components/Footer";
 
 export default function Home() {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
-
-    
-    const container = document.querySelector(".scroll-container");
-    if (container) {
-      container.addEventListener("scroll", () => {
-        AOS.refresh();
-      });
-    }
-  }, []);
-
   return (
-    <div className="w-full h-screen overflow-hidden relative">
-      {/* Fixed Background */}
-      <div
-        className="fixed inset-0 z-0 animate-wave"
-        style={{
-          background: `radial-gradient(
-            ellipse 80% 60% at 50% 0%, 
-            rgba(185, 253, 80, 0.15), 
-            transparent 70%
-          ), #0a0a0a`,
-          backgroundSize: "120% 120%",
-        }}
-      />
-
-      {/* Neon Grid Overlay */}
-      <div
-        className="fixed inset-0 z-10 pointer-events-none grid-primary"
-        style={{
-          WebkitMaskImage:
-            "radial-gradient(ellipse 80% 80% at 100% 0%, #000 50%, transparent 90%)",
-          maskImage:
-            "radial-gradient(ellipse 80% 80% at 100% 0%, #000 50%, transparent 90%)",
-        }}
-      />
-
-      <div className="scroll-container relative z-20 w-full h-full overflow-y-auto snap-y snap-mandatory">
-        <section id="home" className="min-h-screen snap-start flex items-center justify-center">
-          <Hero />
-        </section>
-
-        <section className="min-h-screen snap-start flex items-center justify-center">
-          <Experience />
-        </section>
-
-        <section className="min-h-screen snap-start flex items-center justify-center">
-          <Skill />
-        </section>
-
-        <section className="min-h-screen snap-start flex items-center justify-center">
-          <ProjectSection />
-        </section>
-
-        <section className="min-h-screen snap-start flex items-center justify-center">
-          <ContactForm />
-        </section>
-
-        <footer className="w-full snap-start">
-          <Footer />
-        </footer>
-      </div>
-    </div>
+    <main className="relative w-full">
+      <Hero />
+      <About />
+      <Experience />
+      <Skill />
+      <ProjectSection />
+      <ContactForm />
+      <Footer />
+    </main>
   );
 }

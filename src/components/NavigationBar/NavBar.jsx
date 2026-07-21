@@ -1,156 +1,83 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
 
 const items = [
-  {
-    key: "home",
-    label: "Home",
-    href: "#home",
-    svg: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M3 11.5L12 4l9 7.5" />
-        <path d="M5 10.5V20h14v-9.5" />
-      </svg>
-    ),
-  },
-  {
-    key: "experience",
-    label: "Experience",
-    href: "#experience",
-    svg: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <rect x="3" y="7" width="18" height="13" rx="2" />
-        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      </svg>
-    ),
-  },
-  {
-    key: "skill",
-    label: "Skill",
-    href: "#skills",
-    svg: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M12 2v4" />
-        <path d="M12 18v4" />
-        <path d="M4.93 4.93l2.83 2.83" />
-        <path d="M16.24 16.24l2.83 2.83" />
-        <path d="M2 12h4" />
-        <path d="M18 12h4" />
-        <circle cx="12" cy="12" r="3.5" />
-      </svg>
-    ),
-  },
-  {
-    key: "project",
-    label: "Projects",
-    href: "#projects",
-    svg: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <rect x="3" y="4" width="7" height="7" rx="1.5" />
-        <rect x="14" y="4" width="7" height="7" rx="1.5" />
-        <rect x="3" y="15" width="7" height="7" rx="1.5" />
-        <rect x="14" y="15" width="7" height="7" rx="1.5" />
-      </svg>
-    ),
-  },
-  {
-    key: "contact",
-    label: "Contact",
-    href: "#contact",
-    svg: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M4 5h16v14H4z" />
-        <path d="M4 7l8 6 8-6" />
-      </svg>
-    ),
-  },
+  { key: "home", label: "Home" },
+  { key: "about", label: "About" },
+  { key: "experience", label: "Work" },
+  { key: "skills", label: "Stack" },
+  { key: "projects", label: "Projects" },
+  { key: "contact", label: "Contact" },
 ];
 
 export default function NavBar() {
   const [active, setActive] = useState("home");
   const [visible, setVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  let timeoutId = null;
+  const lastY = useRef(0);
 
+  // Active section via IntersectionObserver (works with Lenis/native scroll).
   useEffect(() => {
-    const container = document.querySelector(".scroll-container");
-    if (!container) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+    items.forEach((it) => {
+      const el = document.getElementById(it.key);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
-    const handleScroll = () => {
-      const currentScrollY = container.scrollTop;
-
-      if (timeoutId) clearTimeout(timeoutId);
-
-      timeoutId = setTimeout(() => {
-        if (currentScrollY > lastScrollY + 5) {
-          setVisible(false); 
-        } else if (currentScrollY < lastScrollY - 5) {
-          setVisible(true); 
-        }
-        setLastScrollY(currentScrollY);
-      }, 80);
-
-      const scrollPosition = currentScrollY + container.clientHeight / 3;
-      let currentActive = null;
-
-      items.forEach((item) => {
-        const section = document.getElementById(item.key);
-        if (!section) return;
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-
-        if (
-          scrollPosition >= sectionTop &&
-          scrollPosition < sectionTop + sectionHeight
-        ) {
-          currentActive = item.key;
-        }
-      });
-
-      if (currentActive && currentActive !== active) {
-        setActive(currentActive);
-      }
+  // Hide on scroll down, reveal on scroll up.
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setVisible(y < 120 || y < lastY.current);
+      lastY.current = y;
     };
-
-    container.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, [lastScrollY, active]);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav
-      className={`
-        fixed inset-x-0 bottom-4 md:left-0 left-[-14%]  z-50 mx-auto w-[75%] max-w-2xl
-        rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-lg
-        p-2 transition-transform duration-300
-        ${visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
-        md:static md:mt-4 md:w-full md:max-w-none md:rounded-2xl
-      `}
+    <motion.nav
+      initial={{ y: 40, opacity: 0 }}
+      animate={{ y: visible ? 0 : 80, opacity: visible ? 1 : 0 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2"
     >
-      <ul className="flex items-center justify-between gap-1 md:justify-center md:gap-4">
-        {items.map((it) => (
-          <li key={it.key}>
-            <a
-              href={it.href}
-              onClick={() => setActive(it.key)}
-              className={`
-                group flex items-center gap-2 rounded-xl md:px-3 px-1 py-1 md:py-2
-                text-sm transition
-                ${active === it.key
-                  ? "text-[#B9FD50] bg-white/10"
-                  : "text-white/80 hover:text-[#B9FD50] hover:bg-white/5"}
-              `}
-            >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg">
-                {it.svg}
-              </span>
-              <span className="hidden sm:inline">{it.label}</span>
-            </a>
-          </li>
-        ))}
+      <ul className="flex items-center gap-1 rounded-full border border-[color:var(--color-line)] bg-black/50 p-1.5 backdrop-blur-xl">
+        {items.map((it) => {
+          const isActive = active === it.key;
+          return (
+            <li key={it.key} className="relative">
+              <a
+                href={`#${it.key}`}
+                className={`relative z-10 block rounded-full px-3.5 py-2 text-xs font-medium transition-colors duration-300 md:px-4 md:text-sm ${
+                  isActive
+                    ? "text-black"
+                    : "text-[color:var(--color-muted)] hover:text-[color:var(--color-fg)]"
+                }`}
+              >
+                {it.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    className="absolute inset-0 -z-10 rounded-full bg-[#c7f94a]"
+                  />
+                )}
+              </a>
+            </li>
+          );
+        })}
       </ul>
-    </nav>
+    </motion.nav>
   );
 }

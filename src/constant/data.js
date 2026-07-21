@@ -101,7 +101,10 @@ export const experience = [
     {
       id: 1,
       title: "StudyNotion",
-      description: "StudyNotion is a comprehensive EdTech platform that allows students to enroll in courses, track progress, and access learning materials. It includes user dashboards, course listings, payment integration via Razorpay, and real-time updates.",
+      tagline: "EdTech learning platform",
+      year: "2024",
+      description:
+        "A full EdTech platform where students enroll, track progress, and consume course material. Ships with role-based dashboards, a course catalog, Razorpay checkout, and real-time progress updates.",
       image: studynotion,
       tech: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Razorpay"],
       category: ["all", "web", "edtech"],
@@ -111,7 +114,10 @@ export const experience = [
     {
       id: 2,
       title: "Friendify",
-      description: "Friendify is a full-stack social media web app built with the MERN stack. It features real-time chat using WebSocket, post creation, likes, comments, user profiles, following/unfollowing, and notifications. Designed for seamless interaction and modern UI experience.",
+      tagline: "Real-time social network",
+      year: "2024",
+      description:
+        "A MERN social app built for live interaction — WebSocket chat, posts, likes, comments, profiles, follows, and notifications, wrapped in a fast, modern UI.",
       image: friendify,
       tech: ["MongoDB", "Express", "React", "Node.js", "WebSocket", "Tailwind CSS"],
       category: ["all", "web", "social"],
@@ -121,7 +127,10 @@ export const experience = [
     {
       id: 3,
       title: "CoSkill",
-      description: "CoSkill is a React Native + Node.js-based skill-sharing and interview preparation platform. Users can sign up, select skills to explore or offer, get matched based on mutual skill interest, schedule mock interviews, chat in real-time using WebSocket + Redis, provide session feedback, and discover trending skills and active users nearby.",
+      tagline: "Skill-swap & mock interviews",
+      year: "2025",
+      description:
+        "A React Native platform that matches people by mutual skill interest, schedules mock interviews, and powers real-time chat with WebSocket + Redis — plus session feedback and trending-skill discovery.",
       image: coskill,
       tech: ["React Native", "Node.js", "Express", "MongoDB", "Redis", "Expo"],
       category: ["all", "app", "mobile"],
@@ -130,8 +139,11 @@ export const experience = [
     },
     {
       id: 4,
-      title: "GallyBajar E-commerce Platform",
-      description: "A full-stack freelance e-commerce platform built with MERN. Includes separate dashboards for sellers, customers, and admins. Features product management, order processing, payment integration, Google authentication, and real-time updates. Fully responsive with modern UI and seamless user experience.",
+      title: "GallyBajar",
+      tagline: "Multi-vendor e-commerce",
+      year: "2025",
+      description:
+        "A freelance MERN commerce platform with separate seller, customer, and admin dashboards — product management, order processing, payments, Google auth, and Cloudinary media, fully responsive end to end.",
       image: gallybajar,
       tech: ["MongoDB", "Express", "React", "Node.js", "Google Auth", "Cloudinary"],
       category: ["all", "freelance", "web"],
@@ -140,8 +152,11 @@ export const experience = [
     },
     {
       id: 5,
-      title: "Anil Dhyani & Associates Website",
-      description: "A professional law firm website built as a full-stack MERN freelance project. Includes service pages, blog section with Quill.js editor, contact form with email notifications, and a modern responsive UI. Designed for easy content management and client engagement.",
+      title: "Anil Dhyani & Associates",
+      tagline: "Law firm website",
+      year: "2025",
+      description:
+        "A freelance MERN site for a law firm: service pages, a Quill.js-powered blog, an email-notifying contact form, and an admin panel built for effortless content management.",
       image: anil,
       tech: ["MongoDB", "Express.js", "React", "Node.js", "Tailwind CSS", "Quill.js"],
       category: ["all", "freelance", "web"],
@@ -150,8 +165,11 @@ export const experience = [
     },
     {
       id: 6,
-      title: "Confidential Marketing Website",
-      description: "A full-stack marketing website built for a client. Includes responsive landing pages, blog section, contact form with email notifications, and modern UI components. Details are confidential.",
+      title: "Confidential Marketing Site",
+      tagline: "Client marketing website",
+      year: "2025",
+      description:
+        "A full-stack marketing site for a client — responsive landing pages, a blog, an email-notifying contact form, and interactive UI. Details under NDA.",
       image: "/assets/projects/placeholder.png",
       tech: ["React", "Node.js", "Express.js", "Tailwind CSS"],
       category: ["all", "freelance", "web"],
@@ -160,14 +178,43 @@ export const experience = [
     },
     {
       id: 7,
-      title: "React Native Style Injector",
-      description: "Used by 140+ developers. A lightweight VS Code extension for React Native that automatically scans your file and adds any missing styles to `StyleSheet.create`. Keeps existing styles intact, no setup required. Trigger with Alt + S for quick prototyping. Open source and super lightweight, saving developers time while building React Native apps.",
+      title: "RN Style Injector",
+      tagline: "VS Code extension · 140+ devs",
+      year: "2025",
+      description:
+        "A lightweight VS Code extension for React Native that scans a file and auto-adds missing styles to StyleSheet.create — existing styles untouched, zero setup, triggered with Alt + S. Open source, used by 140+ developers.",
       image: rn,
-      tech: ["JavaScript", "React Native", "VS Code Extension API"],
+      tech: ["JavaScript", "React Native", "VS Code API"],
       category: ["all", "extension", "tool"],
       liveLink: "https://marketplace.visualstudio.com/items?itemName=rahul-dev.rn-style-injector",
       githubLink: "https://github.com/devrahuljourney/rn-style-injector"
     }
+  ];
+
+  // Sharpened narrative copy used across the revamped UI (facts unchanged).
+  export const hero = {
+    name: "Rahul Kumar Verma",
+    role: "Full-Stack Software Engineer",
+    line: "I build software that goes from idea to launch — fast, scalable, and shaped around the problem it solves.",
+    location: "India",
+    available: true,
+  };
+
+  export const about = {
+    kicker: "About",
+    heading:
+      "I turn ambiguous ideas into products people actually ship and use.",
+    body: [
+      "I'm a full-stack engineer working end to end across the MERN stack and React Native — from data models and APIs to the last pixel of the interface.",
+      "For the past year I've built commerce platforms, real-time apps, and client websites as a freelancer, and shipped a VS Code extension now used by 140+ developers.",
+    ],
+  };
+
+  export const stats = [
+    { value: "15+", label: "Projects shipped" },
+    { value: "140+", label: "Devs using my tooling" },
+    { value: "1yr+", label: "Freelance delivery" },
+    { value: "∞", label: "Cups of coffee" },
   ];
   
 
