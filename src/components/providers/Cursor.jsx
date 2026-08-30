@@ -86,8 +86,8 @@ export default function Cursor() {
         ref={dotRef}
         className="cursor-dot"
         style={{
-          width: 6,
-          height: 6,
+          width: 5,
+          height: 5,
           background: "var(--color-accent)",
           boxShadow: "0 0 8px color-mix(in srgb, var(--color-accent) 90%, transparent)",
           opacity: hovering ? 0 : 1,
@@ -98,8 +98,8 @@ export default function Cursor() {
         ref={ringRef}
         className="cursor-dot flex items-center justify-center"
         style={{
-          width: hovering ? 64 : 34,
-          height: hovering ? 64 : 34,
+          width: hovering ? 48 : 24,
+          height: hovering ? 48 : 24,
           border: "1px solid color-mix(in srgb, var(--color-accent) 65%, transparent)",
           background: hovering
             ? "color-mix(in srgb, var(--color-accent) 12%, transparent)"

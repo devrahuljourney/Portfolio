@@ -106,7 +106,16 @@ function ParticleMonogram({ pointer, color, heroScroll }) {
   );
 
   const { camera, viewport } = useThree();
-  const targets = useMemo(() => buildTextParticles(["SOFTWARE", "ENGINEER"]), []);
+  // Cap the assembled text to a fraction of the current viewport width so it
+  // still fits on narrow portrait screens — the 3.6 default assumes a wide
+  // canvas and overflows badly on a phone-width frustum otherwise.
+  const targets = useMemo(
+    () =>
+      buildTextParticles(["SOFTWARE", "ENGINEER"], {
+        planeWidth: Math.min(3.6, viewport.width * 0.82),
+      }),
+    [viewport.width] // eslint-disable-line react-hooks/exhaustive-deps
+  );
   const count = targets.length / 3;
   // Corners of the *current* full canvas viewport in world units, so the
   // burst genuinely starts from the screen's edges regardless of canvas size.
@@ -194,8 +203,11 @@ function ParticleMonogram({ pointer, color, heroScroll }) {
       }
     }
 
-    raycaster.setFromCamera({ x: pointer.current.x, y: pointer.current.y }, camera);
-    const hasHit = raycaster.ray.intersectPlane(planeZ, hit) !== null;
+    let hasHit = false;
+    if (pointer.current.active) {
+      raycaster.setFromCamera({ x: pointer.current.x, y: pointer.current.y }, camera);
+      hasHit = raycaster.ray.intersectPlane(planeZ, hit) !== null;
+    }
 
     const REPEL_RADIUS = 0.85;
     const REPEL_STRENGTH = 0.55;
@@ -295,12 +307,17 @@ function ParticleMonogram({ pointer, color, heroScroll }) {
 }
 
 export default function HeroScene({ color = "#c7f94a", heroScroll }) {
-  const pointer = useRef({ x: 0, y: 0 });
+  // `active` stays false until a real mousemove fires — without it, the
+  // default (0, 0) would sit exactly at screen-center and permanently repel
+  // nearby particles (a phantom cursor), which on touch devices never
+  // clears since there's no mousemove at all.
+  const pointer = useRef({ x: 0, y: 0, active: false });
 
   useEffect(() => {
     const onMove = (e) => {
       pointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       pointer.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
+      pointer.current.active = true;
     };
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);

@@ -51,24 +51,23 @@ export default function Hero() {
   // Shared with HeroScene/ParticleMonogram — no re-renders on scroll.
   const heroScroll = useRef({ active: false, value: 0 });
 
-  // On desktop, pin the hero just long enough for the copy to fade and the
-  // particle scene to assemble into "SOFTWARE ENGINEER" and hold. The pin's
-  // spacer reserves the section's own full height regardless — so instead of
-  // spending more pinned scroll on the un-assembly (which would just be dead
-  // time before About can physically reach the viewport), the retreat back
-  // toward the corners is driven by a second, unpinned ScrollTrigger that
-  // tracks the section's natural scroll-out. That way the particles are
-  // visibly breaking apart while About is simultaneously sliding up from
-  // below, in the same continuous scroll — no gap in between. Falls back to
-  // a plain scroll on mobile / reduced-motion (see ParticleMonogram's own
-  // free-running fallback).
+  // Pin the hero just long enough for the copy to fade and the particle
+  // scene to assemble into "SOFTWARE ENGINEER" and hold — same behavior on
+  // every screen size. The pin's spacer reserves the section's own full
+  // height regardless — so instead of spending more pinned scroll on the
+  // un-assembly (which would just be dead time before About can physically
+  // reach the viewport), the retreat back toward the corners is driven by a
+  // second, unpinned ScrollTrigger that tracks the section's natural
+  // scroll-out. That way the particles are visibly breaking apart while
+  // About is simultaneously sliding up from below, in the same continuous
+  // scroll — no gap in between. Only reduced-motion gets the plain, static
+  // fallback (see ParticleMonogram's own free-running path).
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     let ctx;
     const build = () => {
-      if (!mq.matches || reduce || !sectionRef.current) return;
+      if (reduceMq.matches || !sectionRef.current) return;
       ctx = gsap.context(() => {
         ScrollTrigger.create({
           trigger: sectionRef.current,
@@ -125,10 +124,10 @@ export default function Hero() {
       build();
       ScrollTrigger.refresh();
     };
-    mq.addEventListener("change", onChange);
+    reduceMq.addEventListener("change", onChange);
 
     return () => {
-      mq.removeEventListener("change", onChange);
+      reduceMq.removeEventListener("change", onChange);
       ctx?.revert();
     };
   }, []);
@@ -144,12 +143,8 @@ export default function Hero() {
       {/* Falling accent beams that burst on the floor line */}
       <BackgroundBeams className="z-0" />
 
-      {/* 3D object — a small offset orb on mobile so it reads as an accent
-          rather than a full-bleed wireframe; full inset panel on desktop. */}
-      <div
-        ref={sceneWrapRef}
-        className="pointer-events-none absolute -top-16 -right-16 z-0 h-[80vw] w-[80vw] max-h-[380px] max-w-[380px] opacity-55 md:inset-0 md:h-auto md:w-auto md:max-h-none md:max-w-none md:opacity-100"
-      >
+      {/* Full-bleed particle scene — same on every screen size. */}
+      <div ref={sceneWrapRef} className="pointer-events-none absolute inset-0 z-0">
         <HeroScene color={sceneColor} heroScroll={heroScroll} />
       </div>
 
