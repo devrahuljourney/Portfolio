@@ -123,7 +123,7 @@ export default function ContactForm() {
               type="submit"
               disabled={status === "loading"}
               data-cursor-label="Send"
-              className="group relative mt-2 w-fit overflow-hidden rounded-full bg-[color:var(--color-accent)] px-9 py-4 text-sm font-medium text-[color:var(--color-on-accent)] disabled:opacity-60"
+              className="elevated-accent group relative mt-2 w-fit overflow-hidden rounded-full bg-[color:var(--color-accent)] px-9 py-4 text-sm font-medium text-[color:var(--color-on-accent)] disabled:opacity-60"
             >
               <span className="relative z-10">
                 {status === "loading" ? "Sending…" : "Send message"}

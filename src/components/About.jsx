@@ -87,7 +87,7 @@ export default function About() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-line)]">
+          <div className="elevated grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-line)]">
             {stats.map((s, i) => (
               <Reveal
                 key={i}

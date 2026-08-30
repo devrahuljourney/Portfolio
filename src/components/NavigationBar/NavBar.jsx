@@ -50,16 +50,16 @@ export default function NavBar() {
       initial={{ y: 40, opacity: 0 }}
       animate={{ y: visible ? 0 : 80, opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2"
+      className="fixed bottom-5 left-4 right-[4.75rem] z-50 md:left-1/2 md:right-auto md:w-fit md:-translate-x-1/2"
     >
-      <ul className="flex items-center gap-1 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-1.5 backdrop-blur-xl">
+      <ul className="elevated flex items-center gap-1 overflow-x-auto rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-1.5 backdrop-blur-xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:w-fit md:overflow-visible">
         {items.map((it) => {
           const isActive = active === it.key;
           return (
-            <li key={it.key} className="relative">
+            <li key={it.key} className="relative shrink-0">
               <a
                 href={`#${it.key}`}
-                className={`relative z-10 block rounded-full px-3.5 py-2 text-xs font-medium transition-colors duration-300 md:px-4 md:text-sm ${
+                className={`relative z-10 block whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-colors duration-300 md:px-4 md:text-sm ${
                   isActive
                     ? "text-[color:var(--color-on-accent)]"
                     : "text-[color:var(--color-muted)] hover:text-[color:var(--color-fg)]"

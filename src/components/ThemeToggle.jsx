@@ -63,7 +63,7 @@ export default function ThemeToggle() {
       aria-label="Toggle color theme"
       data-cursor-label={mounted ? (isDark ? "Light" : "Dark") : ""}
       onClick={toggle}
-      className="fixed right-5 top-5 z-[120] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/60 text-[color:var(--color-fg)] backdrop-blur-xl transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
+      className="elevated fixed right-5 top-5 z-[120] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/60 text-[color:var(--color-fg)] backdrop-blur-xl transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

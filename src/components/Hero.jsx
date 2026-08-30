@@ -47,8 +47,9 @@ export default function Hero() {
       {/* Falling accent beams that burst on the floor line */}
       <BackgroundBeams className="z-0" />
 
-      {/* 3D object — behind the text, offset right on desktop */}
-      <div className="absolute inset-0 md:left-[28%] z-0 pointer-events-none">
+      {/* 3D object — a small offset orb on mobile so it reads as an accent
+          rather than a full-bleed wireframe; full inset panel on desktop. */}
+      <div className="pointer-events-none absolute -top-16 -right-16 z-0 h-[80vw] w-[80vw] max-h-[380px] max-w-[380px] opacity-55 md:top-0 md:right-0 md:bottom-0 md:left-[28%] md:h-auto md:w-auto md:max-h-none md:max-w-none md:opacity-100">
         <HeroScene color={sceneColor} />
       </div>
 
@@ -105,7 +106,7 @@ export default function Hero() {
               href="/assests/Rahul_Kumar_FullStack_RESUME.pdf"
               download
               data-cursor-label="Get"
-              className="group relative overflow-hidden rounded-full bg-[color:var(--color-accent)] px-7 py-3.5 text-sm font-medium text-[color:var(--color-on-accent)]"
+              className="elevated-accent group relative overflow-hidden rounded-full bg-[color:var(--color-accent)] px-7 py-3.5 text-sm font-medium text-[color:var(--color-on-accent)]"
             >
               <span className="relative z-10">Download résumé</span>
               <span className="absolute inset-0 -translate-y-full bg-black transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
@@ -116,7 +117,7 @@ export default function Hero() {
             <a
               href="#contact"
               data-cursor-label="Say hi"
-              className="rounded-full border border-[color:var(--color-line)] px-7 py-3.5 text-sm font-medium text-[color:var(--color-fg)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
+              className="elevated rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-bg-soft)] px-7 py-3.5 text-sm font-medium text-[color:var(--color-fg)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
             >
               Let&apos;s talk
             </a>

@@ -39,7 +39,7 @@ export default function ProjectCard({ project, index }) {
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d", transformPerspective: 1000 }}
-      className="group relative flex h-[62vh] max-h-[560px] w-[82vw] shrink-0 flex-col overflow-hidden rounded-3xl border border-[color:var(--color-line)] bg-[color:var(--color-bg-soft)] sm:w-[440px]"
+      className="elevated group relative flex h-[62vh] max-h-[560px] w-[82vw] shrink-0 flex-col overflow-hidden rounded-3xl border border-[color:var(--color-line)] bg-[color:var(--color-bg-soft)] sm:w-[440px]"
     >
       {/* Media */}
       <div className="relative h-[58%] w-full overflow-hidden">

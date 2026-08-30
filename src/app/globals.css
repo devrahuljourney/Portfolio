@@ -114,6 +114,25 @@
   mix-blend-mode: overlay;
 }
 
+/* ============================================================
+   ELEVATION — soft shadow for surfaces in light mode. The near-
+   black dark theme reads depth from contrast/glow already; a flat
+   12%-opacity border on the warm-paper light theme doesn't, so
+   surfaces there get a real shadow instead.
+   ============================================================ */
+.elevated {
+  box-shadow: 0 1px 2px rgba(22, 21, 15, 0.05), 0 14px 28px -14px rgba(22, 21, 15, 0.18);
+}
+.dark .elevated {
+  box-shadow: none;
+}
+.elevated-accent {
+  box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+.dark .elevated-accent {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+
 /* Faint dotted grid — echoes the 3D point cloud */
 .dot-grid {
   background-image: radial-gradient(circle at center, var(--dot) 1px, transparent 1px);

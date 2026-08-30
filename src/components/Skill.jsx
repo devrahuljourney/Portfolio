@@ -6,7 +6,7 @@ import Reveal from "./ui/Reveal";
 
 function Pill({ item }) {
   return (
-    <div className="group mx-2 flex shrink-0 items-center gap-3 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-bg-soft)] px-6 py-3.5 transition-colors duration-300 hover:border-[color:var(--color-accent)]">
+    <div className="elevated group mx-2 flex shrink-0 items-center gap-3 rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-bg-soft)] px-6 py-3.5 transition-colors duration-300 hover:border-[color:var(--color-accent)]">
       <Image
         src={item.img}
         alt={item.name}

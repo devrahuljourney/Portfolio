@@ -88,7 +88,7 @@ export default function SocialMenu() {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-3 text-[color:var(--color-fg)] shadow-lg backdrop-blur-md transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
+            className="elevated rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-3 text-[color:var(--color-fg)] backdrop-blur-md transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
             title={link.label}
           >
             {link.svg}
@@ -99,7 +99,7 @@ export default function SocialMenu() {
       {/* Glassmorphism Toggle */}
       <button
         onClick={() => setOpen((p) => !p)}
-        className="rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-4 text-[color:var(--color-fg)] shadow-lg backdrop-blur-md transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
+        className="elevated rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-4 text-[color:var(--color-fg)] backdrop-blur-md transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
       >
         {open ? (
     // Close icon
