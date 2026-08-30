@@ -17,6 +17,28 @@ export default function About() {
     if (reduce) return;
 
     const ctx = gsap.context(() => {
+      // The section fades in across its entire entrance — from the moment
+      // its top touches the viewport bottom to the moment its top reaches
+      // the viewport top. That's the exact same physical scroll distance
+      // Hero's particle scene uses to retreat and dissolve after its pin
+      // releases (see Hero.jsx), so the two stay in lockstep: About reaches
+      // full opacity right as the particles finish disappearing, instead of
+      // snapping fully visible while the old scene is still lingering above.
+      gsap.fromTo(
+        sectionRef.current,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+          },
+        }
+      );
+
       const words = gsap.utils.toArray(".about-word");
       gsap.fromTo(
         words,

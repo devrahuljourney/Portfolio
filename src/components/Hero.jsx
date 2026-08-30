@@ -3,8 +3,15 @@
 import dynamic from "next/dynamic";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { hero } from "@/constant/data";
 import { BackgroundBeams } from "./ui/BackgroundBeams";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // WebGL scene is client-only and lazy — the page never blocks on three.js.
 const HeroScene = dynamic(() => import("./Hero/HeroScene"), {
@@ -37,9 +44,99 @@ export default function Hero() {
   // three.js needs a hex; match the CSS accent per theme.
   const sceneColor = resolvedTheme === "light" ? "#4d7c0f" : "#c7f94a";
 
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+  const scrollCueRef = useRef(null);
+  const sceneWrapRef = useRef(null);
+  // Shared with HeroScene/ParticleMonogram — no re-renders on scroll.
+  const heroScroll = useRef({ active: false, value: 0 });
+
+  // On desktop, pin the hero just long enough for the copy to fade and the
+  // particle scene to assemble into "SOFTWARE ENGINEER" and hold. The pin's
+  // spacer reserves the section's own full height regardless — so instead of
+  // spending more pinned scroll on the un-assembly (which would just be dead
+  // time before About can physically reach the viewport), the retreat back
+  // toward the corners is driven by a second, unpinned ScrollTrigger that
+  // tracks the section's natural scroll-out. That way the particles are
+  // visibly breaking apart while About is simultaneously sliding up from
+  // below, in the same continuous scroll — no gap in between. Falls back to
+  // a plain scroll on mobile / reduced-motion (see ParticleMonogram's own
+  // free-running fallback).
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let ctx;
+    const build = () => {
+      if (!mq.matches || reduce || !sectionRef.current) return;
+      ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top top",
+          end: () => `+=${window.innerHeight * 0.6}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const p = self.progress;
+            // Rise 0→0.8 (assemble), hold 0.8→1 (fully formed) for the rest
+            // of the pin.
+            heroScroll.current.value = Math.min(1, p / 0.8);
+
+            const fadeP = Math.min(1, p / 0.4);
+            gsap.set(contentRef.current, { opacity: 1 - fadeP, y: -30 * fadeP });
+            gsap.set(scrollCueRef.current, { opacity: 1 - Math.min(1, p / 0.15) });
+          },
+        });
+
+        // Section's natural scroll-out, right after the pin releases: its
+        // bottom travels from the viewport bottom to the viewport top over
+        // exactly one section-height of ordinary scrolling. Reversing the
+        // particles AND fading the whole scene out over that same distance
+        // — matching About's own fade-in range exactly (see About.jsx) —
+        // keeps both animations locked to the same scroll, so the particles
+        // finish dissolving right as About finishes fading in, instead of
+        // lingering on screen after About is already fully visible.
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "bottom bottom",
+          end: "bottom top",
+          scrub: true,
+          onUpdate: (self) => {
+            const p = self.progress;
+            heroScroll.current.value = 1 - p;
+            gsap.set(sceneWrapRef.current, { opacity: 1 - p });
+          },
+        });
+      }, sectionRef);
+      heroScroll.current.active = true;
+    };
+
+    build();
+    const onChange = () => {
+      ctx?.revert();
+      ctx = undefined;
+      heroScroll.current.active = false;
+      heroScroll.current.value = 0;
+      gsap.set(contentRef.current, { opacity: 1, y: 0 });
+      gsap.set(scrollCueRef.current, { opacity: 1 });
+      gsap.set(sceneWrapRef.current, { opacity: 1 });
+      build();
+      ScrollTrigger.refresh();
+    };
+    mq.addEventListener("change", onChange);
+
+    return () => {
+      mq.removeEventListener("change", onChange);
+      ctx?.revert();
+    };
+  }, []);
+
   return (
     <section
       id="home"
+      ref={sectionRef}
       className="relative min-h-[100svh] w-full overflow-hidden flex items-center"
     >
       <div className="dot-grid absolute inset-0 z-0" />
@@ -49,11 +146,14 @@ export default function Hero() {
 
       {/* 3D object — a small offset orb on mobile so it reads as an accent
           rather than a full-bleed wireframe; full inset panel on desktop. */}
-      <div className="pointer-events-none absolute -top-16 -right-16 z-0 h-[80vw] w-[80vw] max-h-[380px] max-w-[380px] opacity-55 md:top-0 md:right-0 md:bottom-0 md:left-[28%] md:h-auto md:w-auto md:max-h-none md:max-w-none md:opacity-100">
-        <HeroScene color={sceneColor} />
+      <div
+        ref={sceneWrapRef}
+        className="pointer-events-none absolute -top-16 -right-16 z-0 h-[80vw] w-[80vw] max-h-[380px] max-w-[380px] opacity-55 md:inset-0 md:h-auto md:w-auto md:max-h-none md:max-w-none md:opacity-100"
+      >
+        <HeroScene color={sceneColor} heroScroll={heroScroll} />
       </div>
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 md:px-12 pt-28 pb-24">
+      <div ref={contentRef} className="relative z-10 w-full max-w-[1440px] mx-auto px-6 md:px-12 pt-28 pb-24">
         {/* Availability */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -127,6 +227,7 @@ export default function Hero() {
 
       {/* Scroll cue */}
       <motion.div
+        ref={scrollCueRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.1 }}
