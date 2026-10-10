@@ -1,4 +1,4 @@
-import { generateEmailHTML } from "@/utils/generateEmailHtml";
+import { generateEmailHTML, generateConfirmationHTML, textForRahul, textForSender } from "@/utils/generateEmailHtml";
 import mailSender from "@/utils/mailSender";
 
 export default async function handler(req, res) {
@@ -6,38 +6,31 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const { name, email, message } = req.body;
-  console.log(req.body);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  const email = String(req.body?.email ?? "").trim();
+  // Raw values for plain-text parts and headers; escaped ones for HTML.
+  const rawName = String(req.body?.name ?? "").trim().slice(0, 120);
+  const rawMessage = String(req.body?.message ?? "").trim().slice(0, 5000);
+  const name = esc(rawName);
+  const message = esc(rawMessage);
 
   if (!name || !email || !message) {
     return res.status(400).json({ message: "All fields are required" });
   }
+  if (!/^[^\s@<>,;]+@[^\s@<>,;]+\.[^\s@<>,;]+$/.test(email)) {
+    return res.status(400).json({ message: "Enter a valid email" });
+  }
 
   try {
-    const htmlBody = generateEmailHTML(name, email, message);
-    await mailSender(
-      process.env.MAIL_USER,
-      `New message from ${name}`,
-      htmlBody
-    );
-
-    const userConfirmationHTML = `
-      <div style="background-color:#0a0a0a; padding:20px; font-family:Arial, sans-serif; color:white;">
-        <div style="max-width:600px; margin:auto; border:1px solid rgba(255,255,255,0.2); border-radius:12px; background-color:rgba(255,255,255,0.05); text-align:center;">
-          <h1 style="color:#B9FD50;">Thank you for contacting me!</h1>
-          <p style="color:#ccc; margin:10px 0;">Hi ${name}, I’ve received your message and will get back to you soon.</p>
-          <p style="background:rgba(255,255,255,0.05); padding:15px; border-radius:8px; margin:20px 0;">
-            ${message}
-          </p>
-          <p style="font-size:12px; color:gray;">Sent by Dev Rahul Team</p>
-        </div>
-      </div>
-    `;
-    await mailSender(
-      email,
-      "Thanks for reaching out!",
-      userConfirmationHTML
-    );
+    // To Rahul: replying goes straight to the sender.
+    await mailSender(process.env.MAIL_USER, `New letter from ${rawName.replace(/[\r\n]/g, " ")}`, generateEmailHTML(name, esc(email), message), {
+      text: textForRahul(rawName, email, rawMessage),
+      replyTo: email,
+    });
+    // Receipt to the sender.
+    await mailSender(email, "Letter received: thanks for writing", generateConfirmationHTML(name, message), {
+      text: textForSender(rawName, rawMessage),
+    });
 
     return res.status(200).json({ message: "Message sent successfully" });
   } catch (error) {
