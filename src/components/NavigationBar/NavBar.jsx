@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, reducedMotion } from "@/lib/gsap";
 import ThemeToggle from "../ThemeToggle";
+import SoundToggle from "../SoundToggle";
 import Wordmark from "../ui/Wordmark";
 
 const items = [
@@ -78,6 +79,7 @@ export default function NavBar() {
                 </li>
               ))}
             </ul>
+            <SoundToggle className="hidden md:flex" />
             <ThemeToggle className="hidden md:flex" />
             <button
               onClick={() => setOpen((o) => !o)}
@@ -106,7 +108,10 @@ export default function NavBar() {
             </li>
           ))}
         </ul>
-        <ThemeToggle />
+        <div className="flex items-center justify-between">
+          <SoundToggle />
+          <ThemeToggle />
+        </div>
       </div>
     </>
   );

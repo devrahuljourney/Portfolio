@@ -4,6 +4,7 @@ import SmoothScroll from "@/components/providers/SmoothScroll";
 import Cursor from "@/components/providers/Cursor";
 import ScrollProgress from "@/components/providers/ScrollProgress";
 import ThemeProvider from "@/components/providers/ThemeProvider";
+import SoundProvider from "@/components/providers/SoundProvider";
 import NavBar from "@/components/NavigationBar/NavBar";
 import StickerDefs from "@/components/stickers/StickerDefs";
 
@@ -187,11 +188,13 @@ export default function RootLayout({ children }) {
       </head>
       <body className="grain antialiased">
         <ThemeProvider>
-          <StickerDefs />
-          <ScrollProgress />
-          <Cursor />
-          <NavBar />
-          <SmoothScroll>{children}</SmoothScroll>
+          <SoundProvider>
+            <StickerDefs />
+            <ScrollProgress />
+            <Cursor />
+            <NavBar />
+            <SmoothScroll>{children}</SmoothScroll>
+          </SoundProvider>
         </ThemeProvider>
       </body>
     </html>

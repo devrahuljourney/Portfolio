@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger, SplitText, Draggable, reducedMotion } from "@/lib/
 import { hero } from "@/constant/data";
 import Sticker from "../stickers/Sticker";
 import { INTRO_EVENT, introStarted } from "../Preloader";
+import { useSound } from "../providers/SoundProvider";
 
 const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
@@ -93,6 +94,7 @@ function TitleBlock() {
 
 export default function Hero() {
   const root = useRef(null);
+  const { play } = useSound();
 
   // Hide animated pieces before first paint so the intro never flashes.
   useIsoLayoutEffect(() => {
@@ -155,6 +157,7 @@ export default function Hero() {
         },
         onRelease() {
           this.target.classList.remove("is-dragging");
+          play("drop");
         },
       });
       drags.push(d);
@@ -179,7 +182,7 @@ export default function Hero() {
       ctx.revert();
       ScrollTrigger.refresh();
     };
-  }, []);
+  }, [play]);
 
   return (
     <section
@@ -205,7 +208,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         {OBJECTS.map((o) => (
           <div key={o.name} data-parallax={o.depth} className={`absolute z-10 ${o.hideMobile ? "hidden md:block" : ""}`} style={o.style}>
-            <div data-drag className="sticker-drag group relative" data-cursor-label="Drag">
+            <div data-drag data-sound="pickup" className="sticker-drag group relative" data-cursor-label="Drag">
               <span
                 aria-hidden="true"
                 className="pointer-events-none absolute -inset-2 border border-dashed border-[color:var(--color-accent)] opacity-0 transition-opacity group-hover:opacity-100 group-[.is-dragging]:opacity-100"

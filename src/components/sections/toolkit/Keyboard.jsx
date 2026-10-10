@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { projects, toolkit } from "@/constant/data";
+import { useSound } from "@/components/providers/SoundProvider";
 
 // A real 60% keyboard wired to a tiny terminal. Click it (or tab to it) and
 // type: every physical key lights up its twin on screen, Backspace / Tab /
@@ -43,28 +44,6 @@ const TONES = {
   red: ["#f05a1e", "#a8340a", "#fbfaf6"],
   blue: ["#129493", "#095a59", "#fbfaf6"],
 };
-
-// Short synthesized "thock": filtered noise burst. Off unless enabled.
-function useClick() {
-  const ctxRef = useRef(null);
-  return useCallback((on) => {
-    if (!on) return;
-    const ctx = (ctxRef.current ??= new (window.AudioContext || window.webkitAudioContext)());
-    const len = Math.floor(ctx.sampleRate * 0.03);
-    const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 4);
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    const filter = ctx.createBiquadFilter();
-    filter.type = "bandpass";
-    filter.frequency.value = 1800 + Math.random() * 600;
-    const gain = ctx.createGain();
-    gain.gain.value = 0.5;
-    src.connect(filter).connect(gain).connect(ctx.destination);
-    src.start();
-  }, []);
-}
 
 function Key({ legend, code, w, tone = "base", down, onPress }) {
   const [top, side, ink] = TONES[tone];
@@ -110,9 +89,8 @@ export default function Keyboard() {
   const [down, setDown] = useState(() => new Set());
   const [buffer, setBuffer] = useState("");
   const [log, setLog] = useState([]); // [{cmd, out: tool | string | string[]}]
-  const [sound, setSound] = useState(false);
   const [caps, setCaps] = useState(false);
-  const click = useClick();
+  const { enabled: sound, play } = useSound();
   const suggestions = useMemo(() => matches(buffer), [buffer]);
   const bufferRef = useRef("");
   bufferRef.current = buffer;
@@ -140,7 +118,7 @@ export default function Keyboard() {
   // One handler for both the physical keyboard and on-screen clicks.
   const handle = useCallback(
     (code, key) => {
-      click(sound);
+      play("key");
       if (code === "Backspace") return setBuffer((b) => b.slice(0, -1));
       if (code === "Enter") {
         run(bufferRef.current);
@@ -157,7 +135,7 @@ export default function Keyboard() {
         setBuffer((b) => (b.length < 28 ? b + ch : b));
       }
     },
-    [caps, click, run, sound]
+    [caps, play, run]
   );
 
   // First real input cancels the self-typing demo and clears its half word.
@@ -315,15 +293,7 @@ export default function Keyboard() {
             </span>
             <span className="hidden sm:inline">rv-60 · mechanical</span>
           </span>
-          <button
-            type="button"
-            tabIndex={-1}
-            onClick={() => setSound((s) => !s)}
-            className="uppercase tracking-widest hover:text-[#f1efe9]"
-            aria-pressed={sound}
-          >
-            sound {sound ? "on" : "off"}
-          </button>
+          <span>sound {sound ? "on" : "off"}</span>
         </div>
         <div className="rounded-[10px] bg-[#1a1c1a] p-[0.9%]" style={{ containerType: "inline-size" }}>
           {ROWS.map((row, r) => (
