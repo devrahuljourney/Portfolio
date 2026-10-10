@@ -1,36 +1,31 @@
-// Hand-built vector stickers, shared with the GitHub profile panels. Each
+// Hand-built vector objects for the drafting-sheet theme. Each
 // entry is { vb, art, loose? }: `art` gets the die-cut sticker filter, `loose`
 // (steam, motion trails) is drawn without it. Coordinates are centered on 0,0.
 
 const C = {
-  ink: "#0d0f0e", ink2: "#292b28", muted: "#62655e", cream: "#fbf7ee",
-  red: "#b94835", blue: "#3457d5", yellow: "#f0cc78", pink: "#ff8b9d",
+  ink: "#12151c", ink2: "#2a2f3a", muted: "#616977", cream: "#fbfaf6",
+  red: "#e5470d", blue: "#0e7c7b", yellow: "#f4dc4b", pink: "#8fd3b6",
 };
 
-function keyboardArt() {
-  const u = 15, pad = 8;
-  const rows = [
-    [[1, "r"], ...Array(12).fill([1]), [2]],
-    [[1.5], ...Array(12).fill([1]), [1.5]],
-    [[1.75], ...Array(11).fill([1]), [2.25, "r"]],
-    [[2.25, "b"], ...Array(10).fill([1]), [1.75, "b"], [1, "b"]],
-    [[1.25], [1.25], [1.25], [7], [1.25], [1, "b"], [1, "b"], [1, "b"]],
-  ];
-  const W = 15 * u + pad * 2, H = rows.length * u + pad * 2;
-  const tone = { r: [C.red, "#8f3626"], b: [C.blue, "#233f9e"], _: ["#efe8d8", "#cfc5b0"] };
-  let keys = "";
-  rows.forEach((row, ri) => {
-    let x = -W / 2 + pad;
-    const y = -H / 2 + pad + ri * u;
-    for (const [w, c] of row) {
-      const [top, side] = tone[c || "_"];
-      keys += `<rect x="${x + 0.8}" y="${y + 0.8}" width="${w * u - 1.6}" height="${u - 1.6}" rx="2.6" fill="${side}"/>`;
-      keys += `<rect x="${x + 2.2}" y="${y + 1.4}" width="${w * u - 4.4}" height="${u - 5}" rx="2" fill="${top}"/>`;
-      x += w * u;
-    }
-  });
-  return `<rect x="${-W / 2}" y="${-H / 2}" width="${W}" height="${H}" rx="9" fill="#2a2c2b"/>
-    <rect x="${-W / 2 + 3}" y="${-H / 2 + 3}" width="${W - 6}" height="${H - 6}" rx="7" fill="#1c1e1c"/>${keys}`;
+// Laptop with a git graph: a feature branch merging back into main.
+function laptopArt() {
+  const commit = (x, y, c) => `<circle cx="${x}" cy="${y}" r="4.2" fill="${c}" stroke="#12151c" stroke-width="1.4"/>`;
+  return `<path d="M-104,52 h208 l-10,12 h-188 z" fill="#c9ccd2"/>
+    <rect x="-22" y="52" width="44" height="4" rx="2" fill="#9aa0ab"/>
+    <rect x="-90" y="-62" width="180" height="114" rx="8" fill="#2a2f3a"/>
+    <rect x="-82" y="-54" width="164" height="98" rx="3" fill="#12151c"/>
+    <circle cx="-74" cy="-47" r="2" fill="${C.red}"/><circle cx="-67" cy="-47" r="2" fill="${C.yellow}"/><circle cx="-60" cy="-47" r="2" fill="#3fc1bd"/>
+    <text x="74" y="-45" text-anchor="end" class="m" font-size="5.5" fill="#616977">git log --graph</text>
+    <path d="M-66,-20 H66" stroke="#9aa0ab" stroke-width="2.4"/>
+    <path d="M-34,-20 C-24,-20 -24,6 -12,6 H20 C32,6 32,-20 42,-20" fill="none" stroke="#3fc1bd" stroke-width="2.4"/>
+    ${commit(-66, -20, "#9aa0ab")}${commit(-48, -20, "#9aa0ab")}${commit(-34, -20, "#9aa0ab")}
+    ${commit(-6, 6, "#3fc1bd")}${commit(10, 6, "#3fc1bd")}${commit(66, -20, C.red)}
+    <circle cx="42" cy="-20" r="5.5" fill="${C.yellow}" stroke="#12151c" stroke-width="1.4"/>
+    <text x="-66" y="-30" class="m" font-size="5.5" fill="#9aa0ab">main</text>
+    <text x="-8" y="18" class="m" font-size="5.5" fill="#3fc1bd">feat/ship</text>
+    <rect x="-66" y="26" width="64" height="12" rx="6" fill="#3fc1bd"/>
+    <text x="-34" y="34.2" text-anchor="middle" class="m" font-size="6" fill="#12151c">✓ PR MERGED</text>
+    <text x="66" y="34.2" text-anchor="end" class="m" font-size="6" fill="#9aa0ab">CI · 42 passing</text>`;
 }
 
 function phoneArt() {
@@ -56,7 +51,7 @@ const mugSteam = [-14, 0, 14].map((x, i) =>
 
 const mugArt = `<path d="M30,-22 a20,20 0 1,1 0,40" fill="none" stroke="${C.red}" stroke-width="9"/>
   <path d="M-36,-38 h72 v62 a14,14 0 0 1 -14,14 h-44 a14,14 0 0 1 -14,-14 z" fill="${C.red}"/>
-  <ellipse cx="0" cy="-38" rx="36" ry="7" fill="#9e3c2c"/>
+  <ellipse cx="0" cy="-38" rx="36" ry="7" fill="#b8400c"/>
   <ellipse cx="0" cy="-37" rx="31" ry="5" fill="#3b2418"/>
   <rect x="-24" y="-16" width="48" height="26" rx="4" fill="${C.cream}"/>
   <text x="0" y="2" text-anchor="middle" class="m" font-size="13" fill="${C.ink}">&lt;/&gt;</text>`;
@@ -109,14 +104,14 @@ const editorArt = `<rect x="-50" y="-38" width="100" height="70" rx="6" fill="#1
   ${[[-40, 46, C.blue], [-34, 30, C.pink], [-34, 52, "#e5dfd2"], [-40, 22, C.yellow], [-34, 40, "#e5dfd2"]].map(([x, w, c], i) =>
     `<rect x="${x}" y="${-18 + i * 9}" width="${w}" height="4" rx="2" fill="${c}" fill-opacity="0.85"/>`).join("")}
   <g transform="translate(30,26) rotate(-8)">
-    <rect x="-24" y="-17" width="48" height="34" rx="6" fill="#cfc5b0"/>
-    <rect x="-20" y="-15" width="40" height="26" rx="4" fill="#efe8d8"/>
+    <rect x="-24" y="-17" width="48" height="34" rx="6" fill="#c9ccd2"/>
+    <rect x="-20" y="-15" width="40" height="26" rx="4" fill="#eef0f2"/>
     <text y="3" text-anchor="middle" class="m" font-size="10" fill="${C.ink}">Alt+S</text>
   </g>`;
 
 const planeArt = `<polygon points="-20,-4 48,-34 10,26" fill="${C.cream}"/>
-  <polygon points="-20,-4 48,-34 4,6" fill="#e9e1cf"/>
-  <polygon points="4,6 48,-34 10,26 6,10" fill="#d8ceb8"/>
+  <polygon points="-20,-4 48,-34 4,6" fill="#e4e7ea"/>
+  <polygon points="4,6 48,-34 10,26 6,10" fill="#cfd4da"/>
   <path d="M-20,-4 L48,-34 L10,26 Z M4,6 L48,-34" fill="none" stroke="${C.ink}" stroke-width="1.6" stroke-linejoin="round"/>`;
 
 // "NDA" rubber stamp for confidential client work.
@@ -126,7 +121,7 @@ const stampArt = `<rect x="-62" y="-30" width="124" height="60" rx="8" fill="${C
   <text y="18" text-anchor="middle" class="m" font-size="6.5" fill="${C.red}" letter-spacing="1.4">CLIENT WORK</text>`;
 
 export const STICKERS = {
-  keyboard: { vb: "-132 -58 264 116", art: keyboardArt() },
+  laptop: { vb: "-112 -72 228 146", art: laptopArt() },
   phone: { vb: "-48 -82 96 164", art: phoneArt() },
   mug: { vb: "-48 -98 116 148", art: mugArt, loose: mugSteam },
   duck: { vb: "-78 -66 130 130", art: duckArt },

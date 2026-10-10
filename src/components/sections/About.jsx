@@ -78,40 +78,43 @@ export default function About() {
   return (
     <section id="about" ref={root} className="relative w-full px-5 py-28 md:px-10 md:py-40">
       <div className="mx-auto max-w-[1440px]">
-        <div className="flex items-center justify-between border-b border-[color:var(--color-line)] pb-3 font-mono text-xs uppercase tracking-wider">
-          <span className="text-[color:var(--color-accent)]">(About)</span>
-          <span className="text-[color:var(--color-muted)]">01 / 05</span>
+        <div className="flex items-stretch gap-3 font-mono text-xs uppercase tracking-wider">
+          <span className="flex w-11 items-center justify-center border-[1.5px] border-[color:var(--color-fg)] py-1.5 font-bold">01</span>
+          <span className="flex flex-1 items-center justify-between border-b-[1.5px] border-[color:var(--color-fg)]">
+            <span className="text-[color:var(--color-accent)]">About</span>
+            <span className="text-[color:var(--color-muted)]">Sheet 01 / 05</span>
+          </span>
         </div>
 
-        <div className="mt-14 grid gap-16 md:grid-cols-12 md:gap-10">
+        <div className="mt-14 grid gap-16 lg:grid-cols-[330px_minmax(0,1fr)] lg:gap-16">
           {/* "HELLO my name is" name tag, stuck on the desk */}
-          <div className="relative mx-auto w-[min(80vw,330px)] self-start md:col-span-4 md:mx-0 md:mt-6">
+          <div className="relative mx-auto w-[min(76vw,330px)] self-start lg:mx-0 lg:mt-6">
             <figure
               data-polaroid
               aria-label="Name tag: Hello, my name is Rahul"
-              className="die-cut relative -rotate-3 overflow-hidden rounded-2xl bg-[#b94835] text-center transition-transform duration-500 hover:rotate-0"
+              className="die-cut relative -rotate-3 overflow-hidden rounded-2xl bg-[#e5470d] text-center transition-transform duration-500 hover:rotate-0"
             >
-              <div className="px-4 pb-3 pt-5 text-[#fbf7ee]">
+              <div className="px-4 pb-3 pt-5 text-[#fbfaf6]">
                 <div className="display text-[4.2rem] leading-none tracking-[-0.03em]">HELLO</div>
                 <div className="mt-1 font-mono text-sm uppercase tracking-[0.2em]">my name is</div>
               </div>
-              <div className="mx-3 flex aspect-[5/3] items-center justify-center rounded-lg bg-[#fbf7ee]">
-                <span className="-rotate-3 font-serif text-[4.4rem] italic leading-none text-[#0d0f0e]">Rahul</span>
+              <div className="mx-3 flex aspect-[5/3] items-center justify-center rounded-lg bg-[#fbfaf6]">
+                <span className="-rotate-3 font-serif text-[4.4rem] italic leading-none text-[#12151c]">Rahul</span>
               </div>
-              <figcaption className="py-3 font-mono text-xs uppercase tracking-wider text-[#fbf7ee]/85">
+              <figcaption className="py-3 font-mono text-xs uppercase tracking-wider text-[#fbfaf6]/85">
                 full-stack · ships things
               </figcaption>
             </figure>
-            <span data-pill className="absolute -bottom-9 -right-3 rotate-6 rounded-full bg-[color:var(--color-yellow)] px-4 py-2 font-mono text-xs uppercase tracking-wider text-[#0d0f0e]">
+            <span data-pill className="absolute -bottom-9 right-0 rotate-6 md:-right-3 rounded-full bg-[color:var(--color-yellow)] px-4 py-2 font-mono text-xs uppercase tracking-wider text-[#12151c]">
               Based in India
             </span>
-            <span data-pill className="absolute -left-4 -top-4 -rotate-6 rounded-full bg-[color:var(--color-blue)] px-4 py-2 font-mono text-xs uppercase tracking-wider text-[#fbf7ee]">
+            <span data-pill className="absolute -left-4 -top-4 -rotate-6 rounded-full bg-[color:var(--color-blue)] px-4 py-2 font-mono text-xs uppercase tracking-wider text-[#fbfaf6]">
               B.Tech CSE &apos;26
             </span>
           </div>
 
           {/* Copy */}
-          <div className="md:col-span-8">
+          <div className="min-w-0">
             <h2
               data-about-heading
               className="display text-[clamp(2.2rem,5.4vw,5.2rem)] leading-[0.95]"
@@ -135,7 +138,7 @@ export default function About() {
               &ldquo;Ship it, watch people use it, then make it better.&rdquo;
             </blockquote>
 
-            <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
+            <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 xl:grid-cols-4">
               {stats.map((s) => (
                 <Stat key={s.label} {...s} />
               ))}

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap, reducedMotion } from "@/lib/gsap";
+import Wordmark from "./ui/Wordmark";
 
 // Fired once the loader is gone so the hero can start its intro.
 export const INTRO_EVENT = "intro:start";
@@ -62,16 +63,14 @@ export default function Preloader() {
       className="grid-paper fixed inset-0 z-[300] flex flex-col justify-between bg-[color:var(--color-bg)] px-5 py-6 text-[color:var(--color-fg)] md:px-10 md:py-8"
     >
       <div className="line-mask">
-        <div data-loader-word className="display text-[19px] leading-[0.86] tracking-[-0.06em]">
-          rahul
-          <br />
-          verma
-        </div>
+        <div data-loader-word className="block">
+            <Wordmark />
+          </div>
       </div>
       <div className="flex items-end justify-between">
         <div className="line-mask">
           <p data-loader-word className="font-mono text-xs uppercase tracking-wider text-[color:var(--color-muted)]">
-            Setting up the desk
+            Plotting sheet 00
           </p>
         </div>
         <div className="line-mask">

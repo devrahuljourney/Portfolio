@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, reducedMotion } from "@/lib/gsap";
 import ThemeToggle from "../ThemeToggle";
+import Wordmark from "../ui/Wordmark";
 
 const items = [
   { href: "#about", label: "About" },
@@ -66,10 +67,8 @@ export default function NavBar() {
     <>
       <header ref={navRef} className="fixed inset-x-0 top-0 z-[150] px-5 pt-5 md:px-10 md:pt-7">
         <nav className="flex items-start justify-between text-[color:var(--color-fg)]">
-          <a href="#home" aria-label="Rahul Verma, home" className="display text-[19px] leading-[0.86] tracking-[-0.06em]">
-            rahul
-            <br />
-            verma
+          <a href="#home" aria-label="Rahul Verma, home" className="block">
+            <Wordmark />
           </a>
           <div className="flex items-center gap-8">
             <ul className="hidden items-center gap-7 md:flex">

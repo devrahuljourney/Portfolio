@@ -28,9 +28,9 @@ const hasShot = (p) => typeof p.image !== "string";
 const isConfidential = (p) => !hasShot(p) && p.image !== "personal";
 
 function stampFor(p) {
-  if (isConfidential(p)) return { text: "NDA", color: "#b94835" };
-  if (p.liveLink) return { text: "LIVE", color: "#3457d5" };
-  return { text: "OPEN SOURCE", color: "#b94835" };
+  if (isConfidential(p)) return { text: "NDA", color: "#e5470d" };
+  if (p.liveLink) return { text: "LIVE", color: "#0e7c7b" };
+  return { text: "OPEN SOURCE", color: "#e5470d" };
 }
 
 function PaperClip({ className = "" }) {
@@ -51,32 +51,32 @@ function PaperClip({ className = "" }) {
 function Evidence({ project }) {
   if (hasShot(project)) {
     return (
-      <div className="relative rotate-[1.5deg] bg-[#fbf7ee] p-3 pb-10 shadow-[0_18px_30px_-14px_rgba(13,15,14,0.45)]">
+      <div className="relative rotate-[1.5deg] bg-[#fbfaf6] p-3 pb-10 shadow-[0_18px_30px_-14px_rgba(18,21,28,0.45)]">
         <PaperClip className="absolute -top-7 left-10 h-16 w-6" />
         <div className="relative aspect-[16/10] overflow-hidden">
           <Image src={project.image} alt={`${project.title} screenshot`} fill sizes="(max-width: 768px) 90vw, 560px" className="object-cover object-top" />
         </div>
-        <p className="absolute bottom-3 left-4 font-mono text-xs text-[#62655e]">fig. 1 · {project.title.toLowerCase()}</p>
+        <p className="absolute bottom-3 left-4 font-mono text-xs text-[#616977]">fig. 1 · {project.title.toLowerCase()}</p>
       </div>
     );
   }
   if (isConfidential(project)) {
     const bars = [92, 78, 100, 64, 88, 40, 96, 72, 84, 56];
     return (
-      <div className="relative -rotate-1 bg-[#fbf7ee] px-7 py-8 shadow-[0_18px_30px_-14px_rgba(13,15,14,0.45)]">
+      <div className="relative -rotate-1 bg-[#fbfaf6] px-7 py-8 shadow-[0_18px_30px_-14px_rgba(18,21,28,0.45)]">
         <PaperClip className="absolute -top-7 right-12 h-16 w-6" />
-        <p className="font-mono text-xs uppercase tracking-wider text-[#62655e]">Client brief · page 1 of 1</p>
+        <p className="font-mono text-xs uppercase tracking-wider text-[#616977]">Client brief · page 1 of 1</p>
         <div className="mt-5 space-y-3">
           {bars.map((w, i) => (
-            <div key={i} data-redact className="h-3.5 origin-left bg-[#0d0f0e]" style={{ width: `${w}%` }} />
+            <div key={i} data-redact className="h-3.5 origin-left bg-[#12151c]" style={{ width: `${w}%` }} />
           ))}
         </div>
-        <p className="mt-6 font-mono text-xs text-[#62655e]">Details shared on request, under NDA.</p>
+        <p className="mt-6 font-mono text-xs text-[#616977]">Details shared on request, under NDA.</p>
       </div>
     );
   }
   return (
-    <div className="grid-paper relative flex aspect-[16/11] items-center justify-center rotate-1 bg-[#fbf7ee] shadow-[0_18px_30px_-14px_rgba(13,15,14,0.45)]">
+    <div className="grid-paper relative flex aspect-[16/11] items-center justify-center rotate-1 bg-[#fbfaf6] shadow-[0_18px_30px_-14px_rgba(18,21,28,0.45)]">
       <PaperClip className="absolute -top-7 left-10 h-16 w-6" />
       <Sticker name="phone" className="w-[22%] max-w-[120px]" />
     </div>
@@ -86,21 +86,21 @@ function Evidence({ project }) {
 function CaseFile({ project, number, total }) {
   const stamp = stampFor(project);
   return (
-    <div className="grid gap-10 md:grid-cols-[1.05fr_1fr] md:gap-12">
+    <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
       {/* Left page: typed case sheet */}
-      <div data-sheet className="relative bg-[#fbf7ee] px-6 py-8 text-[#0d0f0e] shadow-[0_18px_30px_-14px_rgba(13,15,14,0.4)] md:px-10 md:py-10">
-        <div className="flex flex-wrap items-baseline justify-between gap-2 font-mono text-xs uppercase tracking-wider text-[#62655e]">
+      <div data-sheet className="relative bg-[#fbfaf6] px-6 py-8 text-[#12151c] shadow-[0_18px_30px_-14px_rgba(18,21,28,0.4)] md:px-10 md:py-10">
+        <div className="flex flex-wrap items-baseline justify-between gap-2 font-mono text-xs uppercase tracking-wider text-[#616977]">
           <span>
             Case file № {String(number).padStart(2, "0")}
-            <span className="text-[#92958b]"> / {String(total).padStart(2, "0")}</span>
+            <span className="text-[#9aa0ab]"> / {String(total).padStart(2, "0")}</span>
           </span>
           <span>{project.year}</span>
         </div>
         <h3 data-title className="display mt-6 text-[clamp(2.4rem,4.6vw,4.4rem)]">{project.title}</h3>
-        <p className="mt-3 font-mono text-sm uppercase tracking-wider text-[#b94835]">{project.tagline}</p>
-        {project.client && <p className="mt-1 font-mono text-xs uppercase tracking-wider text-[#62655e]">{project.client}</p>}
+        <p className="mt-3 font-mono text-sm uppercase tracking-wider text-[#e5470d]">{project.tagline}</p>
+        {project.client && <p className="mt-1 font-mono text-xs uppercase tracking-wider text-[#616977]">{project.client}</p>}
 
-        <p data-typed-desc className="mt-6 font-mono text-[14.5px] leading-7 text-[#292b28]">
+        <p data-typed-desc className="mt-6 font-mono text-[14.5px] leading-7 text-[#2a2f3a]">
           {project.description.split(" ").map((w, i) => (
             <span key={i} data-w>
               {w}{" "}
@@ -109,14 +109,14 @@ function CaseFile({ project, number, total }) {
         </p>
 
         <div className="mt-7">
-          <p className="font-mono text-xs uppercase tracking-wider text-[#62655e]">Stack</p>
+          <p className="font-mono text-xs uppercase tracking-wider text-[#616977]">Stack</p>
           {/* Label-maker tape */}
           <ul className="mt-3 flex flex-wrap gap-2.5">
             {project.tech.map((t, i) => (
               <li
                 key={t}
                 data-tape
-                className="bg-[#0d0f0e] px-2.5 py-1 font-mono text-xs uppercase tracking-[0.12em] text-[#ece6d9] [text-shadow:0_1px_0_rgba(255,255,255,0.18)]"
+                className="bg-[#12151c] px-2.5 py-1 font-mono text-xs uppercase tracking-[0.12em] text-[#f1efe9] [text-shadow:0_1px_0_rgba(255,255,255,0.18)]"
                 style={{ transform: `rotate(${((i * 37) % 5) - 2}deg)` }}
               >
                 {t}
@@ -127,7 +127,7 @@ function CaseFile({ project, number, total }) {
 
         <div className="mt-8 flex flex-wrap gap-6 font-mono text-sm uppercase tracking-wider">
           {project.liveLink && (
-            <a href={project.liveLink} target="_blank" rel="noopener noreferrer" data-cursor-label="Visit" className="link-underline text-[#b94835]">
+            <a href={project.liveLink} target="_blank" rel="noopener noreferrer" data-cursor-label="Visit" className="link-underline text-[#e5470d]">
               Visit live ↗
             </a>
           )}
@@ -212,7 +212,7 @@ export default function Works() {
   return (
     <section id="projects" ref={root} className="relative w-full px-5 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1440px]">
-        <SectionHead label="Selected work" index="03 / 05" title="WORKS" count={String(projects.length).padStart(2, "0")} />
+        <SectionHead label="Selected work" index="03 / 05" title="Case files" count={`${projects.length} files`} />
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filter case files">
@@ -252,14 +252,14 @@ export default function Works() {
                   style={{ transform: on ? "translateY(-6px)" : "none" }}
                 >
                   <span
-                    className="block min-w-[128px] px-4 pb-3 pt-2.5 font-mono text-[11px] uppercase tracking-wider text-[#0d0f0e] transition-colors md:min-w-[150px]"
+                    className="block min-w-[128px] px-4 pb-3 pt-2.5 font-mono text-[11px] uppercase tracking-wider text-[#12151c] transition-colors md:min-w-[150px]"
                     style={{
                       background: on ? MANILA : MANILA_DARK,
                       clipPath: "polygon(10px 0, calc(100% - 10px) 0, 100% 100%, 0 100%)",
                       boxShadow: on ? "none" : `inset 0 -6px 8px -6px ${MANILA_EDGE}`,
                     }}
                   >
-                    <span className="text-[#b94835]">{String(i + 1).padStart(2, "0")}</span>{" "}
+                    <span className="text-[#e5470d]">{String(i + 1).padStart(2, "0")}</span>{" "}
                     <span className="group-hover:underline">{p.title.length > 16 ? p.title.slice(0, 15) + "…" : p.title}</span>
                   </span>
                 </button>
@@ -275,12 +275,12 @@ export default function Works() {
           <div
             ref={folderRef}
             role="tabpanel"
-            className="relative z-[1] rounded-b-lg rounded-tr-lg p-4 shadow-[0_40px_70px_-35px_rgba(13,15,14,0.55)] md:p-8"
+            className="relative z-[1] rounded-b-lg rounded-tr-lg p-4 shadow-[0_40px_70px_-35px_rgba(18,21,28,0.55)] md:p-8"
             style={{ background: MANILA, backgroundImage: "linear-gradient(180deg, rgba(255,255,255,0.12), transparent 30%)" }}
           >
             <CaseFile project={active} number={index + 1} total={visible.length} />
             {/* Folder crease */}
-            <div aria-hidden="true" className="pointer-events-none absolute inset-y-6 left-1/2 hidden w-px bg-[#b8955a]/50 md:block" />
+            <div aria-hidden="true" className="pointer-events-none absolute inset-y-6 left-1/2 hidden w-px bg-[#b8955a]/50 lg:block" />
           </div>
         </div>
       </div>

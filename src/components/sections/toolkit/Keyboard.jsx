@@ -38,10 +38,10 @@ function matches(buffer) {
 }
 
 const TONES = {
-  base: ["#efe8d8", "#cfc5b0", "#0d0f0e"],
-  mod: ["#4a4c49", "#2f312f", "#ece6d9"],
-  red: ["#c4513d", "#8f3626", "#fbf7ee"],
-  blue: ["#3f62de", "#233f9e", "#fbf7ee"],
+  base: ["#eef0f2", "#c9ccd2", "#12151c"],
+  mod: ["#4a4c49", "#2f312f", "#f1efe9"],
+  red: ["#f05a1e", "#a8340a", "#fbfaf6"],
+  blue: ["#129493", "#095a59", "#fbfaf6"],
 };
 
 // Short synthesized "thock": filtered noise burst. Off unless enabled.
@@ -95,7 +95,7 @@ function Key({ legend, code, w, tone = "base", down, onPress }) {
         }}
       >
         <span className={`font-mono leading-none ${legend.length > 1 ? "text-[1.05cqw] uppercase" : "text-[1.55cqw]"}`}>{legend}</span>
-        {hint && <span className="font-mono text-[0.85cqw] leading-none text-[#b94835]">{hint}</span>}
+        {hint && <span className="font-mono text-[0.85cqw] leading-none text-[#e5470d]">{hint}</span>}
       </span>
     </button>
   );
@@ -254,21 +254,21 @@ export default function Keyboard() {
         <div
           ref={screenRef}
           onClick={() => deviceRef.current.focus({ preventScroll: true })}
-          className="h-[230px] overflow-y-auto px-5 py-4 font-mono text-[13px] leading-6 text-[#d6cfc0] [scrollbar-width:none] md:h-[250px] md:px-7 md:text-sm"
+          className="h-[230px] overflow-y-auto px-5 py-4 font-mono text-[13px] leading-6 text-[#cfd5df] [scrollbar-width:none] md:h-[250px] md:px-7 md:text-sm"
           style={{ backgroundImage: "repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 3px)" }}
         >
-          <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-[#62655e]">
+          <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-widest text-[#616977]">
             <span className="flex items-center gap-2">
-              <span className={`h-1.5 w-1.5 rounded-full ${focused ? "bg-[#7fb069]" : "bg-[#62655e]"}`} />
+              <span className={`h-1.5 w-1.5 rounded-full ${focused ? "bg-[#7fb069]" : "bg-[#616977]"}`} />
               ~/toolkit
             </span>
             <span>{focused ? "listening · esc to stop" : "click to type"}</span>
           </div>
 
           {log.length === 0 && (
-            <p className="text-[#92958b]">
-              Type a tool I use and press <span className="text-[#f0cc78]">enter</span>. Try <span className="text-[#f0cc78]">react</span>,{" "}
-              <span className="text-[#f0cc78]">kotlin</span>, or <span className="text-[#f0cc78]">ls</span>.
+            <p className="text-[#9aa0ab]">
+              Type a tool I use and press <span className="text-[#f4dc4b]">enter</span>. Try <span className="text-[#f4dc4b]">react</span>,{" "}
+              <span className="text-[#f4dc4b]">kotlin</span>, or <span className="text-[#f4dc4b]">ls</span>.
             </p>
           )}
 
@@ -278,14 +278,14 @@ export default function Keyboard() {
                 <span className="text-[#7fb069]">$</span> {entry.cmd}
               </p>
               {typeof entry.out === "string" ? (
-                <p className="text-[#e05a3f]">{entry.out}</p>
+                <p className="text-[#ff6a2b]">{entry.out}</p>
               ) : Array.isArray(entry.out) ? (
-                <p className="text-[#92958b]">{entry.out.join("  ·  ")}</p>
+                <p className="text-[#9aa0ab]">{entry.out.join("  ·  ")}</p>
               ) : (
-                <div className="mt-1 border-l-2 border-[#f0cc78] pl-3">
-                  <p className="text-lg text-[#f0cc78]">{entry.out.name}</p>
+                <div className="mt-1 border-l-2 border-[#f4dc4b] pl-3">
+                  <p className="text-lg text-[#f4dc4b]">{entry.out.name}</p>
                   <p>{entry.out.note}</p>
-                  <p className="text-[#92958b]">
+                  <p className="text-[#9aa0ab]">
                     used in →{" "}
                     {usedIn(entry.out).length ? usedIn(entry.out).join(", ") : "behind the scenes on most of my projects"}
                   </p>
@@ -296,9 +296,9 @@ export default function Keyboard() {
 
           <p className="mt-2">
             <span className="text-[#7fb069]">$</span> {buffer}
-            <span className={`ml-0.5 inline-block h-[1.1em] w-[0.55em] translate-y-[0.2em] bg-[#f0cc78] ${focused ? "animate-pulse" : "opacity-40"}`} />
+            <span className={`ml-0.5 inline-block h-[1.1em] w-[0.55em] translate-y-[0.2em] bg-[#f4dc4b] ${focused ? "animate-pulse" : "opacity-40"}`} />
             {suggestions.length > 0 && suggestions[0].name.toLowerCase() !== buffer && (
-              <span className="ml-3 text-[#62655e]">tab → {suggestions.map((s) => s.name).join(" · ")}</span>
+              <span className="ml-3 text-[#616977]">tab → {suggestions.map((s) => s.name).join(" · ")}</span>
             )}
           </p>
         </div>
@@ -306,9 +306,9 @@ export default function Keyboard() {
 
       {/* Keyboard */}
       <div
-        className="relative rounded-[18px] bg-[#2a2c2b] p-[1.6%] shadow-[0_40px_60px_-30px_rgba(13,15,14,0.7),inset_0_2px_0_rgba(255,255,255,0.08)]"
+        className="relative rounded-[18px] bg-[#2a2c2b] p-[1.6%] shadow-[0_40px_60px_-30px_rgba(18,21,28,0.7),inset_0_2px_0_rgba(255,255,255,0.08)]"
       >
-        <div className="mb-[1%] flex items-center justify-between px-[0.6%] font-mono text-[10px] uppercase tracking-widest text-[#92958b]">
+        <div className="mb-[1%] flex items-center justify-between px-[0.6%] font-mono text-[10px] uppercase tracking-widest text-[#9aa0ab]">
           <span className="flex items-center gap-3">
             <span className="flex items-center gap-1.5">
               <span className={`h-1.5 w-1.5 rounded-full ${caps ? "bg-[#7fb069] shadow-[0_0_6px_#7fb069]" : "bg-[#3b3d3b]"}`} /> caps
@@ -319,7 +319,7 @@ export default function Keyboard() {
             type="button"
             tabIndex={-1}
             onClick={() => setSound((s) => !s)}
-            className="uppercase tracking-widest hover:text-[#ece6d9]"
+            className="uppercase tracking-widest hover:text-[#f1efe9]"
             aria-pressed={sound}
           >
             sound {sound ? "on" : "off"}

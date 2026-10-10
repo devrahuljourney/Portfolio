@@ -1,4 +1,4 @@
-import { Montserrat, DM_Mono } from "next/font/google";
+import { Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import Cursor from "@/components/providers/Cursor";
@@ -7,15 +7,17 @@ import ThemeProvider from "@/components/providers/ThemeProvider";
 import NavBar from "@/components/NavigationBar/NavBar";
 import StickerDefs from "@/components/stickers/StickerDefs";
 
-const montserrat = Montserrat({
+// Archivo's width axis gives the condensed poster headlines; JetBrains Mono
+// carries labels and code.
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  axes: ["wdth"],
+  variable: "--font-archivo",
   display: "swap",
 });
-const dmMono = DM_Mono({
+const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-dmmono",
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
@@ -97,8 +99,8 @@ export const viewport = {
   initialScale: 1,
   colorScheme: "dark light",
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#101110" },
-    { media: "(prefers-color-scheme: light)", color: "#ece6d9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d1424" },
+    { media: "(prefers-color-scheme: light)", color: "#f1efe9" },
   ],
 };
 
@@ -107,7 +109,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${montserrat.variable} ${dmMono.variable}`}
+      className={`${archivo.variable} ${jetbrains.variable}`}
     >
       <head>
         <script

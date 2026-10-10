@@ -2,45 +2,43 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================================
-   DESIGN TOKENS: "paper & ink"
-   Day: warm paper desk, black ink, brick red + blue accents.
-   Night: the same desk with the lights off; ink becomes the
-   paper and paper becomes the ink. Stickers keep their colors.
+   DESIGN TOKENS: "drafting sheet"
+   Day: cool drafting white, graphite-navy ink, safety-orange
+   accent, teal + highlighter yellow. Night: a blueprint, navy
+   sheet with light linework. Objects keep their own colors.
    ============================================================ */
 :root {
-  --bg: #ece6d9;
-  --bg-soft: #f3eee3;
-  --surface: #fbf7ee;
-  --fg: #0d0f0e;
-  --fg-soft: #292b28;
-  --muted: #62655e;
-  --faint: #92958b;
-  --line: rgba(13, 15, 14, 0.16);
-  --grid: rgba(13, 15, 14, 0.07);
-  --accent: #b94835;
-  --blue: #3457d5;
-  --yellow: #f0cc78;
-  --pink: #ff8b9d;
-  --on-accent: #fbf7ee;
-  --sky-top: #6f98cf;
-  --sky-mid: #a9c0dd;
+  --bg: #f1efe9;
+  --bg-soft: #f6f5f0;
+  --surface: #fbfaf6;
+  --fg: #12151c;
+  --fg-soft: #2a2f3a;
+  --muted: #616977;
+  --faint: #9aa0ab;
+  --line: rgba(18, 21, 28, 0.16);
+  --grid: rgba(18, 21, 28, 0.07);
+  --accent: #e5470d;
+  --blue: #0e7c7b;
+  --yellow: #f4dc4b;
+  --pink: #8fd3b6;
+  --on-accent: #fbfaf6;
+  --shadow: #12151c;
 }
 
 .dark {
-  --bg: #101110;
-  --bg-soft: #171917;
-  --surface: #1e201e;
-  --fg: #ece6d9;
-  --fg-soft: #d6cfc0;
-  --muted: #92958b;
-  --faint: #62655e;
-  --line: rgba(236, 230, 217, 0.14);
-  --grid: rgba(236, 230, 217, 0.05);
-  --accent: #e05a3f;
-  --blue: #6b87f0;
-  --on-accent: #101110;
-  --sky-top: #0b1530;
-  --sky-mid: #1d2b4f;
+  --bg: #0d1424;
+  --bg-soft: #111a2e;
+  --surface: #16213a;
+  --fg: #f1efe9;
+  --fg-soft: #cfd5df;
+  --muted: #9aa0ab;
+  --faint: #616977;
+  --line: rgba(241, 239, 233, 0.14);
+  --grid: rgba(159, 200, 255, 0.12);
+  --accent: #ff6a2b;
+  --blue: #3fc1bd;
+  --on-accent: #0d1424;
+  --shadow: #050912;
 }
 
 @theme {
@@ -57,13 +55,13 @@
   --color-yellow: var(--yellow);
   --color-pink: var(--pink);
   --color-on-accent: var(--on-accent);
-  --color-ink: #0d0f0e;
-  --color-paper: #ece6d9;
-  --color-cream: #fbf7ee;
+  --color-ink: #12151c;
+  --color-paper: #f1efe9;
+  --color-cream: #fbfaf6;
 
-  --font-display: var(--font-montserrat), "Helvetica Neue", Arial, sans-serif;
-  --font-body: var(--font-montserrat), system-ui, sans-serif;
-  --font-mono: var(--font-dmmono), ui-monospace, monospace;
+  --font-display: var(--font-archivo), "Arial Narrow", sans-serif;
+  --font-body: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -74,6 +72,7 @@
   }
 
   html {
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -94,7 +93,8 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 800;
-    letter-spacing: -0.035em;
+    font-variation-settings: "wdth" 80;
+    letter-spacing: -0.01em;
     line-height: 0.92;
   }
 
@@ -125,38 +125,39 @@
   mix-blend-mode: overlay;
 }
 
-/* Graph paper, the desk surface. */
+/* Drafting sheet: dot grid with faint major lines every 5 dots. */
 .grid-paper {
   background-image:
+    radial-gradient(circle, var(--grid) 1.1px, transparent 1.3px),
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-size: 24px 24px, 120px 120px, 120px 120px;
+  background-position: 12px 12px, 0 0, 0 0;
 }
 
-/* Ruled index-card lines with a red margin. */
+/* Ruled index-card lines with a red margin (narrower on phones). */
 .ruled {
+  --margin: 30px;
   background-color: var(--color-surface);
   background-image:
-    linear-gradient(90deg, transparent 54px, color-mix(in srgb, var(--accent) 45%, transparent) 54px, color-mix(in srgb, var(--accent) 45%, transparent) 56px, transparent 56px),
+    linear-gradient(90deg, transparent var(--margin), color-mix(in srgb, var(--accent) 45%, transparent) var(--margin), color-mix(in srgb, var(--accent) 45%, transparent) calc(var(--margin) + 2px), transparent calc(var(--margin) + 2px)),
     repeating-linear-gradient(transparent 0 31px, color-mix(in srgb, var(--blue) 16%, transparent) 31px 32px);
 }
 
 /* ============================================================
-   STICKERS: die-cut look via the #stk SVG filter (StickerDefs)
+   OBJECTS: flat ink outline + hard offset shadow (#stk filter)
    ============================================================ */
 .sticker-svg { overflow: visible; }
-.sticker-svg .d { font-family: var(--font-display); font-weight: 800; }
+.sticker-svg .d { font-family: var(--font-display); font-weight: 800; font-variation-settings: "wdth" 70; }
 .sticker-svg .s { font-family: var(--font-display); font-weight: 600; }
 .sticker-svg .m { font-family: var(--font-mono); font-weight: 400; }
 .sticker-drag { touch-action: none; cursor: grab; }
 .sticker-drag:active { cursor: grabbing; }
 
-/* Paper "sticker" edge for HTML elements (polaroid, stamps). */
+/* Same printed-object look for HTML elements (name tag). */
 .die-cut {
-  box-shadow:
-    0 0 0 6px var(--color-cream),
-    0 0 0 7.5px #e05a3f,
-    6px 12px 24px -6px rgba(13, 15, 14, 0.35);
+  border: 2px solid var(--color-ink);
+  box-shadow: 7px 8px 0 var(--shadow);
 }
 
 /* ============================================================
@@ -189,9 +190,11 @@
 }
 .display {
   font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 0.88;
+  font-weight: 900;
+  /* next/font doesn't declare a font-stretch range, so set the axis directly. */
+  font-variation-settings: "wdth" 62;
+  letter-spacing: 0;
+  line-height: 0.86;
 }
 
 /* Masked line for split-text reveals. */
@@ -210,18 +213,18 @@
    KEYCAPS
    ============================================================ */
 .keycap {
-  --cap: #efe8d8;
-  --cap-side: #cfc5b0;
-  --cap-ink: #0d0f0e;
+  --cap: #eef0f2;
+  --cap-side: #c9ccd2;
+  --cap-ink: #12151c;
   background: var(--cap);
   color: var(--cap-ink);
   border-radius: 10px;
   box-shadow: inset 0 -6px 0 var(--cap-side), 0 2px 0 #0b0c0b;
   transition: box-shadow 0.08s ease, translate 0.08s ease;
 }
-.keycap[data-tone="red"] { --cap: #b94835; --cap-side: #8f3626; --cap-ink: #fbf7ee; }
-.keycap[data-tone="blue"] { --cap: #3457d5; --cap-side: #233f9e; --cap-ink: #fbf7ee; }
-.keycap[data-tone="yellow"] { --cap: #f0cc78; --cap-side: #c9a250; }
+.keycap[data-tone="red"] { --cap: #e5470d; --cap-side: #a8340a; --cap-ink: #fbfaf6; }
+.keycap[data-tone="blue"] { --cap: #0e7c7b; --cap-side: #095a59; --cap-ink: #fbfaf6; }
+.keycap[data-tone="yellow"] { --cap: #f4dc4b; --cap-side: #c9b42f; }
 .keycap.is-down,
 .keycap:active {
   translate: 0 4px;
@@ -245,3 +248,7 @@
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
+
+@media (min-width: 768px) {
+  .ruled { --margin: 54px; }
+}

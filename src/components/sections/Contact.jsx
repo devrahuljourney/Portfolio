@@ -13,7 +13,7 @@ function Blank({ className = "", ...props }) {
     <input
       {...props}
       required
-      className={`mx-1 inline-block border-b-2 border-dashed border-[#0d0f0e]/40 bg-transparent px-1 font-mono text-[0.95em] text-[#3457d5] outline-none transition-colors placeholder:text-[#92958b] focus:border-[#b94835] ${className}`}
+      className={`mx-1 inline-block border-b-2 border-dashed border-[#12151c]/40 bg-transparent px-1 font-mono text-[0.95em] text-[#0e7c7b] outline-none transition-colors placeholder:text-[#9aa0ab] focus:border-[#e5470d] ${className}`}
     />
   );
 }
@@ -72,7 +72,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative w-full px-5 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1440px]">
-        <SectionHead label="Connect" index="05 / 05" title="HELLO" />
+        <SectionHead label="Get in touch" index="05 / 05" title="Say hello" />
 
         <div className="mt-14 grid gap-16 md:grid-cols-[1fr_1.1fr] md:gap-14">
           <div>
@@ -125,10 +125,10 @@ export default function Contact() {
             <form
               ref={letter}
               onSubmit={onSubmit}
-              className="ruled relative -rotate-[1.5deg] rounded-md py-8 pl-[76px] pr-6 text-[17px] leading-[32px] text-[#0d0f0e] shadow-[0_30px_60px_-24px_rgba(13,15,14,0.45)] md:pr-10 md:text-lg"
-              style={{ backgroundColor: "#fbf7ee" }}
+              className="ruled relative -rotate-[1.5deg] rounded-md py-8 pl-[46px] pr-5 text-[17px] leading-[32px] text-[#12151c] shadow-[0_30px_60px_-24px_rgba(18,21,28,0.45)] md:pr-10 md:text-lg"
+              style={{ backgroundColor: "#fbfaf6" }}
             >
-              <span className="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-[-3deg] bg-[#f0cc78]/80" />
+              <span className="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-[-3deg] bg-[#f4dc4b]/80" />
               <p className="font-semibold">Dear Rahul,</p>
               <p className="mt-[32px]">
                 My name is
@@ -145,7 +145,7 @@ export default function Contact() {
                 rows={4}
                 aria-label="Your message"
                 placeholder="an app, a site, an AI feature, a wild idea..."
-                className="block w-full resize-none bg-transparent font-mono text-[0.95em] leading-[32px] text-[#3457d5] outline-none placeholder:text-[#92958b]"
+                className="block w-full resize-none bg-transparent font-mono text-[0.95em] leading-[32px] text-[#0e7c7b] outline-none placeholder:text-[#9aa0ab]"
               />
               <div className="mt-[32px] flex flex-wrap items-center justify-between gap-4">
                 <span className="font-semibold">Talk soon,</span>
@@ -153,13 +153,13 @@ export default function Contact() {
                   type="submit"
                   disabled={status === "loading"}
                   data-cursor-label="Send"
-                  className="rounded-full bg-[#b94835] px-6 py-3 font-mono text-sm uppercase tracking-wider text-[#fbf7ee] transition-transform hover:-rotate-2 disabled:opacity-60"
+                  className="rounded-full bg-[#e5470d] px-6 py-3 font-mono text-sm uppercase tracking-wider text-[#fbfaf6] transition-transform hover:-rotate-2 disabled:opacity-60"
                 >
                   {status === "loading" ? "Folding..." : "Fold & send ✈"}
                 </button>
               </div>
               {status === "error" && (
-                <p className="mt-4 font-mono text-sm text-[#b94835]">
+                <p className="mt-4 font-mono text-sm text-[#e5470d]">
                   That didn&apos;t send. Try again, or email {contactEmail}.
                 </p>
               )}

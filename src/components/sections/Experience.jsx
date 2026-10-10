@@ -33,7 +33,7 @@ export default function Experience() {
   return (
     <section id="experience" ref={root} className="relative w-full px-5 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1440px]">
-        <SectionHead label="Work log" index="02 / 05" title="LOG" count={String(experience.length).padStart(2, "0")} />
+        <SectionHead label="Work log" index="02 / 05" title="Log" count={`${experience.length} roles`} />
         <p className="mt-6 max-w-md text-[color:var(--color-fg-soft)]">
           From intern to engineer, shipping real products for real users.
         </p>
@@ -43,34 +43,34 @@ export default function Experience() {
             <div key={exp.id} className="md:sticky" style={{ top: `calc(14vh + ${i * 26}px)` }}>
               <article
                 data-card
-                className="ruled relative mx-auto max-w-5xl origin-top rounded-md border border-[color:var(--color-line)] px-6 pb-10 pt-6 pl-[76px] text-[#0d0f0e] shadow-[0_24px_50px_-20px_rgba(13,15,14,0.35)] md:px-12 md:pl-[96px]"
-                style={{ backgroundColor: "#fbf7ee" }}
+                className="ruled relative mx-auto max-w-5xl origin-top rounded-md border border-[color:var(--color-line)] px-5 pb-10 pt-6 pl-[46px] text-[#12151c] shadow-[0_24px_50px_-20px_rgba(18,21,28,0.35)] md:px-12 md:pl-[96px]"
+                style={{ backgroundColor: "#fbfaf6" }}
               >
                 <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-xs uppercase tracking-wider">
-                  <span className="text-[#b94835]">
+                  <span className="text-[#e5470d]">
                     {exp.start} → {exp.end}
                   </span>
-                  <span className="text-[#62655e]">{exp.tag}</span>
+                  <span className="text-[#616977]">{exp.tag}</span>
                 </div>
                 <h3 className="display mt-6 text-[clamp(2rem,4.6vw,3.8rem)]">{exp.role}</h3>
-                <p className="mt-2 font-semibold text-[#292b28]">
+                <p className="mt-2 font-semibold text-[#2a2f3a]">
                   {exp.company}
-                  {exp.location && <span className="font-medium text-[#62655e]"> · {exp.location}</span>}
+                  {exp.location && <span className="font-medium text-[#616977]"> · {exp.location}</span>}
                 </p>
                 <ul className="mt-6 space-y-3">
                   {exp.points.map((p, j) => (
-                    <li key={j} className="flex gap-3 text-[15px] leading-relaxed text-[#292b28] md:text-base">
-                      <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rotate-45 bg-[#b94835]" />
+                    <li key={j} className="flex gap-3 text-[15px] leading-relaxed text-[#2a2f3a] md:text-base">
+                      <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rotate-45 bg-[#e5470d]" />
                       {p}
                     </li>
                   ))}
                 </ul>
                 {exp.end === "Present" && (
-                  <span className="absolute -right-3 -top-4 rotate-6 rounded-full bg-[#b94835] px-4 py-2 font-mono text-xs uppercase tracking-wider text-[#fbf7ee]">
+                  <span className="absolute -right-3 -top-4 rotate-6 rounded-full bg-[#e5470d] px-4 py-2 font-mono text-xs uppercase tracking-wider text-[#fbfaf6]">
                     Current
                   </span>
                 )}
-                <span className="absolute bottom-4 right-6 font-mono text-xs text-[#92958b]">
+                <span className="absolute bottom-4 right-6 font-mono text-xs text-[#9aa0ab]">
                   {String(i + 1).padStart(2, "0")} / {String(experience.length).padStart(2, "0")}
                 </span>
               </article>
