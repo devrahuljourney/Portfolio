@@ -45,7 +45,7 @@ export default function Cursor() {
       }
     };
 
-    const interactiveSel = "a, button, [data-cursor], input, textarea, [role='button']";
+    const interactiveSel = "a, button, [data-cursor], [data-cursor-label], input, textarea, [role='button']";
     const onOver = (e) => {
       const target = e.target.closest?.(interactiveSel);
       if (target) {
@@ -86,10 +86,9 @@ export default function Cursor() {
         ref={dotRef}
         className="cursor-dot"
         style={{
-          width: 5,
-          height: 5,
-          background: "var(--color-accent)",
-          boxShadow: "0 0 8px color-mix(in srgb, var(--color-accent) 90%, transparent)",
+          width: 8,
+          height: 8,
+          background: "var(--color-fg)",
           opacity: hovering ? 0 : 1,
           transition: "opacity .2s",
         }}
@@ -98,18 +97,16 @@ export default function Cursor() {
         ref={ringRef}
         className="cursor-dot flex items-center justify-center"
         style={{
-          width: hovering ? 48 : 24,
-          height: hovering ? 48 : 24,
-          border: "1px solid color-mix(in srgb, var(--color-accent) 65%, transparent)",
-          background: hovering
-            ? "color-mix(in srgb, var(--color-accent) 12%, transparent)"
-            : "transparent",
+          width: hovering ? (label ? 64 : 40) : 26,
+          height: hovering ? (label ? 64 : 40) : 26,
+          border: hovering ? "none" : "1.5px solid var(--color-fg)",
+          background: hovering ? "var(--color-accent)" : "transparent",
           transition:
             "width .3s cubic-bezier(0.16,1,0.3,1), height .3s cubic-bezier(0.16,1,0.3,1), background .3s",
         }}
       >
         {label && (
-          <span className="text-[9px] uppercase tracking-widest text-[color:var(--color-accent)] font-[family-name:var(--font-jetbrains)]">
+          <span className="font-mono text-[10px] uppercase tracking-wider text-[color:var(--color-on-accent)]">
             {label}
           </span>
         )}

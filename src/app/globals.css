@@ -2,37 +2,45 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================================
-   DESIGN TOKENS — themeable palette
-   Refined lime-on-X editorial system. Values live in :root
-   (light) and .dark, mapped into Tailwind tokens below so the
-   whole page swaps by toggling a class. No AI-blob gradients.
+   DESIGN TOKENS: "paper & ink"
+   Day: warm paper desk, black ink, brick red + blue accents.
+   Night: the same desk with the lights off; ink becomes the
+   paper and paper becomes the ink. Stickers keep their colors.
    ============================================================ */
 :root {
-  /* Light theme — warm bone paper, deep lime accent */
-  --bg: #f4f3ec;
-  --bg-soft: #ffffff;
-  --surface: #ffffff;
-  --fg: #16150f;
-  --muted: #57564d;
-  --faint: #b4b2a6;
-  --line: rgba(0, 0, 0, 0.12);
-  --dot: rgba(0, 0, 0, 0.10);
-  --accent: #4d7c0f;
-  --on-accent: #ffffff;
+  --bg: #ece6d9;
+  --bg-soft: #f3eee3;
+  --surface: #fbf7ee;
+  --fg: #0d0f0e;
+  --fg-soft: #292b28;
+  --muted: #62655e;
+  --faint: #92958b;
+  --line: rgba(13, 15, 14, 0.16);
+  --grid: rgba(13, 15, 14, 0.07);
+  --accent: #b94835;
+  --blue: #3457d5;
+  --yellow: #f0cc78;
+  --pink: #ff8b9d;
+  --on-accent: #fbf7ee;
+  --sky-top: #6f98cf;
+  --sky-mid: #a9c0dd;
 }
 
 .dark {
-  /* Dark theme — near-black, bright lime accent */
-  --bg: #090909;
-  --bg-soft: #0e0e0e;
-  --surface: #141414;
-  --fg: #f2f2ee;
-  --muted: #8a8a82;
-  --faint: #4c4c46;
-  --line: rgba(255, 255, 255, 0.09);
-  --dot: rgba(255, 255, 255, 0.08);
-  --accent: #c7f94a;
-  --on-accent: #060606;
+  --bg: #101110;
+  --bg-soft: #171917;
+  --surface: #1e201e;
+  --fg: #ece6d9;
+  --fg-soft: #d6cfc0;
+  --muted: #92958b;
+  --faint: #62655e;
+  --line: rgba(236, 230, 217, 0.14);
+  --grid: rgba(236, 230, 217, 0.05);
+  --accent: #e05a3f;
+  --blue: #6b87f0;
+  --on-accent: #101110;
+  --sky-top: #0b1530;
+  --sky-mid: #1d2b4f;
 }
 
 @theme {
@@ -40,15 +48,22 @@
   --color-bg-soft: var(--bg-soft);
   --color-surface: var(--surface);
   --color-fg: var(--fg);
+  --color-fg-soft: var(--fg-soft);
   --color-muted: var(--muted);
   --color-faint: var(--faint);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-blue: var(--blue);
+  --color-yellow: var(--yellow);
+  --color-pink: var(--pink);
   --color-on-accent: var(--on-accent);
+  --color-ink: #0d0f0e;
+  --color-paper: #ece6d9;
+  --color-cream: #fbf7ee;
 
-  --font-display: var(--font-space-grotesk), "Arial Narrow", sans-serif;
-  --font-body: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-display: var(--font-montserrat), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-montserrat), system-ui, sans-serif;
+  --font-mono: var(--font-dmmono), ui-monospace, monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -67,8 +82,8 @@
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-body);
+    font-weight: 500;
     overflow-x: hidden;
-    /* Native cursor hidden on pointer devices; custom cursor replaces it */
   }
 
   ::selection {
@@ -78,25 +93,21 @@
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 0.95;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
   }
 
-  /* Thin, unobtrusive scrollbar */
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: var(--color-bg); }
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--color-fg) 22%, transparent);
+    background: color-mix(in srgb, var(--color-fg) 25%, transparent);
     border-radius: 99px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: color-mix(in srgb, var(--color-fg) 35%, transparent);
   }
 }
 
 /* ============================================================
-   TEXTURE — subtle film grain (not a gradient)
+   TEXTURE
    ============================================================ */
 .grain::after {
   content: "";
@@ -104,41 +115,48 @@
   inset: 0;
   z-index: 100;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.06;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px;
 }
 .dark .grain::after {
-  opacity: 0.05;
+  opacity: 0.07;
   mix-blend-mode: overlay;
 }
 
-/* ============================================================
-   ELEVATION — soft shadow for surfaces in light mode. The near-
-   black dark theme reads depth from contrast/glow already; a flat
-   12%-opacity border on the warm-paper light theme doesn't, so
-   surfaces there get a real shadow instead.
-   ============================================================ */
-.elevated {
-  box-shadow: 0 1px 2px rgba(22, 21, 15, 0.05), 0 14px 28px -14px rgba(22, 21, 15, 0.18);
-}
-.dark .elevated {
-  box-shadow: none;
-}
-.elevated-accent {
-  box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--color-accent) 45%, transparent);
-}
-.dark .elevated-accent {
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 25%, transparent);
+/* Graph paper, the desk surface. */
+.grid-paper {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
-/* Faint dotted grid — echoes the 3D point cloud */
-.dot-grid {
-  background-image: radial-gradient(circle at center, var(--dot) 1px, transparent 1px);
-  background-size: 26px 26px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 78%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 78%);
+/* Ruled index-card lines with a red margin. */
+.ruled {
+  background-color: var(--color-surface);
+  background-image:
+    linear-gradient(90deg, transparent 54px, color-mix(in srgb, var(--accent) 45%, transparent) 54px, color-mix(in srgb, var(--accent) 45%, transparent) 56px, transparent 56px),
+    repeating-linear-gradient(transparent 0 31px, color-mix(in srgb, var(--blue) 16%, transparent) 31px 32px);
+}
+
+/* ============================================================
+   STICKERS: die-cut look via the #stk SVG filter (StickerDefs)
+   ============================================================ */
+.sticker-svg { overflow: visible; }
+.sticker-svg .d { font-family: var(--font-display); font-weight: 800; }
+.sticker-svg .s { font-family: var(--font-display); font-weight: 600; }
+.sticker-svg .m { font-family: var(--font-mono); font-weight: 400; }
+.sticker-drag { touch-action: none; cursor: grab; }
+.sticker-drag:active { cursor: grabbing; }
+
+/* Paper "sticker" edge for HTML elements (polaroid, stamps). */
+.die-cut {
+  box-shadow:
+    0 0 0 6px var(--color-cream),
+    0 0 0 7.5px #e05a3f,
+    6px 12px 24px -6px rgba(13, 15, 14, 0.35);
 }
 
 /* ============================================================
@@ -149,7 +167,6 @@
     cursor: none !important;
   }
 }
-
 .cursor-dot {
   position: fixed;
   top: 0;
@@ -165,22 +182,50 @@
    ============================================================ */
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-muted);
 }
-
-.display-huge {
+.display {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 0.86;
-  letter-spacing: -0.03em;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.88;
 }
 
-.text-outline {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--color-faint);
+/* Masked line for split-text reveals. */
+.line-mask { overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-out-expo);
+}
+.link-underline:hover { background-size: 100% 1px; }
+
+/* ============================================================
+   KEYCAPS
+   ============================================================ */
+.keycap {
+  --cap: #efe8d8;
+  --cap-side: #cfc5b0;
+  --cap-ink: #0d0f0e;
+  background: var(--cap);
+  color: var(--cap-ink);
+  border-radius: 10px;
+  box-shadow: inset 0 -6px 0 var(--cap-side), 0 2px 0 #0b0c0b;
+  transition: box-shadow 0.08s ease, translate 0.08s ease;
+}
+.keycap[data-tone="red"] { --cap: #b94835; --cap-side: #8f3626; --cap-ink: #fbf7ee; }
+.keycap[data-tone="blue"] { --cap: #3457d5; --cap-side: #233f9e; --cap-ink: #fbf7ee; }
+.keycap[data-tone="yellow"] { --cap: #f0cc78; --cap-side: #c9a250; }
+.keycap.is-down,
+.keycap:active {
+  translate: 0 4px;
+  box-shadow: inset 0 -2px 0 var(--cap-side), 0 1px 0 #0b0c0b;
 }
 
 /* ============================================================
@@ -195,89 +240,8 @@
   width: max-content;
   animation: marquee-x var(--marquee-duration, 30s) linear infinite;
 }
-.marquee-track.reverse { animation-direction: reverse; }
-.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
-
-/* ============================================================
-   REVEAL PRIMITIVES (used by GSAP + fallback)
-   ============================================================ */
-.reveal-line {
-  display: block;
-  overflow: hidden;
-}
-.reveal-line > * {
-  display: block;
-}
-
-/* Magnetic / interactive affordances */
-.hairline {
-  border: 1px solid var(--color-line);
-}
-
-.link-underline {
-  position: relative;
-}
-.link-underline::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 1px;
-  width: 100%;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.4s var(--ease-out-expo);
-}
-.link-underline:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-/* ============================================================
-   SKILL ICONS — theme-safe monochrome wall that reveals colour
-   on hover. (Bare grayscale turned bright logos pale, so they
-   vanished on the light background.)
-   ============================================================ */
-.skill-icon {
-  filter: grayscale(1) brightness(0);
-  opacity: 0.7;
-  transition: filter 0.35s var(--ease-out-expo), opacity 0.35s;
-}
-.dark .skill-icon {
-  filter: grayscale(1) brightness(0) invert(1);
-  opacity: 0.65;
-}
-.group:hover .skill-icon {
-  filter: none;
-  opacity: 1;
-}
-
-/* ============================================================
-   THEME SWITCH — smooth animated transition
-   View Transitions handle the circular reveal (see ThemeToggle);
-   this class is the crossfade fallback for unsupported browsers.
-   ============================================================ */
-.theme-transitioning,
-.theme-transitioning * {
-  transition: background-color 0.45s ease, border-color 0.45s ease,
-    color 0.45s ease, fill 0.45s ease !important;
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-/* New theme is revealed on top of the old snapshot via clip-path. */
-::view-transition-new(root) {
-  z-index: 1;
-}
-::view-transition-old(root) {
-  z-index: 0;
-}
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
-  * { scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+

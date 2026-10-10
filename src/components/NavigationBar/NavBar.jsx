@@ -1,83 +1,114 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { gsap, reducedMotion } from "@/lib/gsap";
+import ThemeToggle from "../ThemeToggle";
 
 const items = [
-  { key: "home", label: "Home" },
-  { key: "about", label: "About" },
-  { key: "experience", label: "Work" },
-  { key: "skills", label: "Stack" },
-  { key: "projects", label: "Projects" },
-  { key: "contact", label: "Contact" },
+  { href: "#about", label: "About" },
+  { href: "#experience", label: "Log" },
+  { href: "#projects", label: "Works" },
+  { href: "#toolkit", label: "Toolkit" },
+  { href: "#contact", label: "Connect" },
 ];
 
-export default function NavBar() {
-  const [active, setActive] = useState("home");
-  const [visible, setVisible] = useState(true);
-  const lastY = useRef(0);
-
-  // Active section via IntersectionObserver (works with Lenis/native scroll).
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-    );
-    items.forEach((it) => {
-      const el = document.getElementById(it.key);
-      if (el) observer.observe(el);
+function ScrambleLink({ href, label, onClick, className = "" }) {
+  const ref = useRef(null);
+  const scramble = () => {
+    if (reducedMotion()) return;
+    gsap.to(ref.current, {
+      duration: 0.6,
+      scrambleText: { text: label, chars: "upperCase", speed: 0.6 },
     });
-    return () => observer.disconnect();
-  }, []);
+  };
+  return (
+    <a href={href} onMouseEnter={scramble} onClick={onClick} className={className}>
+      <span ref={ref}>{label}</span>
+    </a>
+  );
+}
+
+export default function NavBar() {
+  const navRef = useRef(null);
+  const overlayRef = useRef(null);
+  const [open, setOpen] = useState(false);
 
   // Hide on scroll down, reveal on scroll up.
   useEffect(() => {
+    let last = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      setVisible(y < 120 || y < lastY.current);
-      lastY.current = y;
+      const hide = y > 160 && y > last;
+      gsap.to(navRef.current, { yPercent: hide ? -120 : 0, duration: 0.5, ease: "expo.out", overwrite: true });
+      last = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Mobile overlay menu.
+  useEffect(() => {
+    const el = overlayRef.current;
+    if (!el) return;
+    const links = el.querySelectorAll("[data-menu-link]");
+    if (open) {
+      window.__lenis?.stop();
+      gsap.set(el, { display: "flex" });
+      gsap.fromTo(el, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.7, ease: "expo.inOut" });
+      gsap.fromTo(links, { yPercent: 110 }, { yPercent: 0, duration: 0.8, stagger: 0.06, ease: "expo.out", delay: 0.25 });
+    } else {
+      window.__lenis?.start();
+      gsap.to(el, { clipPath: "inset(0 0 100% 0)", duration: 0.5, ease: "expo.inOut", onComplete: () => gsap.set(el, { display: "none" }) });
+    }
+  }, [open]);
+
   return (
-    <motion.nav
-      initial={{ y: 40, opacity: 0 }}
-      animate={{ y: visible ? 0 : 80, opacity: visible ? 1 : 0 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed bottom-5 left-4 right-[4.75rem] z-50 md:left-1/2 md:right-auto md:w-fit md:-translate-x-1/2"
-    >
-      <ul className="elevated flex items-center gap-1 overflow-x-auto rounded-full border border-[color:var(--color-line)] bg-[color:var(--color-surface)]/70 p-1.5 backdrop-blur-xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:w-fit md:overflow-visible">
-        {items.map((it) => {
-          const isActive = active === it.key;
-          return (
-            <li key={it.key} className="relative shrink-0">
-              <a
-                href={`#${it.key}`}
-                className={`relative z-10 block whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-colors duration-300 md:px-4 md:text-sm ${
-                  isActive
-                    ? "text-[color:var(--color-on-accent)]"
-                    : "text-[color:var(--color-muted)] hover:text-[color:var(--color-fg)]"
-                }`}
-              >
+    <>
+      <header ref={navRef} className="fixed inset-x-0 top-0 z-[150] px-5 pt-5 md:px-10 md:pt-7">
+        <nav className="flex items-start justify-between text-[color:var(--color-fg)]">
+          <a href="#home" aria-label="Rahul Verma, home" className="display text-[19px] leading-[0.86] tracking-[-0.06em]">
+            rahul
+            <br />
+            verma
+          </a>
+          <div className="flex items-center gap-8">
+            <ul className="hidden items-center gap-7 md:flex">
+              {items.map((it) => (
+                <li key={it.href}>
+                  <ScrambleLink href={it.href} label={it.label} className="font-mono text-[13px] uppercase tracking-wide" />
+                </li>
+              ))}
+            </ul>
+            <ThemeToggle className="hidden md:flex" />
+            <button
+              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              className="relative z-[160] font-mono text-xs uppercase tracking-wider md:hidden"
+            >
+              {open ? "Close" : "Menu"}
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      <div
+        id="mobile-menu"
+        ref={overlayRef}
+        className="fixed inset-0 z-[140] hidden flex-col justify-between bg-[color:var(--color-accent)] px-5 pb-10 pt-28 text-[color:var(--color-on-accent)] md:hidden"
+      >
+        <ul className="space-y-1">
+          {items.map((it, i) => (
+            <li key={it.href} className="line-mask">
+              <a data-menu-link href={it.href} onClick={() => setOpen(false)} className="display flex items-baseline gap-3 text-[15vw]">
+                <span className="font-mono text-sm font-normal tracking-normal">0{i + 1}</span>
                 {it.label}
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                    className="absolute inset-0 -z-10 rounded-full bg-[color:var(--color-accent)]"
-                  />
-                )}
               </a>
             </li>
-          );
-        })}
-      </ul>
-    </motion.nav>
+          ))}
+        </ul>
+        <ThemeToggle />
+      </div>
+    </>
   );
 }

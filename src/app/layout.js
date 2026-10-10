@@ -1,33 +1,27 @@
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Montserrat, DM_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import Cursor from "@/components/providers/Cursor";
 import ScrollProgress from "@/components/providers/ScrollProgress";
 import ThemeProvider from "@/components/providers/ThemeProvider";
-import ThemeToggle from "@/components/ThemeToggle";
 import NavBar from "@/components/NavigationBar/NavBar";
-import SocialMenu from "@/components/NavigationBar/SocialMenu";
+import StickerDefs from "@/components/stickers/StickerDefs";
 
-const spaceGrotesk = Space_Grotesk({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-montserrat",
   display: "swap",
 });
-const inter = Inter({
+const dmMono = DM_Mono({
   subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
+  weight: ["400", "500"],
+  variable: "--font-dmmono",
   display: "swap",
 });
 
 const SITE_URL = "https://rahulverma.site";
-const OG_IMAGE = "/assests/portfolio.png";
 const DESCRIPTION =
-  "Rahul Kumar Verma is a Full-Stack Software Engineer in India building production web and mobile products — AI features (LangChain, GPT-4o), payment systems, and multi-tenant SaaS with Next.js, React Native, and Node.js.";
+  "Rahul Kumar Verma is a Full-Stack Software Engineer in India building production web and mobile products: AI features (LangChain, GPT-4o), payment systems, and multi-tenant SaaS with Next.js, React Native, and Node.js.";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -36,7 +30,7 @@ export const metadata = {
     template: "%s | Rahul Kumar Verma",
   },
   description: DESCRIPTION,
-  applicationName: "Rahul Kumar Verma — Portfolio",
+  applicationName: "Rahul Kumar Verma · Portfolio",
   authors: [{ name: "Rahul Kumar Verma", url: SITE_URL }],
   creator: "Rahul Kumar Verma",
   publisher: "Rahul Kumar Verma",
@@ -74,24 +68,15 @@ export const metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "Rahul Kumar Verma — Full-Stack Software Engineer",
+    siteName: "Rahul Kumar Verma · Full-Stack Software Engineer",
     title: "Rahul Kumar Verma | Full-Stack Software Engineer",
     description: DESCRIPTION,
     locale: "en_IN",
-    images: [
-      {
-        url: OG_IMAGE,
-        width: 1200,
-        height: 630,
-        alt: "Rahul Kumar Verma — Full-Stack Software Engineer portfolio",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Rahul Kumar Verma | Full-Stack Software Engineer",
     description: DESCRIPTION,
-    images: [OG_IMAGE],
     creator: "@devrahuljourney",
     site: "@devrahuljourney",
   },
@@ -112,8 +97,8 @@ export const viewport = {
   initialScale: 1,
   colorScheme: "dark light",
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#090909" },
-    { media: "(prefers-color-scheme: light)", color: "#f4f3ec" },
+    { media: "(prefers-color-scheme: dark)", color: "#101110" },
+    { media: "(prefers-color-scheme: light)", color: "#ece6d9" },
   ],
 };
 
@@ -122,7 +107,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrains.variable}`}
+      className={`${montserrat.variable} ${dmMono.variable}`}
     >
       <head>
         <script
@@ -137,7 +122,6 @@ export default function RootLayout({ children }) {
                   name: "Rahul Kumar Verma",
                   alternateName: "devrahuljourney",
                   url: "https://rahulverma.site",
-                  image: "https://rahulverma.site/assests/portfolio.png",
                   sameAs: [
                     "https://www.linkedin.com/in/devrahuljourney",
                     "https://github.com/devrahuljourney",
@@ -179,9 +163,9 @@ export default function RootLayout({ children }) {
                   "@type": "WebSite",
                   "@id": "https://rahulverma.site/#website",
                   url: "https://rahulverma.site",
-                  name: "Rahul Kumar Verma — Portfolio",
+                  name: "Rahul Kumar Verma · Portfolio",
                   description:
-                    "Portfolio of Rahul Kumar Verma — a full-stack software engineer building AI-driven web and mobile products.",
+                    "Portfolio of Rahul Kumar Verma, a full-stack software engineer building AI-driven web and mobile products.",
                   inLanguage: "en",
                   publisher: { "@id": "https://rahulverma.site/#person" },
                 },
@@ -201,12 +185,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className="grain antialiased">
         <ThemeProvider>
+          <StickerDefs />
           <ScrollProgress />
           <Cursor />
-          <ThemeToggle />
-          <SmoothScroll>{children}</SmoothScroll>
           <NavBar />
-          <SocialMenu />
+          <SmoothScroll>{children}</SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

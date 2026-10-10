@@ -2,18 +2,33 @@
 
 import { useEffect } from "react";
 import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 /**
  * Global smooth-scroll powered by Lenis, synced to GSAP's ScrollTrigger so
  * every pinned / scrubbed animation on the page reads the same scroll clock.
  */
 export default function SmoothScroll({ children }) {
+  // Web fonts, images and expanding panels shift the page after triggers are
+  // measured. Re-measure whenever the document height settles.
+  useEffect(() => {
+    let timer;
+    let lastHeight = document.documentElement.scrollHeight;
+    const ro = new ResizeObserver(() => {
+      const h = document.documentElement.scrollHeight;
+      if (h === lastHeight) return;
+      lastHeight = h;
+      clearTimeout(timer);
+      timer = setTimeout(() => ScrollTrigger.refresh(), 200);
+    });
+    ro.observe(document.body);
+    document.fonts?.ready.then(() => ScrollTrigger.refresh());
+    return () => {
+      clearTimeout(timer);
+      ro.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
@@ -45,11 +60,13 @@ export default function SmoothScroll({ children }) {
       }
     };
     document.addEventListener("click", onClick);
+    window.__lenis = lenis;
 
     return () => {
       document.removeEventListener("click", onClick);
       gsap.ticker.remove(raf);
       lenis.destroy();
+      delete window.__lenis;
     };
   }, []);
 
