@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { projects, toolkit } from "@/constant/data";
 import { useSound } from "@/components/providers/SoundProvider";
+import { SWITCHES, setSwitch } from "@/lib/sound";
 
 // A real 60% keyboard wired to a tiny terminal. Click it (or tab to it) and
 // type: every physical key lights up its twin on screen, Backspace / Tab /
@@ -21,6 +22,12 @@ const ROWS = [
 const HINTS = { J: "js", T: "ts", R: "react", N: "node", E: "express", K: "kotlin", M: "mongo", P: "postgres", S: "supabase", D: "docker", A: "aws", V: "vercel", G: "github", L: "langchain", W: "tailwind", X: "next" };
 
 const ALIASES = { js: "JavaScript", ts: "TypeScript", rn: "React Native", next: "Next.js", nextjs: "Next.js", node: "Node.js", mongo: "MongoDB", pg: "PostgreSQL", postgres: "PostgreSQL", tw: "Tailwind", tailwind: "Tailwind", gh: "GitHub" };
+
+const SWITCH_KEY = "key-switch";
+const SWITCH_DOTS = { red: "#e5484d", blue: "#3e8ed0", brown: "#9a6b43" };
+
+// Big keys get their own recorded sample; everything else plays an alpha key.
+const KEY_SOUND = { Space: "space", Enter: "enter", Backspace: "backspace", ShiftLeft: "space", ShiftRight: "space" };
 
 const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 const techKey = (s) => norm(s).replace(/\d+$/, "").replace(/(js|css)$/, "");
@@ -91,6 +98,26 @@ export default function Keyboard() {
   const [log, setLog] = useState([]); // [{cmd, out: tool | string | string[]}]
   const [caps, setCaps] = useState(false);
   const { enabled: sound, play } = useSound();
+  const [switchType, setSwitchType] = useState("red");
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(SWITCH_KEY);
+      if (SWITCHES[saved]) {
+        setSwitchType(saved);
+        setSwitch(saved);
+      }
+    } catch {}
+  }, []);
+
+  const pickSwitch = (name) => {
+    setSwitchType(name);
+    try {
+      localStorage.setItem(SWITCH_KEY, name);
+    } catch {}
+    // Preview the new switch once its samples are in.
+    setSwitch(name).then(() => play("key"));
+  };
   const suggestions = useMemo(() => matches(buffer), [buffer]);
   const bufferRef = useRef("");
   bufferRef.current = buffer;
@@ -118,7 +145,7 @@ export default function Keyboard() {
   // One handler for both the physical keyboard and on-screen clicks.
   const handle = useCallback(
     (code, key) => {
-      play("key");
+      play("key", KEY_SOUND[code]);
       if (code === "Backspace") return setBuffer((b) => b.slice(0, -1));
       if (code === "Enter") {
         run(bufferRef.current);
@@ -293,7 +320,28 @@ export default function Keyboard() {
             </span>
             <span className="hidden sm:inline">rv-60 · mechanical</span>
           </span>
-          <span>sound {sound ? "on" : "off"}</span>
+          <span className="flex items-center gap-2">
+            <span className="hidden sm:inline">{sound ? "switch" : "sound off"}</span>
+            <span role="radiogroup" aria-label="Key switch sound" className="flex gap-1">
+              {Object.entries(SWITCHES).map(([name, sw]) => (
+                <button
+                  key={name}
+                  type="button"
+                  role="radio"
+                  aria-checked={switchType === name}
+                  title={`Cherry MX ${sw.label} · ${sw.feel}`}
+                  data-sound="silent"
+                  onClick={() => pickSwitch(name)}
+                  className={`flex items-center gap-1 rounded-full px-2 py-0.5 transition-colors ${
+                    switchType === name ? "bg-[#3b3d3b] text-[#f4f1ea]" : "hover:text-[#f4f1ea]"
+                  }`}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: SWITCH_DOTS[name] }} />
+                  {sw.label}
+                </button>
+              ))}
+            </span>
+          </span>
         </div>
         <div className="rounded-[10px] bg-[#1a1c1a] p-[0.9%]" style={{ containerType: "inline-size" }}>
           {ROWS.map((row, r) => (

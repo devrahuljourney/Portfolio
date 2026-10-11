@@ -45,9 +45,9 @@ export default function SoundProvider({ children }) {
     if (next) play("toggle");
   }, []);
 
-  const trigger = useCallback((name) => {
+  const trigger = useCallback((name, variant) => {
     if (!enabledRef.current) return;
-    play(name);
+    play(name, variant);
   }, []);
 
   // Delegated listeners: anything matching INTERACTIVE_SEL gets a sound for
