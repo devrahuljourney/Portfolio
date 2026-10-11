@@ -34,13 +34,13 @@ export default async function Activity() {
           count={data ? `${data.total.toLocaleString("en-US")} contributions` : undefined}
         />
         <p className="mt-6 max-w-md text-[color:var(--color-fg-soft)]">
-          A year of commits, drawn to scale. Every column is a week, measured from the ground up. Hover one to cut a section through its days.
+          A year of commits, drawn to scale. Look at it from the side, where every column is a week, or from above, where every dot is a day. Hover anywhere to cut a section through that week.
         </p>
 
         <div className="mt-12 border-[1.5px] border-[color:var(--color-fg)] bg-[color:var(--color-surface)] shadow-[6px_7px_0_var(--shadow)]">
           <header className="flex flex-wrap items-center gap-x-4 gap-y-1 border-b-[1.5px] border-[color:var(--color-fg)] bg-[#12151c] px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-[#f1efe9] md:px-6">
-            <span>Front elevation · weekly commits</span>
-            <span className="hidden text-[#9aa0ab] sm:inline">Scale: 1 column = 1 week</span>
+            <span>Survey drawing · GitHub contributions</span>
+            <span className="hidden text-[#9aa0ab] sm:inline">Sheet 2 views</span>
             <a
               href={social.github}
               target="_blank"
