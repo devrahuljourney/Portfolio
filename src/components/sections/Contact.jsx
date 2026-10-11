@@ -8,7 +8,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative w-full px-5 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1440px]">
-        <SectionHead label="Get in touch" index="05 / 05" title="Say hello" />
+        <SectionHead label="Get in touch" index="06 / 06" title="Say hello" />
 
         <div className="mt-14 grid gap-16 md:grid-cols-[1fr_1.1fr] md:gap-14">
           <div>

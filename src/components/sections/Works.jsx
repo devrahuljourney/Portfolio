@@ -212,7 +212,7 @@ export default function Works() {
   return (
     <section id="projects" ref={root} className="relative w-full px-5 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1440px]">
-        <SectionHead label="Selected work" index="03 / 05" title="Case files" count={`${projects.length} files`} />
+        <SectionHead label="Selected work" index="03 / 06" title="Case files" count={`${projects.length} files`} />
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filter case files">

@@ -94,7 +94,7 @@ export default function Toolkit() {
   return (
     <section id="toolkit" className="relative w-full px-5 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1440px]">
-        <SectionHead label="Services & stack" index="04 / 05" title="Toolkit" />
+        <SectionHead label="Services & stack" index="04 / 06" title="Toolkit" />
 
         <div className="mt-16 grid items-start gap-16 lg:grid-cols-[380px_1fr] lg:gap-14">
           <Receipt />

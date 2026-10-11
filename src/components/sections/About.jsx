@@ -82,7 +82,7 @@ export default function About() {
           <span className="flex w-11 items-center justify-center border-[1.5px] border-[color:var(--color-fg)] py-1.5 font-bold">01</span>
           <span className="flex flex-1 items-center justify-between border-b-[1.5px] border-[color:var(--color-fg)]">
             <span className="text-[color:var(--color-accent)]">About</span>
-            <span className="text-[color:var(--color-muted)]">Sheet 01 / 05</span>
+            <span className="text-[color:var(--color-muted)]">Sheet 01 / 06</span>
           </span>
         </div>
 

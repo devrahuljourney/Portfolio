@@ -218,7 +218,7 @@ export default function Experience() {
   return (
     <section id="experience" className="relative w-full px-5 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1440px]">
-        <SectionHead label="Work log" index="02 / 05" title="Log" count={`${n} frames`} />
+        <SectionHead label="Work log" index="02 / 06" title="Log" count={`${n} frames`} />
         <p className="mt-6 max-w-md text-[color:var(--color-fg-soft)]">
           My career, paused in the debugger. Each role was called by the one before it. Scroll to step out and walk back in time.
         </p>
