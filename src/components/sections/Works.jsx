@@ -54,7 +54,8 @@ function Evidence({ project }) {
       <div className="relative rotate-[1.5deg] bg-[#fbfaf6] p-3 pb-10 shadow-[0_18px_30px_-14px_rgba(18,21,28,0.45)]">
         <PaperClip className="absolute -top-7 left-10 h-16 w-6" />
         <div className="relative aspect-[16/10] overflow-hidden">
-          <Image src={project.image} alt={`${project.title} screenshot`} fill sizes="(max-width: 768px) 90vw, 560px" className="object-cover object-top" />
+          {/* The first file is open on load, so its screenshot is fetched up front. */}
+          <Image src={project.image} alt={`${project.title} screenshot`} fill sizes="(max-width: 768px) 90vw, 560px" priority={project.id === projects[0].id} className="object-cover object-top" />
         </div>
         <p className="absolute bottom-3 left-4 font-mono text-xs text-[#616977]">fig. 1 · {project.title.toLowerCase()}</p>
       </div>
