@@ -25,6 +25,7 @@ import anil from "../../public/assests/ana.png"
 import rn from "../../public/assests/rn.png"
 import coskill from "../../public/assests/coskill.jpeg"
 import ph from "../../public/assests/ph.png"
+import rethink from "../../public/assests/rethink.webp"
 
 
 
@@ -132,11 +133,11 @@ export const experience = [
       tagline: "Digital-wellbeing app · Android",
       year: "2025",
       description:
-        "A screen-time app that actually intervenes. I wrote a custom Kotlin AccessibilityService and a from-scratch React Native native-module bridge to detect the foreground app in real time and hard-block distracting apps instantly, even when the app is force-closed (HeadlessJS). Adds AI coaching (Gemini + LangChain), scheduled Focus Mode, and 15-minute background sync.",
-      image: "personal",
+        "A screen-time app that pauses you before you scroll. A Kotlin AccessibilityService sees the app you open, a pure, unit-tested decision engine picks block, pause or allow, and a Jetpack Compose screen asks you to breathe, say why you came, and pick how long you need. Plus a 24-hour usage dial, daily limits, focus hours, and an AI coach (Gemini + LangChain).",
+      image: rethink,
       tech: ["React Native", "Kotlin", "Node.js", "Supabase", "Gemini"],
       category: ["all", "app", "mobile", "ai"],
-      liveLink: null,
+      liveLink: "https://rethink-landing.vercel.app/",
       githubLink: "https://github.com/devrahuljourney/rethink",
     },
     {
