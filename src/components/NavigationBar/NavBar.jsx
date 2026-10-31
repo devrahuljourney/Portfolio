@@ -8,7 +8,7 @@ import Wordmark from "../ui/Wordmark";
 
 const items = [
   { href: "#about", label: "About" },
-  { href: "#experience", label: "Log" },
+  { href: "#experience", label: "Experience" },
   { href: "#projects", label: "Works" },
   { href: "#toolkit", label: "Toolkit" },
   { href: "#contact", label: "Connect" },

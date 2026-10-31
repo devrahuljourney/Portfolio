@@ -124,6 +124,11 @@ const sounds = {
   drop(c) {
     tone(c, { freq: 160, duration: 0.14, type: "sine", gain: 0.22, glideTo: 60 });
   },
+  // A machine press closing on a crate: a dull slap with a low body.
+  press(c) {
+    noiseBurst(c, { duration: 0.09, freq: 520, q: 0.7, gain: 0.7 });
+    tone(c, { freq: 120, duration: 0.13, type: "sine", gain: 0.28, glideTo: 50 });
+  },
   // For controls that play their own sound instead.
   silent() {},
   // Short rising chime, for success states (e.g. a form submission).

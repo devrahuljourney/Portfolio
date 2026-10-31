@@ -83,29 +83,86 @@ export const experience = [
   {
     id: 1,
     role: "Software Engineer",
-    tag: "Client · Indian travel brand",
+    tag: "Onsite at a 260-year-old Indian travel brand",
     company: "Vitraga Solutions",
-    location: "Delhi, India",
+    location: "New Delhi",
     start: "Mar 2026",
     end: "Present",
+    stack: ["React", "TypeScript", "PostgreSQL", "Supabase", "Node.js"],
     points: [
-      "Built an AI travel-planner chatbot with LangChain, GPT-4o, and pgvector semantic search across 20+ partner agencies, cutting agent package discovery from ~20 minutes to under 2, with mid-conversation lead capture synced to TeleCRM with UTM attribution.",
-      "Designed a PaymentGateway interface and GatewayFactory unifying HDFC SmartGateway and ICICI Orange Gateway, enabling provider switches without touching orchestration code.",
-      "Integrated TripJack GDS via Supabase Edge Functions for live flight search, fare validation, confirm-book, and hotel pricing, embedding travel inventory directly in the agent portal.",
+      "Co-built the client's end-to-end B2B travel platform covering quotes, live flight/hotel booking, payments and operations, now used by 300+ agents.",
+      "Built a LangChain + pgvector AI trip planner with in-chat lead capture synced to TeleCRM; cut package discovery from ~20 minutes to under 2.",
+      "Built flight/hotel booking on TripJack with automatic re-pricing that flags fare changes instead of silently charging a new price.",
+      "Unified HDFC and ICICI behind one payment layer, with each payment tied to its original gateway.",
+      "Built an operations module: 18-stage trip lifecycle, per-component tasks and SLA deadlines with escalation emails.",
+    ],
+    cases: [
+      {
+        crate: { label: "Finding a tour", out: "< 2 min" },
+        problem: "The client sells hundreds of tours from 20+ partner agencies. Matching one to what a customer wanted meant about 20 minutes of searching.",
+        built: "An AI trip planner: describe the trip in plain words (\"10 days in Europe for a couple under ₹1.5 lakh\") and get matching tours, itineraries and prices. Interested visitors verify their phone on WhatsApp and land in the CRM without leaving the chat.",
+        tech: ["LangChain", "GPT-4o", "pgvector"],
+        result: { before: "~20 min", after: "< 2 min", ratio: 0.1, label: "to find the right tour" },
+      },
+      {
+        crate: { label: "Flight prices", out: "Re-checked" },
+        problem: "Agents booked flights and hotels in outside tools, and airline fares from the supplier expire in about 30 minutes, so a quoted price could quietly change before the customer paid.",
+        built: "Flight and hotel booking inside the agents' portal (search, hold, confirm, cancel) that automatically re-prices attached flights and checks again right before payment.",
+        tech: ["TripJack API", "Edge Functions", "Cron jobs"],
+        result: { text: "Fare changes are flagged to the agent, never silently charged" },
+      },
+      {
+        crate: { label: "Two banks", out: "1 layer" },
+        problem: "Payments ran through two banks, HDFC and ICICI, each with its own integration. A refund had to go back through whichever bank originally took the money.",
+        built: "One payment layer for both banks. Each payment remembers which bank handled it, so refunds and checks always go to the right one, even after switching banks.",
+        tech: ["Factory pattern", "HDFC", "ICICI"],
+        result: { text: "Switch banks without touching the booking flow or breaking refunds" },
+      },
+      {
+        crate: { label: "Trip fulfilment", out: "Tracked" },
+        problem: "Once a trip was paid for, booking its hotels, flights, visas and vouchers lived in emails and spreadsheets, with no deadlines and no one clearly responsible.",
+        built: "An operations module that splits every trip into tasks, moves it through 18 stages from payment to closure, and sets deadlines (tighter for last-minute trips) with automatic escalation emails.",
+        tech: ["PostgreSQL", "Cron jobs"],
+        result: { text: "Every trip is tracked to closure, with an owner and a deadline" },
+      },
     ],
   },
   {
     id: 2,
     role: "Software Engineer Intern",
-    tag: "Australian NDIS client",
+    tag: "NDIS disability-care SaaS for an Australian client",
     company: "Vitraga Solutions",
     location: "Remote",
     start: "Sep 2025",
     end: "Feb 2026",
+    stack: ["Next.js", "Node.js", "Express", "PostgreSQL", "Gemini"],
     points: [
-      "Built a task-to-invoice pipeline with PDF generation, NDIS service codes, and GST compliance, reducing billing time from 2+ days to under 5 minutes.",
-      "Shipped an LLM-assisted NDIS plan parser (pdf-parse + Google Generative AI) that extracts participant details, funded supports, and service rates from PDFs, cutting plan entry from 30–60 minutes to under 5.",
-      "Architected a multi-tenant RBAC/ABAC system with 200+ permission keys gating every UI action, enforced in Express middleware and scoped SQL.",
+      "Built an NDIS disability-care SaaS for an Australian client, including a task-to-invoice pipeline (PDF, NDIS codes, GST) that cut billing from 2+ days to 5 minutes.",
+      "Built an AI plan parser (Google Gemini) that reads participant PDFs for human review, cutting plan entry from 30–60 minutes to under 5.",
+      "Designed multi-tenant access control with 200+ permissions and a custom role builder.",
+    ],
+    cases: [
+      {
+        crate: { label: "Billing run", out: "< 5 min" },
+        problem: "An Australian disability-care provider billed the government's NDIS scheme by hand: an admin added up every care task and typed invoices in Excel. One wrong code got a claim rejected.",
+        built: "A pipeline that turns approved care tasks into ready-to-send PDF invoices, with the right NDIS service codes and GST worked out automatically, then emails them.",
+        tech: ["Node.js", "PDF generation"],
+        result: { before: "2+ days", after: "< 5 min", ratio: 0.03, label: "per billing run" },
+      },
+      {
+        crate: { label: "Plan entry", out: "< 5 min" },
+        problem: "Every new client arrives with a 20–40 page government plan PDF. Staff re-typed the funded services, hours and rates into the system by hand.",
+        built: "An AI reader (Google Gemini) that pulls those details out of the PDF and pre-fills the form, so staff only review and confirm.",
+        tech: ["Google Gemini", "pdf-parse"],
+        result: { before: "30–60 min", after: "< 5 min", ratio: 0.11, label: "per new client" },
+      },
+      {
+        crate: { label: "Who sees what", out: "200+ rules" },
+        problem: "Care workers, managers and admins share one app, but a care worker must never see billing or other workers' clients, and every organisation is structured differently.",
+        built: "Access control with 200+ fine-grained permissions and a role builder, so each organisation designs its own roles without a developer. Every query is locked to its own organisation.",
+        tech: ["Express", "PostgreSQL"],
+        result: { text: "Each organisation sets its own roles and only ever sees its own data" },
+      },
     ],
   },
   {
@@ -113,20 +170,40 @@ export const experience = [
     role: "Frontend Developer Intern",
     tag: "E-commerce",
     company: "PlayGG (formerly Weird Esports India)",
-    location: "Jaipur, India",
+    location: "Jaipur",
     start: "Sep 2024",
     end: "Jan 2025",
+    stack: ["MongoDB", "Express", "React", "Node.js"],
     points: [
-      "Built and deployed a full-stack MERN e-commerce platform with responsive design across desktop, tablet, and mobile.",
-      "Engineered a multi-step checkout flow, reducing user drop-off by 30%.",
-      "Implemented bulk product upload via CSV, cutting manual product-entry time by 80%.",
+      "Built a MERN e-commerce platform; a multi-step checkout cut drop-off by 30% and CSV bulk upload cut manual entry by 80%.",
+    ],
+    cases: [
+      {
+        crate: { label: "Online store", out: "Shipped" },
+        problem: "PlayGG needed its own online store that worked just as well on a phone as on a desktop.",
+        built: "A full-stack MERN e-commerce platform, built and deployed end to end, responsive from phone to desktop.",
+        tech: ["MongoDB", "Express", "React", "Node.js"],
+        result: { text: "Store live on desktop, tablet and mobile" },
+      },
+      {
+        crate: { label: "Checkout drop-off", out: "−30%" },
+        problem: "Too many shoppers gave up halfway through the checkout page, before paying.",
+        built: "Split the long checkout into short, guided steps, so shoppers only deal with one small part at a time.",
+        tech: ["React"],
+        result: { after: "−30%", ratio: 0.7, label: "shoppers abandoning checkout" },
+      },
+      {
+        crate: { label: "Adding products", out: "−80%" },
+        problem: "The team added products one at a time through a form, which was painfully slow for a big catalogue.",
+        built: "Bulk upload: fill in a CSV spreadsheet and the whole batch of products is created at once.",
+        tech: ["CSV import"],
+        result: { after: "−80%", ratio: 0.2, label: "time spent adding products" },
+      },
     ],
   },
-]
-  
+];
 
-
-  export const projects = [
+export const projects = [
     {
       id: 10,
       title: "ReThink",
