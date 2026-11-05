@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant short (@media (max-width: 639.98px) and (max-height: 839.98px));
 
 /* ============================================================
    DESIGN TOKENS: "drafting sheet"

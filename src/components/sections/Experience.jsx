@@ -19,8 +19,13 @@ const IN_X = "18%";
 const OUT_X = "82%";
 const KRAFT = "#d8bd8f";
 const INK = "#12151c";
-const CRATE = "h-[58px] w-[92px] sm:h-[70px] sm:w-[120px] lg:h-[80px] lg:w-[170px]";
+const CRATE = "h-[clamp(44px,7.2svh,58px)] w-[23vw] sm:h-[70px] sm:w-[120px] lg:h-[80px] lg:w-[170px]";
 const TOTAL = LINE.reduce((n, e) => n + (e.cases?.length || 0), 0);
+// Below this the pinned scene can't fit (landscape phones, small handsets),
+// so the same content renders as a plain list.
+const MIN_STAGE_W = 360;
+const MIN_STAGE_H = 640;
+const cantRun = () => reducedMotion() || window.innerWidth < MIN_STAGE_W || window.innerHeight < MIN_STAGE_H;
 
 const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
 const toMonth = (s) => {
@@ -79,8 +84,8 @@ function Crate({ crate, k }) {
       {/* Raw: the problem going in */}
       <div data-before className="absolute inset-0 flex flex-col justify-between border-2 p-1.5 sm:p-2" style={{ background: KRAFT, borderColor: INK, color: INK }}>
         <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top_right,transparent_calc(50%-1px),rgba(18,21,28,0.18)_50%,transparent_calc(50%+1px))]" />
-        <span className="relative font-mono text-[8px] uppercase tracking-wider opacity-70 sm:text-[9px]">Problem</span>
-        <span className="display relative line-clamp-2 text-[0.85rem] uppercase leading-[0.92] sm:text-[1rem] lg:text-[1.2rem]">{crate.label}</span>
+        <span className="relative font-mono text-[8px] uppercase tracking-wider opacity-70 short:hidden sm:text-[9px]">Problem</span>
+        <span className="display relative line-clamp-2 text-[clamp(0.72rem,3.7vw,0.85rem)] uppercase leading-[0.92] sm:text-[1rem] lg:text-[1.2rem]">{crate.label}</span>
       </div>
       {/* Shipped: what came out */}
       <div data-after className="absolute inset-0 flex flex-col justify-between border-2 p-1.5 opacity-0 sm:p-2" style={{ background: INK, borderColor: INK }}>
@@ -88,7 +93,7 @@ function Crate({ crate, k }) {
           <span className="truncate">{crate.label}</span>
           <span className="text-[#8fd3b6]">✓</span>
         </span>
-        <span className="display truncate text-[1.05rem] leading-none text-[#ff6a2b] sm:text-[1.35rem] lg:text-[1.8rem]">{crate.out}</span>
+        <span className="display truncate text-[clamp(0.72rem,3.9vw,1.05rem)] leading-none text-[#ff6a2b] sm:text-[1.35rem] lg:text-[1.8rem]">{crate.out}</span>
       </div>
     </div>
   );
@@ -100,9 +105,9 @@ function Station({ exp, index, readout }) {
   return (
     <>
       {/* Role header: this is the experience entry */}
-      <header className="absolute inset-x-5 top-[8.4rem] md:inset-x-10 md:top-[9.4rem]">
+      <header className="absolute inset-x-5 top-[7rem] sm:top-[8.4rem] md:inset-x-10 md:top-[9.4rem]">
         <div className="mx-auto max-w-[1440px]">
-          <p className={`${mono} flex flex-wrap items-center gap-x-3 gap-y-1 text-[color:var(--color-muted)]`}>
+          <p className={`${mono} flex flex-wrap items-center gap-x-2 gap-y-1 text-[color:var(--color-muted)] sm:gap-x-3`}>
             <span className="text-[color:var(--color-accent)]">Role {pad(index + 1)}</span>
             {now && (
               <span className="flex items-center gap-1.5 bg-[color:var(--color-accent)] px-1.5 py-0.5 font-bold text-[color:var(--color-on-accent)]">
@@ -112,13 +117,13 @@ function Station({ exp, index, readout }) {
             <span className="text-[color:var(--color-fg)]">
               {exp.start} — {exp.end}
             </span>
-            <span suppressHydrationWarning>{fmtSpan(exp)}</span>
+            <span suppressHydrationWarning className="hidden min-[380px]:inline">{fmtSpan(exp)}</span>
             <span className="hidden sm:inline">· {exp.location}</span>
           </p>
-          <h3 className="display mt-2 text-[clamp(2rem,4.2vw,3.6rem)] uppercase leading-[0.86]">{exp.role}</h3>
-          <p className="mt-1.5 font-mono text-xs uppercase tracking-wider md:text-sm">
+          <h3 className="display mt-1 text-[clamp(1.35rem,7vw,2rem)] uppercase leading-[0.86] sm:mt-2 sm:text-[clamp(2rem,4.2vw,3.6rem)]">{exp.role}</h3>
+          <p className="mt-1 font-mono text-xs uppercase tracking-wider sm:mt-1.5 md:text-sm">
             <span className="text-[color:var(--color-accent)]">@ {shortCompany(exp.company)}</span>
-            <span className="text-[color:var(--color-muted)]"> · {exp.tag}</span>
+            <span className="text-[color:var(--color-muted)] short:hidden"> · {exp.tag}</span>
           </p>
         </div>
       </header>
@@ -126,7 +131,7 @@ function Station({ exp, index, readout }) {
       {/* The machine */}
       <div
         data-machine
-        className="absolute inset-x-0 z-20 mx-auto flex w-[clamp(150px,46%,660px)] flex-col border-2 border-[color:var(--color-fg)] bg-[color:var(--color-surface)] shadow-[7px_8px_0_var(--shadow)]"
+        className="absolute inset-x-0 z-20 mx-auto flex w-[clamp(130px,40%,240px)] flex-col sm:w-[clamp(150px,46%,660px)] border-2 border-[color:var(--color-fg)] bg-[color:var(--color-surface)] shadow-[7px_8px_0_var(--shadow)]"
         style={{ bottom: "calc(var(--belt) - 22px)", height: "var(--mh)" }}
       >
         <div className="absolute -top-9 right-[14%] h-9 w-7 border-2 border-b-0 border-[color:var(--color-fg)] bg-[color:var(--color-surface)] sm:w-9">
@@ -171,7 +176,7 @@ function Station({ exp, index, readout }) {
 }
 
 function ResultLine({ r, big }) {
-  if (!r.after) return <p className={`mt-1 font-medium leading-snug ${big ? "text-[clamp(0.95rem,1.2vw,1.15rem)]" : "text-[14px]"}`}>✓ {r.text}</p>;
+  if (!r.after) return <p className={`mt-1 font-medium leading-snug ${big ? "text-[clamp(0.95rem,1.2vw,1.15rem)]" : "text-[14px] short:text-[13px]"}`}>✓ {r.text}</p>;
   return (
     <p className="mt-1 flex flex-wrap items-baseline gap-x-2">
       {r.before && (
@@ -180,7 +185,7 @@ function ResultLine({ r, big }) {
           <span className="text-[color:var(--color-muted)]">→</span>
         </>
       )}
-      <span className={`display leading-none text-[color:var(--color-accent)] ${big ? "text-[clamp(1.8rem,2.6vw,2.6rem)]" : "text-[1.9rem]"}`}>{r.after}</span>
+      <span className={`display leading-none text-[color:var(--color-accent)] ${big ? "text-[clamp(1.8rem,2.6vw,2.6rem)]" : "text-[1.9rem] short:text-[1.4rem]"}`}>{r.after}</span>
       <span className="font-mono text-[11px] text-[color:var(--color-muted)]">{r.label}</span>
     </p>
   );
@@ -207,7 +212,7 @@ function Readout({ state, big = false }) {
     gsap.fromTo(ref.current.children, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, stagger: 0.06, ease: "power3.out" });
   }, [key]);
 
-  const lead = big ? "text-[clamp(1rem,1.45vw,1.6rem)]" : "text-[14px]";
+  const lead = big ? "text-[clamp(1rem,1.45vw,1.6rem)]" : "text-[14px] short:text-[13px]";
 
   if (state.st >= LINE.length) {
     return (
@@ -234,7 +239,7 @@ function Readout({ state, big = false }) {
 
   const c = exp.cases[state.k];
   return (
-    <div ref={ref} className={`flex h-full flex-col justify-center ${big ? "gap-3.5" : "gap-2.5"}`}>
+    <div ref={ref} className={`flex h-full flex-col justify-center ${big ? "gap-3.5" : "gap-2.5 short:gap-1.5"}`}>
       <div>
         <p className={`${mono} text-[color:var(--color-accent)]`}>
           Problem {state.k + 1} of {exp.cases.length}
@@ -243,7 +248,7 @@ function Readout({ state, big = false }) {
       </div>
       <div>
         <p className={`${mono} text-[color:var(--color-muted)]`}>What I built</p>
-        <p className={`mt-1 leading-snug text-[color:var(--color-fg-soft)] ${big ? "text-[clamp(0.85rem,1vw,0.95rem)]" : "text-[13px]"}`}>{c.built}</p>
+        <p className={`mt-1 leading-snug text-[color:var(--color-fg-soft)] ${big ? "text-[clamp(0.85rem,1vw,0.95rem)]" : "text-[13px] short:text-[12px]"}`}>{c.built}</p>
       </div>
       <div>
         <p className={`${mono} ${state.done ? "text-[color:var(--color-blue)]" : "text-[color:var(--color-muted)]"}`}>{state.done ? "✓ Result" : "Processing…"}</p>
@@ -291,10 +296,15 @@ export default function Experience() {
   const n = LINE.length;
 
   useEffect(() => {
-    if (reducedMotion()) {
-      setStill(true);
-      return;
-    }
+    const check = () => setStill(cantRun());
+    check();
+    const mq = window.matchMedia("(orientation: landscape)");
+    mq.addEventListener("change", check);
+    return () => mq.removeEventListener("change", check);
+  }, []);
+
+  useEffect(() => {
+    if (still || cantRun()) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
       const stations = gsap.utils.toArray("[data-station]", world.current);
@@ -402,7 +412,7 @@ export default function Experience() {
       stRef.current = null;
       ctx.revert();
     };
-  }, [n, play]);
+  }, [n, play, still]);
 
   const jump = (i) => {
     const st = stRef.current;
@@ -426,83 +436,87 @@ export default function Experience() {
       {still ? (
         <StillLine />
       ) : (
-        <div ref={stage} className="relative mt-10 h-[100svh] min-h-[600px] w-full overflow-hidden [--belt:40%] [--mh:min(calc(100%_-_var(--belt)_-_21rem),440px,70vw)] sm:[--belt:11%] sm:[--mh:min(calc(100%_-_var(--belt)_-_15rem),560px)] md:mt-14">
-          {/* HUD */}
-          <div className="absolute inset-x-0 top-20 z-30 px-5 md:top-24 md:px-10">
-            <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-wider">
-              <p className="text-[color:var(--color-muted)]">
-                <span className="text-[color:var(--color-accent)]">Experience</span> · {atDock ? "Dock" : `${pad(active + 1)} / ${pad(n)}`}
-                <span className="hidden md:inline"> · scroll to run the line ↓</span>
-              </p>
-              <div className="flex border-[1.5px] border-[color:var(--color-fg)]">
-                {LINE.map((e, i) => (
-                  <button
-                    key={e.id}
-                    onClick={() => jump(i)}
-                    aria-label={`Go to ${e.role} at ${shortCompany(e.company)}`}
-                    className={`border-r-[1.5px] border-[color:var(--color-fg)] px-2 py-1 transition-colors sm:px-3 ${
-                      i === active ? "bg-[color:var(--color-fg)] text-[color:var(--color-bg)]" : "hover:bg-[color:var(--color-surface)]"
-                    }`}
-                  >
-                    {e.start.slice(-4)}
-                  </button>
-                ))}
-                <button
-                  onClick={() => jump(n)}
-                  className={`px-2 py-1 transition-colors sm:px-3 ${atDock ? "bg-[color:var(--color-fg)] text-[color:var(--color-bg)]" : "hover:bg-[color:var(--color-surface)]"}`}
-                >
-                  Dock
-                </button>
-              </div>
-            </div>
-            <div className="mx-auto mt-2 h-[3px] max-w-[1440px] bg-[color:var(--color-line)]">
-              <div data-progress className="h-full origin-left scale-x-0 bg-[color:var(--color-accent)]" />
-            </div>
-          </div>
-
-          <div ref={world} className="absolute inset-0">
-            <div className="absolute left-0 h-[18px] border-y-2 border-[color:var(--color-fg)]" style={{ bottom: "calc(var(--belt) - 18px)", width: `${(n + 1) * 100}%` }}>
-              <div data-belt className="h-full bg-[repeating-linear-gradient(90deg,#12151c_0_26px,#3a3f4b_26px_30px)]" />
-            </div>
-            <div
-              className="absolute left-0 h-4 bg-[radial-gradient(circle_at_center,var(--color-fg)_0_4px,transparent_5px)] bg-[length:40px_16px] opacity-60"
-              style={{ bottom: "calc(var(--belt) - 36px)", width: `${(n + 1) * 100}%` }}
-            />
-
-            {LINE.map((e, i) => (
-              <div key={e.id} data-station className="absolute inset-y-0 w-full" style={{ left: `${i * 100}%` }}>
-                <Station exp={e} index={i} readout={readout} />
-              </div>
-            ))}
-
-            {/* Loading dock */}
-            <div className="absolute inset-y-0 w-full" style={{ left: `${n * 100}%` }}>
-              <div className="absolute inset-x-5 top-[24%] text-center md:inset-x-10">
-                <p className={`${mono} text-[color:var(--color-muted)]`}>Loading dock · {TOTAL} problems shipped</p>
-                <p className="display mt-3 text-[clamp(2.6rem,8vw,7rem)] uppercase leading-[0.85]">
-                  Got a slow process?
-                  <span className="block text-[color:var(--color-accent)]">Put it on the belt.</span>
+        // The wrapper gives React a stable node to remove: GSAP moves the stage into a pin-spacer.
+        <div>
+          <div ref={stage} className="relative mt-10 h-[100svh] min-h-[600px] w-full overflow-hidden [--belt:clamp(280px,42%,360px)] [--mh:min(calc(100%_-_var(--belt)_-_11.5rem),48vw)] [--ro-gap:44px] short:[--ro-gap:24px] sm:[--belt:11%] sm:[--mh:min(calc(100%_-_var(--belt)_-_15rem),560px)] md:mt-14">
+            {/* HUD */}
+            <div className="absolute inset-x-0 top-[4.5rem] z-30 px-5 sm:top-20 md:top-24 md:px-10">
+              <div className="mx-auto flex max-w-[1440px] flex-nowrap items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-wider sm:flex-wrap">
+                <p className="text-[color:var(--color-muted)]">
+                  <span className="text-[color:var(--color-accent)]">Experience</span>
+                  <span className="hidden sm:inline"> · {atDock ? "Dock" : `${pad(active + 1)} / ${pad(n)}`}</span>
+                  <span className="hidden md:inline"> · scroll to run the line ↓</span>
                 </p>
+                <div className="flex border-[1.5px] border-[color:var(--color-fg)]">
+                  {LINE.map((e, i) => (
+                    <button
+                      key={e.id}
+                      onClick={() => jump(i)}
+                      aria-label={`Go to ${e.role} at ${shortCompany(e.company)}`}
+                      className={`border-r-[1.5px] border-[color:var(--color-fg)] px-2 py-1 transition-colors sm:px-3 ${
+                        i === active ? "bg-[color:var(--color-fg)] text-[color:var(--color-bg)]" : "hover:bg-[color:var(--color-surface)]"
+                      }`}
+                    >
+                      {e.start.slice(-4)}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => jump(n)}
+                    className={`px-2 py-1 transition-colors sm:px-3 ${atDock ? "bg-[color:var(--color-fg)] text-[color:var(--color-bg)]" : "hover:bg-[color:var(--color-surface)]"}`}
+                  >
+                    Dock
+                  </button>
+                </div>
               </div>
-              <a
-                href="#contact"
-                className="absolute left-1/2 z-10 flex h-[58px] w-[150px] -translate-x-1/2 flex-col justify-between border-2 p-2 transition-transform hover:-translate-y-2 sm:h-[70px] sm:w-[190px] lg:h-[96px] lg:w-[250px]"
-                style={{ bottom: "var(--belt)", background: KRAFT, borderColor: INK, color: INK }}
-              >
-                <span className="font-mono text-[9px] uppercase tracking-wider opacity-70">Your problem</span>
-                <span className="display text-[1.2rem] leading-none sm:text-[1.5rem] lg:text-[1.9rem]">Ship it in →</span>
-              </a>
+              <div className="mx-auto mt-2 h-[3px] max-w-[1440px] bg-[color:var(--color-line)]">
+                <div data-progress className="h-full origin-left scale-x-0 bg-[color:var(--color-accent)]" />
+              </div>
             </div>
-          </div>
 
-          {/* Readout console under the belt */}
-          <div
-            className="absolute inset-x-5 bottom-4 z-30 border-t-2 sm:hidden border-[color:var(--color-fg)] pt-3 md:inset-x-10 md:bottom-6"
-            style={{ top: "calc(100% - var(--belt) + 44px)" }}
-            aria-live="polite"
-          >
-            <div className="mx-auto h-full max-w-[1440px]">
-              <Readout state={readout} />
+            <div ref={world} className="absolute inset-0">
+              <div className="absolute left-0 h-[18px] border-y-2 border-[color:var(--color-fg)]" style={{ bottom: "calc(var(--belt) - 18px)", width: `${(n + 1) * 100}%` }}>
+                <div data-belt className="h-full bg-[repeating-linear-gradient(90deg,#12151c_0_26px,#3a3f4b_26px_30px)]" />
+              </div>
+              <div
+                className="absolute left-0 h-4 bg-[radial-gradient(circle_at_center,var(--color-fg)_0_4px,transparent_5px)] bg-[length:40px_16px] opacity-60 short:hidden"
+                style={{ bottom: "calc(var(--belt) - 36px)", width: `${(n + 1) * 100}%` }}
+              />
+
+              {LINE.map((e, i) => (
+                <div key={e.id} data-station className="absolute inset-y-0 w-full" style={{ left: `${i * 100}%` }}>
+                  <Station exp={e} index={i} readout={readout} />
+                </div>
+              ))}
+
+              {/* Loading dock */}
+              <div className="absolute inset-y-0 w-full" style={{ left: `${n * 100}%` }}>
+                <div className="absolute inset-x-5 top-[24%] text-center md:inset-x-10">
+                  <p className={`${mono} text-[color:var(--color-muted)]`}>Loading dock · {TOTAL} problems shipped</p>
+                  <p className="display mt-3 text-[clamp(2.6rem,8vw,7rem)] uppercase leading-[0.85]">
+                    Got a slow process?
+                    <span className="block text-[color:var(--color-accent)]">Put it on the belt.</span>
+                  </p>
+                </div>
+                <a
+                  href="#contact"
+                  className="absolute left-1/2 z-10 flex h-[58px] w-[150px] -translate-x-1/2 flex-col justify-between border-2 p-2 transition-transform hover:-translate-y-2 sm:h-[70px] sm:w-[190px] lg:h-[96px] lg:w-[250px]"
+                  style={{ bottom: "var(--belt)", background: KRAFT, borderColor: INK, color: INK }}
+                >
+                  <span className="font-mono text-[9px] uppercase tracking-wider opacity-70">Your problem</span>
+                  <span className="display text-[1.2rem] leading-none sm:text-[1.5rem] lg:text-[1.9rem]">Ship it in →</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Readout console under the belt */}
+            <div
+              className="absolute inset-x-5 bottom-2 z-30 border-t-2 border-[color:var(--color-fg)] pt-2 sm:hidden"
+              style={{ top: "calc(100% - var(--belt) + var(--ro-gap))" }}
+              aria-live="polite"
+            >
+              <div className="mx-auto h-full max-w-[1440px]">
+                <Readout state={readout} />
+              </div>
             </div>
           </div>
         </div>
